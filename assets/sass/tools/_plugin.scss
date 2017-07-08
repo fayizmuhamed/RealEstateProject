@@ -1,0 +1,22 @@
+.loading {
+    background: url('../images/gif.gif') no-repeat center center;
+    top: 0px;
+    left: 0px;
+    background-position:center;
+    height: 100vh;
+    width: 100%;
+    position:absalute;
+    z-index: 9999;
+}
+section {
+    opacity: 0;
+    -webkit-transition:opacity .6s;
+    -moz-transition:opacity .6s;
+    -o-transition:opacity .6s;
+    transition: opacity .6s;
+}
+.loaded section {
+    opacity: 1;
+}
+
+
