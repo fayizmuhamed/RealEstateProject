@@ -8,8 +8,8 @@ and open the template in the editor.
     <head>
         <title>Admin</title>
         <!-- style -->
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/materialize.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/screen.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/screen.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     </head>
@@ -18,7 +18,7 @@ and open the template in the editor.
         <!-- Main Area-->
         <div class="login">
             <div class="head">
-                <i><img src="<?php echo base_url(); ?>assets/img/logo2.svg"></i>
+                <i><img src="<?php echo base_url(); ?>assets/images/logo2.svg"></i>
             </div>
             <div class="form">
                 <?php echo form_open('admin/login/validate_credentials'); ?>
@@ -51,8 +51,8 @@ and open the template in the editor.
             </div>
 
             <!--Import jQuery before materialize.js-->
-            <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquary.js"></script>
-            <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>
+           <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
             <script src="<?php echo base_url(); ?>assets/js/index.js"></script>
             <script type="text/javascript">
                 $(".button-collapse").sideNav();

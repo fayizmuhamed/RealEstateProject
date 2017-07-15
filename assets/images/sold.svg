@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-21310.801 7446.1 62.801 64.496">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #aa2020;
+      }
+
+      .cls-2 {
+        fill: #f15c5c;
+      }
+
+      .cls-3 {
+        fill: #cc2b2b;
+      }
+
+      .cls-4 {
+        fill: #fff;
+        font-size: 9px;
+        font-family: SegoeUI, Segoe UI;
+        letter-spacing: 0.2em;
+      }
+    </style>
+  </defs>
+  <g id="Group_13455" data-name="Group 13455" transform="translate(-22557 6980)">
+    <path id="Path_8547" data-name="Path 8547" class="cls-1" d="M-21351.059,7360.791h-4s-.4-5.3.6-5.3S-21351.059,7360.791-21351.059,7360.791Z" transform="translate(22660.057 -6830.195)"/>
+    <path id="Path_8545" data-name="Path 8545" class="cls-2" d="M-21483.3,7229.1h27.875l34.922,34.288V7293.6Z" transform="translate(22729.504 -6763)"/>
+    <path id="Path_10525" data-name="Path 10525" class="cls-3" d="M-21411.6,7464l-.2-3.9,3.8,3.9h-3.7" transform="translate(22658 -6994)"/>
+    <text id="SOLD" class="cls-4" transform="translate(1271 482) rotate(45)"><tspan x="0" y="0">SOLD</tspan></text>
+  </g>
+</svg>

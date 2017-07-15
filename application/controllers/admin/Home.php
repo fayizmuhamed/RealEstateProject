@@ -11,15 +11,12 @@
  *
  * @author DELL
  */
-class Home extends CI_Controller{
+class Home extends AdminController{
     //put your code here
     
      public function __construct() {
         parent::__construct();
         
-        /*if(!$this->session->userdata('is_logged_in')){
-            redirect('admin/login');
-        }*/
     }
     
     /**

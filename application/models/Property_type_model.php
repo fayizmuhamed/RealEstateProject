@@ -33,11 +33,34 @@ class Property_type_model extends CI_Model {
         return $query->result_array();
     }
 
+    /**
+     * get property type list by parent id
+     */
+    function get_property_types() {
+
+        $this->db->select('pt_id');
+        $this->db->select('pt_name');
+        $this->db->select('pt_model_id');
+        $this->db->select('pm_name as pt_model_name');
+        $this->db->select('pt_created_at');
+        $this->db->select('pt_updated_at');
+        $this->db->from('property_types');
+      
+        $this->db->join('property_models', 'pt_model_id = pm_id', 'left');
+
+        $this->db->group_by('pt_id');
+
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
 
     /**
      * get property type list by parent id
      */
-    function get_property_types($property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc', $limit_start, $limit_end) {
+    function get_property_types_with_search($property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc', $limit_start, $limit_end) {
 
         $this->db->select('pt_id');
         $this->db->select('pt_name');

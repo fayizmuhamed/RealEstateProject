@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Community  extends CI_Controller{
+class Community  extends AdminController{
     //put your code here
     
     /**
@@ -21,9 +21,6 @@ class Community  extends CI_Controller{
     public function __construct() {
         parent::__construct();
         $this->load->model('Community_model');
-        if (!$this->session->userdata('is_logged_in')) {
-            redirect('admin/login');
-        }
     }
 
     /**

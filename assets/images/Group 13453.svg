@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-5861 -2400 68 168">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2ec4b6;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 14px;
+        font-family: OpenSans, Open Sans;
+      }
+
+      .cls-3 {
+        filter: url(#Rectangle_11118);
+      }
+    </style>
+    <filter id="Rectangle_11118" x="-5861" y="-2400" width="68" height="168" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_13453" data-name="Group 13453" transform="translate(-7242 -3920)">
+    <g class="cls-3" transform="matrix(1, 0, 0, 1, 7242, 3920)">
+      <path id="Rectangle_11118-2" data-name="Rectangle 11118" class="cls-1" d="M7,0H50a0,0,0,0,1,0,0V150a0,0,0,0,1,0,0H7a7,7,0,0,1-7-7V7A7,7,0,0,1,7,0Z" transform="translate(-5852 -2394)"/>
+    </g>
+    <text id="QUICK_CONTACT" data-name="QUICK CONTACT" class="cls-2" transform="translate(1421 1656) rotate(-90)"><tspan x="0" y="0">QUICK CONTACT</tspan></text>
+  </g>
+</svg>

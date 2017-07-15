@@ -65,6 +65,7 @@ $route['admin/projects/add']='admin/project/add';
 $route['admin/projects/update']='admin/project/update';
 $route['admin/projects/update/(:any)'] = 'admin/project/update/$1';
 $route['admin/projects/delete/(:any)'] = 'admin/project/delete/$1';
+$route['admin/projects/delete_thumbnail/(:any)'] = 'admin/project/deleteProjectThumbnail/$1';
 $route['admin/projects/(:any)'] = 'admin/projects/index/$1';
 
 $route['admin/propertytypes']='admin/property_type';
@@ -81,9 +82,13 @@ $route['admin/communities/update/(:any)'] = 'admin/community/update/$1';
 $route['admin/communities/delete/(:any)'] = 'admin/community/delete/$1';
 $route['admin/communities/(:any)'] = 'admin/community/index/$1';
 
+$route['admin/config/about']='admin/configuration/about';
+$route['admin/config']='admin/configurations';
 
 
-$route['default_controller'] = 'admin/user';
+$route['projects/(:num)']='public/project/index/$1';
+$route['projects']='public/project';
+$route['default_controller'] = 'public/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 

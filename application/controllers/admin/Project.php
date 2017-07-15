@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Project extends CI_Controller {
+class Project extends AdminController {
 //put your code here
 
     /**
@@ -20,10 +20,9 @@ class Project extends CI_Controller {
      */
     public function __construct() {
         parent::__construct();
+        $this->load->model('Property_type_model');
         $this->load->model('Project_model');
-        if (!$this->session->userdata('is_logged_in')) {
-            redirect('admin/login');
-        }
+        $this->load->model('Project_thumbnail_model');
     }
 
     /**
@@ -31,6 +30,11 @@ class Project extends CI_Controller {
      * @return void
      */
     public function index() {
+
+        //all the posts sent by the view
+        $search_string = $this->input->post('search_string');
+        $order = $this->input->post('order');
+        $order_type = $this->input->post('order_type');
 
         //pagination settings
         $config['per_page'] = 20;
@@ -47,14 +51,19 @@ class Project extends CI_Controller {
             $limit_end = 0;
         }
 
-        $config['total_rows'] = 100;
+        $projects = $this->Project_model->get_projects_with_search($search_string, $order, $order_type, $config['per_page'], $limit_end);
+
+
+        $config['total_rows'] = $projects == null ? 0 : count($projects);
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
-        
+
+        $data['projects'] = $projects;
+
         //load the view
         $data['content'] = 'admin/projects/list';
-        
+
         $this->load->view('includes/admin_template', $data);
     }
 
@@ -64,34 +73,51 @@ class Project extends CI_Controller {
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             //form validation
+            $this->form_validation->set_rules('project_reference', 'Project Number', 'trim|required|xss_clean');
             $this->form_validation->set_rules('project_name', 'Project Name', 'trim|required|xss_clean');
             $this->form_validation->set_rules('project_developer', 'Project Developer', 'trim|required|xss_clean');
             $this->form_validation->set_rules('project_location', 'Project location', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('property_type', 'Propert Type', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('start_date', 'Start Date', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('expected_end_date', 'Expected End Date', 'trim|required|xss_clean');
-            
+            $this->form_validation->set_rules('project_property_type', 'Propert Type', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_start_date', 'Start Date', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_end_date', 'End Date', 'trim|required|xss_clean');
+
             //if the form has passed through the validation
-            if ($this->form_validation->run()) {
+            if ($this->form_validation->run() && $this->do_upload()) {
+
+
                 $data_to_store = array(
+                    'project_reference' => $this->input->post('project_reference'),
                     'project_name' => $this->input->post('project_name'),
                     'project_developer' => $this->input->post('project_developer'),
                     'project_location' => $this->input->post('project_location'),
-                    'property_type' => $this->input->post('property_type'),
-                    'start_date' => $this->input->post('start_date'),
-                    'expected_end_date' => $this->input->post('expected_end_date'),
-                    'description' => $this->input->post('description')
+                    'project_property_type' => $this->input->post('project_property_type'),
+                    'project_no_of_bedrooms' => $this->input->post('project_no_of_bedrooms'),
+                    'project_start_price' => $this->input->post('project_start_price'),
+                    'project_start_date' => date('Y-m-d', strtotime($this->input->post('project_start_date'))),
+                    'project_end_date' => date('Y-m-d', strtotime($this->input->post('project_end_date'))),
+                    'project_description' => $this->input->post('project_description'),
+                    'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? "" : $this->upload_data['project_cover_image']['file_name'],
+                    'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? "" : $this->upload_data['project_brochure']['file_name'],
+                    'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? "" : $this->upload_data['project_floor_plan']['file_name'],
+                    'project_payment_plans' => $this->input->post('project_payment_plans')
                 );
+
+                $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
+
                 //if the insert has returned true then we show the flash message
-                if ($this->Project_model->insert_project($data_to_store)) {
-                    $data['flash_message'] = TRUE;
+                if ($this->insert_project($data_to_store, $thumbnail)) {
+
+                    $this->session->set_flashdata('flash_message', TRUE);
+                    redirect(current_url());
                 } else {
-                    $data['flash_message'] = FALSE;
+                    $this->session->set_flashdata('flash_message', FALSE);
                 }
             }
         }
-        
+
         //load the view
+
+        $data['property_types'] = $this->Property_type_model->get_property_types();
         $data['content'] = 'admin/projects/add';
         $this->load->view('includes/admin_template', $data);
     }
@@ -101,46 +127,65 @@ class Project extends CI_Controller {
      * @return void
      */
     public function update() {
-//product id 
+//project id 
         $id = $this->uri->segment(4);
 
 //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
-//form validation
-            $this->form_validation->set_rules('description', 'description', 'required');
-            $this->form_validation->set_rules('stock', 'stock', 'required|numeric');
-            $this->form_validation->set_rules('cost_price', 'cost_price', 'required|numeric');
-            $this->form_validation->set_rules('sell_price', 'sell_price', 'required|numeric');
-            $this->form_validation->set_rules('manufacture_id', 'manufacture_id', 'required');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
-//if the form has passed through the validation
-            if ($this->form_validation->run()) {
 
+            //form validation
+            $this->form_validation->set_rules('project_reference', 'Project Number', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_name', 'Project Name', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_developer', 'Project Developer', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_location', 'Project location', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_property_type', 'Propert Type', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_start_date', 'Start Date', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('project_end_date', 'End Date', 'trim|required|xss_clean');
+
+            $test=$this->input->post('project_payment_plan_hidden');
+            //if the form has passed through the validation
+            if ($this->form_validation->run() && $this->do_upload()) {
                 $data_to_store = array(
-                    'description' => $this->input->post('description'),
-                    'stock' => $this->input->post('stock'),
-                    'cost_price' => $this->input->post('cost_price'),
-                    'sell_price' => $this->input->post('sell_price'),
-                    'manufacture_id' => $this->input->post('manufacture_id')
+                    'project_reference' => $this->input->post('project_reference'),
+                    'project_name' => $this->input->post('project_name'),
+                    'project_developer' => $this->input->post('project_developer'),
+                    'project_location' => $this->input->post('project_location'),
+                    'project_property_type' => $this->input->post('project_property_type'),
+                    'project_no_of_bedrooms' => $this->input->post('project_no_of_bedrooms'),
+                    'project_start_price' => $this->input->post('project_start_price'),
+                    'project_start_date' => date('Y-m-d', strtotime($this->input->post('project_start_date'))),
+                    'project_end_date' => date('Y-m-d', strtotime($this->input->post('project_end_date'))),
+                    'project_description' => $this->input->post('project_description'),
+                    'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? $this->input->post('project_cover_image_hidden') : $this->upload_data['project_cover_image']['file_name'],
+                    'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? $this->input->post('project_brochure_hidden') : $this->upload_data['project_brochure']['file_name'],
+                    'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? $this->input->post('project_floor_plan_hidden') : $this->upload_data['project_floor_plan']['file_name'],
+                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden')
                 );
-//if the insert has returned true then we show the flash message
-                if ($this->Project_model->update_project($id, $data_to_store) == TRUE) {
+
+                $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
+
+
+                //if the insert has returned true then we show the flash message
+                if ($this->update_project($id, $data_to_store, $thumbnail)) {
                     $this->session->set_flashdata('flash_message', 'updated');
                 } else {
                     $this->session->set_flashdata('flash_message', 'not_updated');
                 }
-                redirect('admin/products/update/' . $id . '');
-            }//validation run
+                redirect('admin/projects');
+            }
         }
-//if we are updating, and the data did not pass trough the validation
-//the code below wel reload the current data
-//product data 
-        $data['product'] = $this->products_model->get_product_by_id($id);
-//fetch manufactures data to populate the select field
-        $data['manufactures'] = $this->manufacturers_model->get_manufacturers();
-//load the view
-        $data['main_content'] = 'admin/products/edit';
-        $this->load->view('includes/template', $data);
+        //if we are updating, and the data did not pass trough the validation
+        //the code below wel reload the current data
+        //
+        //project data 
+        $data['project_thumbnails'] = $this->Project_thumbnail_model->get_project_thumbnails($id);
+        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['project'] = $this->Project_model->get_projects_by_id($id);
+
+
+        //load the view
+        $data['content'] = 'admin/projects/edit';
+        $this->load->view('includes/admin_template', $data);
     }
 
 //update
@@ -149,10 +194,321 @@ class Project extends CI_Controller {
      * @return void
      */
     public function delete() {
-//product id 
+
         $id = $this->uri->segment(4);
-        $this->products_model->delete_product($id);
-        redirect('admin/products');
+
+        $this->db->trans_start(); # Starting Transaction
+
+        $this->db->trans_strict(FALSE);
+
+        $this->Project_model->delete_project($id);
+        $this->Project_thumbnail_model->delete_project_thumbnail_by_project_id($id);
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            redirect('admin/projects');
+        }
+    }
+    
+    /**
+     * Delete project thumbnail by his id
+     * @return void
+     */
+    public function deleteProjectThumbnail($project_thumbnail_id) {
+
+        $this->db->trans_start(); # Starting Transaction
+
+        $this->db->trans_strict(FALSE);
+
+        $this->Project_thumbnail_model->delete_project_thumbnail($project_thumbnail_id);
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            return true;
+        }
+        
+    }
+
+    function do_upload() {
+
+        $upload_dir = './uploads';
+
+        if (!is_dir($upload_dir)) {
+
+            mkdir($upload_dir);
+        }
+
+        $config['upload_path'] = $upload_dir;
+
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+
+        $config['overwrite'] = false;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->project_cover_image_upload()) {
+
+            return false;
+        }
+
+        if (!$this->project_thumbnail_upload()) {
+
+            return false;
+        }
+
+        if (!$this->project_brochure_upload()) {
+
+            return false;
+        }
+
+        if (!$this->project_floor_plan_upload()) {
+
+            return false;
+        }
+
+        return true;
+    }
+
+    function project_cover_image_upload() {
+
+        if ($_FILES['project_cover_image']['size'] != 0) {
+
+            $upload_dir = './uploads/project/cover';
+
+            if (!is_dir($upload_dir)) {
+
+                mkdir($upload_dir);
+            }
+
+            $config1['upload_path'] = $upload_dir;
+
+            $config1['allowed_types'] = 'gif|jpg|png|jpeg';
+
+            $date = new DateTime();
+
+            $file_name = 'cover_' . $date->format('Y_m_d_H_i_s');
+
+            $config1['file_name'] = $file_name;
+
+            $config1['overwrite'] = false;
+
+            $this->upload->initialize($config1);
+
+            if (!$this->upload->do_upload('project_cover_image')) {
+
+                $this->form_validation->set_message('project_cover_image_upload', $this->upload->display_errors());
+
+                return false;
+            } else {
+
+                $this->upload_data['project_cover_image'] = $this->upload->data();
+
+                return true;
+            }
+        } else {
+            
+            $previousCoverImage=$this->input->post('project_cover_image_hidden');
+
+            if (empty($previousCoverImage)) {
+
+                $this->form_validation->set_message('project_cover_image_upload', "No file selected");
+
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    function project_thumbnail_upload() {
+
+        $upload_dir = './uploads/project/thumbnail';
+
+        if (!is_dir($upload_dir)) {
+
+            mkdir($upload_dir);
+        }
+
+        $config4['upload_path'] = $upload_dir;
+
+        $config4['allowed_types'] = 'gif|jpg|png|jpeg';
+
+        $files = $_FILES;
+
+        if (!empty($files['project_thumbnail_image']['name'][0])) {
+            $count = count($_FILES['project_thumbnail_image']['name']);
+            for ($i = 0; $i < $count; $i++) {
+                $_FILES['project_thumbnail_image']['name'] = time() . $files['project_thumbnail_image']['name'][$i];
+                $_FILES['project_thumbnail_image']['type'] = $files['project_thumbnail_image']['type'][$i];
+                $_FILES['project_thumbnail_image']['tmp_name'] = $files['project_thumbnail_image']['tmp_name'][$i];
+                $_FILES['project_thumbnail_image']['error'] = $files['project_thumbnail_image']['error'][$i];
+                $_FILES['project_thumbnail_image']['size'] = $files['project_thumbnail_image']['size'][$i];
+
+                $date = new DateTime();
+                $file_name = 'thumbnail_' . $date->format('Y_m_d_H_i_s');
+                $config4['file_name'] = $file_name;
+                $config4['overwrite'] = false;
+
+                $this->upload->initialize($config4);
+
+                if (!$this->upload->do_upload('project_thumbnail_image')) {
+
+                    $this->form_validation->set_message('project_thumbnail_upload', $this->upload->display_errors());
+
+                    return false;
+                } else {
+
+                    $fileName = $this->upload->data()['file_name'];
+
+                    $images[] = $fileName;
+                }
+            }
+            $fileName = implode(',', $images);
+            $this->upload_data['project_thumbnail_image'] = $fileName;
+            return true;
+        } else {
+            return true;
+        }
+    }
+
+    function project_brochure_upload() {
+
+        if ($_FILES['project_brochure']['size'] != 0) {
+
+            $upload_dir = './uploads/project/brochure';
+
+            if (!is_dir($upload_dir)) {
+
+                mkdir($upload_dir);
+            }
+
+            $config2['upload_path'] = $upload_dir;
+
+            $config2['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
+
+            $date = new DateTime();
+
+            $file_name = 'brochure_' . $date->format('Y_m_d_H_i_s');
+
+            $config2['file_name'] = $file_name;
+
+            $config2['overwrite'] = false;
+
+            $this->upload->initialize($config2);
+
+            if (!$this->upload->do_upload('project_brochure')) {
+
+                $this->form_validation->set_message('project_brochure_upload', $this->upload->display_errors());
+
+                return false;
+            } else {
+
+                $this->upload_data['project_brochure'] = $this->upload->data();
+
+                return true;
+            }
+        } else {
+
+            return true;
+        }
+    }
+
+    function project_floor_plan_upload() {
+
+        if ($_FILES['project_floor_plan']['size'] != 0) {
+
+            $upload_dir = './uploads/project/floor_plan';
+
+            if (!is_dir($upload_dir)) {
+
+                mkdir($upload_dir);
+            }
+
+            $config3['upload_path'] = $upload_dir;
+
+            $config3['allowed_types'] = 'gif|jpg|png|jpeg|pdf';
+
+            $date = new DateTime();
+
+            $file_name = 'floor_plan_' . $date->format('Y_m_d_H_i_s');
+
+            $config3['file_name'] = $file_name;
+
+            $config3['overwrite'] = false;
+
+            $this->upload->initialize($config3);
+
+            if (!$this->upload->do_upload('project_floor_plan')) {
+
+                $this->form_validation->set_message('project_floor_plan_upload', $this->upload->display_errors());
+
+                return false;
+            } else {
+
+                $this->upload_data['project_floor_plan'] = $this->upload->data();
+
+                return true;
+            }
+        } else {
+
+            return true;
+        }
+    }
+
+    /**
+     * Transaction based project insert
+     * @param type $data
+     * @param type $thumbnails
+     * @return boolean
+     */
+    function insert_project($data, $thumbnails) {
+
+        $this->db->trans_start(); # Starting Transaction
+
+        $this->db->trans_strict(FALSE);
+
+        $project_id = $this->Project_model->insert_project($data);
+
+        $this->Project_thumbnail_model->insert_project_thumbnail($project_id, $thumbnails);
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Transaction based project update
+     * @param type $data
+     * @param type $thumbnails
+     * @return boolean
+     */
+    function update_project($id, $data, $thumbnails) {
+
+        $this->db->trans_start(); # Starting Transaction
+
+        $this->db->trans_strict(FALSE);
+
+        $this->Project_model->update_project($id, $data);
+
+        $this->Project_thumbnail_model->insert_project_thumbnail($id, $thumbnails);
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

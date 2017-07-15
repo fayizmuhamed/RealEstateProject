@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Property_type extends CI_Controller {
+class Property_type extends AdminController {
     //put your code here
 
     /**
@@ -22,9 +22,6 @@ class Property_type extends CI_Controller {
         parent::__construct();
         $this->load->model('Property_type_model');
         $this->load->model('Property_model_model');
-        if (!$this->session->userdata('is_logged_in')) {
-            redirect('admin/login');
-        }
     }
 
     /**
@@ -54,7 +51,7 @@ class Property_type extends CI_Controller {
             $limit_end = 0;
         }
 
-        $property_types = $this->Property_type_model->get_property_types($property_model_id, $search_string, $order, $order_type, $config['per_page'], $limit_end);
+        $property_types = $this->Property_type_model->get_property_types_with_search($property_model_id, $search_string, $order, $order_type, $config['per_page'], $limit_end);
 
 
         $config['total_rows'] = $property_types == null ? 0 : count($property_types);

@@ -17,94 +17,33 @@
         <table class="striped responsive-table">
             <thead>
                 <tr>
-                    <th>Location Name</th>
-                    <th>Description</th>
-                    <th>Transportion</th>
-                    <th>Agent Details</th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Reference</th>
+                    <th>Location</th>
+                    <th>Developer</th>
                     <th class="width-150">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dubai</td>
-                    <td>Eclair</td>
-                    <td>Comen Text</td>
-                    <td>Demmy</td>
-                    <td class="width-150 action-table">
-                        <a href="#"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>
-                        <a href="#"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
-                    </td>
-                </tr>
+                <?php
+                $i = 0;
+                foreach ($projects as $row) {
+                    $i++;
+                    echo '<tr>';
+                    echo '<td>' . $i . '</td>';
+                    echo '<td>' . $row['project_name'] . '</td>';
+                    echo '<td>' . $row['project_reference'] . '</td>';
+                    echo '<td>' . $row['project_location'] . '</td>';
+                    echo '<td>' . $row['project_developer'] . '</td>';
+                    echo '<td class="width-150 action-table">
+                  <a href="' . site_url("admin") . '/project/update/' . $row['project_id'] . '"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>  
+                  <a href="' . site_url("admin") . '/project/delete/' . $row['project_id'] . '"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
+                </td>';
+                    echo '</tr>';
+                }
+                ?> 
+                
             </tbody>
         </table>
         <?php echo $this->pagination->create_links(); ?>
