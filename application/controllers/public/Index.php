@@ -20,6 +20,7 @@ class Index extends CI_Controller {
 
         $this->load->model('Project_model');
         $this->load->model('Project_thumbnail_model');
+        $this->load->model('Configuration_model');
     }
 
     /**
@@ -56,6 +57,8 @@ class Index extends CI_Controller {
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
+        
+        $data['configurations'] = $this->Configuration_model->get_configurations_as_key_map();
 
         $data['projects'] = $projects;
         //load the view

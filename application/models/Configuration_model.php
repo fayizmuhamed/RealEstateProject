@@ -11,13 +11,14 @@
  *
  * @author DELL
  */
-class Configuration extends CI_Model{
+class Configuration_model extends CI_Model {
+
     //put your code here
-    
+
     function __construct() {
         
     }
-    
+
     /**
      * get property type list by parent id
      */
@@ -25,10 +26,78 @@ class Configuration extends CI_Model{
 
         $this->db->select('config_key');
         $this->db->select('config_value');
-
+        $this->db->from('configurations');
         $query = $this->db->get();
 
         return $query->result_array();
+    }
+
+    /**
+     * get property type list by parent id
+     */
+    function get_configurations_by_key($key) {
+
+        $this->db->select('config_key');
+        $this->db->select('config_value');
+        $this->db->from('configurations');
+        $this->db->where('config_key', $key);
+        $this->db->limit(1);
+        $query = $this->db->get();
+
+        return $query->row();
+    }
+
+    /**
+     * get property type list by parent id
+     */
+    function get_configurations_as_key_map() {
+
+        $this->db->select('config_key');
+        $this->db->select('config_value');
+        $this->db->from('configurations');
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+
+        $config = array();
+        foreach ($result as $value) {
+            $config[$value['config_key']] = $value['config_value'];
+        }
+
+        return $config;
+    }
+
+    /**
+     * Store the new project into the database
+     * @param array $data - associative array with data to store
+     * @return boolean 
+     */
+    function insert_multiple_configaurations($data) {
+
+        $this->db->trans_start(); # Starting Transaction
+
+        $this->db->trans_strict(FALSE);
+
+        foreach ($data as $data_each) {
+
+            $row = $this->get_configurations_by_key($data_each['config_key']);
+            
+            if($row==NULL?$this->insert_configuration( $data_each):$this->update_configuration($data_each['config_key'], $data_each)){
+                
+                continue;
+            }else{
+                return FALSE;
+            }
+
+        }
+
+        $this->db->trans_complete();
+
+        if ($this->db->trans_status() === FALSE) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -46,12 +115,11 @@ class Configuration extends CI_Model{
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_configuration($id, $data) {
-        $this->db->where('id', $id);
+    function update_configuration($key, $data) {
+        $this->db->where('config_key', $key);
         $this->db->update('configurations', $data);
         $report = array();
-        $report['error'] = $this->db->_error_number();
-        $report['message'] = $this->db->_error_message();
+        $report['error'] = $this->db->error();
         if ($report !== 0) {
             return true;
         } else {
@@ -64,8 +132,9 @@ class Configuration extends CI_Model{
      * @param int $id - product id
      * @return boolean
      */
-    function delete($id) {
-        $this->db->where('id', $id);
+    function delete($key) {
+        $this->db->where('config_key', $key);
         $this->db->delete('configurations');
     }
+
 }

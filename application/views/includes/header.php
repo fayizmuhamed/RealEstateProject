@@ -9,8 +9,7 @@
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/croppie.css" />
-        <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-        <script>tinymce.init({ selector:'#aboutus_textarea' });</script>
+        
     </head>
     <body >
         <!-- Header -->
