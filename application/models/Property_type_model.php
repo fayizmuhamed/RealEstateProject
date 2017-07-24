@@ -60,7 +60,7 @@ class Property_type_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_types_with_search($property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc', $limit_start, $limit_end) {
+    function get_property_types_with_search($limit_start, $limit_end, $property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('pt_id');
         $this->db->select('pt_name');
@@ -116,7 +116,7 @@ class Property_type_model extends CI_Model {
         $this->db->where('pt_id', $id);
         $this->db->update('property_types', $data);
         $report = array();
-        $report = $this->db->error();
+        $report['error'] = $this->db->error();
         if ($report !== 0) {
             return true;
         } else {

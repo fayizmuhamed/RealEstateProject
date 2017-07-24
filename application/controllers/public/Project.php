@@ -20,7 +20,6 @@ class Project extends CI_Controller {
 
         $this->load->library('image_lib');
         $this->load->model('Project_model');
-        $this->load->model('Project_thumbnail_model');
     }
 
     /**

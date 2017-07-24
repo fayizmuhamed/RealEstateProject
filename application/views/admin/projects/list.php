@@ -37,7 +37,7 @@
                     echo '<td>' . $row['project_location'] . '</td>';
                     echo '<td>' . $row['project_developer'] . '</td>';
                     echo '<td class="width-150 action-table">
-                  <a href="' . site_url("admin") . '/project/update/' . $row['project_id'] . '"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>  
+                  <a href="' . site_url("admin") . '/project/edit/' . $row['project_id'] . '"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>  
                   <a href="' . site_url("admin") . '/project/delete/' . $row['project_id'] . '"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
                 </td>';
                     echo '</tr>';

@@ -20,7 +20,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * get property type list by parent id
+     * get configuration list
      */
     function get_configurations() {
 
@@ -33,7 +33,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * get property type list by parent id
+     * get configuration by key
      */
     function get_configurations_by_key($key) {
 
@@ -48,7 +48,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * get property type list by parent id
+     * get configuration map with key and value
      */
     function get_configurations_as_key_map() {
 
@@ -68,7 +68,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * Store the new project into the database
+     * Store the multiple configuration into the database
      * @param array $data - associative array with data to store
      * @return boolean 
      */
@@ -101,7 +101,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * Store the new project into the database
+     * Store the new configuration into the database
      * @param array $data - associative array with data to store
      * @return boolean 
      */
@@ -111,7 +111,7 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * Update project
+     * Update configuration
      * @param array $data - associative array with data to store
      * @return boolean
      */
@@ -128,8 +128,8 @@ class Configuration_model extends CI_Model {
     }
 
     /**
-     * Delete project
-     * @param int $id - product id
+     * Delete configuration by key
+     * @param int $key - configuration key
      * @return boolean
      */
     function delete($key) {

@@ -51,7 +51,7 @@ class Property_type extends AdminController {
             $limit_end = 0;
         }
 
-        $property_types = $this->Property_type_model->get_property_types_with_search($property_model_id, $search_string, $order, $order_type, $config['per_page'], $limit_end);
+        $property_types = $this->Property_type_model->get_property_types_with_search($config['per_page'], $limit_end,$property_model_id, $search_string, $order, $order_type );
 
 
         $config['total_rows'] = $property_types == null ? 0 : count($property_types);

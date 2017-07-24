@@ -6,13 +6,13 @@
         <div class="row bredcrums">
             <div class="col s10 m10 l10">
                 <ul>
-                    <li><a href="#">HOME</a></li>
+                    <li><a href="<?php echo base_url(); ?>">HOME</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="#" class="active-bred">PROJECT</a></li>
+                    <li><a href="<?php echo base_url(); ?>projects" class="active-bred">PROJECT</a></li>
                 </ul>
             </div>
             <div class="col s2 m2 l2">
-                <a href="#" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
+                <a href="<?php echo base_url(); ?>projects" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
                     <span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: <?php echo $project[0]['project_developer']; ?></span>
                     <span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: <?php echo $project[0]['pt_name']; ?></span>
                     <span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: <?php echo $project[0]['project_no_of_bedrooms']; ?></span>
-                    <span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: <?php echo $project[0]['project_start_price']; ?></span>
+                    <span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: <?php echo number_format($project[0]['project_start_price']); ?></span>
                     <span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: <?php echo date('d M Y', strtotime($project[0]['project_end_date'])); ?></span>
                     <br>
                     <!--				<button class="waves-effect waves-light"><a href="#">VIEW DETAILS</a></button>-->
@@ -92,7 +92,7 @@
                                 echo '<h1>' .$i.date('S', mktime(1, 1, 1, 1, ( (($i >= 10) + ($i >= 20) + ($i == 0)) * 10 + $i % 10))) . '</h1>';
                                 echo '<span>Installment</span>';
                                 echo ' </div>';
-                                echo '<div class="percentage">' . $row_payment_plan['amount'] . '</div>';
+                                echo '<div class="percentage">' .$row_payment_plan['amount'] . '</div>';
                                 echo '<i>' . date('d M Y', strtotime($row_payment_plan['date'])) . '</i>';
                                 echo '</div>';
                             }

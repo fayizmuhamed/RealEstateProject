@@ -1,34 +1,3 @@
-<style type="text/css">
-
-    #images {
-        display: inline-block;
-        position: relative;
-
-
-    }
-
-    .thumbnail-card {
-        width: 180px;
-        height: 200px;
-        background-color: #fff;
-        border: 1px solid rgba(225, 225, 225, 0.73);
-        float: left;
-        margin: 5px 5px;
-        text-align: center;
-    }
-
-    .del_photo {
-        display: inline-block;
-        float: right;
-        margin: 10px 10px 0 0;
-        position: absolute;
-        top: 0;
-        right: 0;
-        color: pink;
-    }
-</style>
-
-
 <div class="main-area">
     <!-- Header -->
     <div class="header-all-section">
@@ -39,29 +8,18 @@
 
     <!-- form -->
     <div class="add-new-form">
-        <?php
-        //flash messages
-        if (isset($flash_message)) {
-            if ($flash_message == TRUE) {
-                echo '<div class="alert alert-success">';
-                echo '<a class="close" data-dismiss="alert">×</a>';
-                echo '<strong>Well done!</strong> new project created with success.';
-                echo '</div>';
-            } else {
-                echo '<div class="alert alert-error">';
-                echo '<a class="close" data-dismiss="alert">×</a>';
-                echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-                echo '</div>';
-            }
-        }
-        ?>
-        <?php echo form_open_multipart('admin/projects/update/' . $this->uri->segment(4) . ''); ?>
+        
+        <?php $attributes = array('id' => 'frm_edit_project'); ?>
+        <?php echo form_open_multipart('',$attributes); ?>
+        <div id="response" class="row">
+        </div>
 
         <!-- Project Name Developer -->
         <div class="row">
             <div class="input-field col s4">
                 <input id="project_reference" type="text" name="project_reference" class="validate" value="<?php echo $project[0]['project_reference']; ?>">
                 <label class="active" for="project_reference">Project Reference</label>
+                <input type="hidden" id="project_id" name="project_id" value="<?php echo $project[0]['project_id']; ?>"/>
             </div>
             <div class="input-field col s4">
                 <input id="project_name" type="text" name="project_name" class="validate" value="<?php echo $project[0]['project_name']; ?>">
@@ -105,7 +63,7 @@
                             </select>
                         </div>-->
             <div class="input-field col s4">
-                <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value($project[0]['project_no_of_bedrooms']); ?>">
+                <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project[0]['project_no_of_bedrooms']); ?>" >
                 <label class="active" for="project_no_of_bedrooms">No of bedrooms</label>
             </div>
         </div>
@@ -113,7 +71,7 @@
         <!-- Start date End date -->
         <div class="row">
             <div class="input-field col s4">
-                <input id="project_start_price" name="project_start_price"  type="number" value="<?php echo set_value($project[0]['project_start_price']); ?>">
+                <input id="project_start_price" name="project_start_price"   type="number" value="<?php echo set_value('project_start_price', $project[0]['project_start_price']); ?>"  step="any">
                 <label for="project_start_price">Start Price</label>
 
             </div>
@@ -165,8 +123,6 @@
             <div class="col s12 l12 m12 thum-slid">
                 <ul>
                     <?php
-                  
-
                     foreach ($project_thumbnails as $row_image) {
 
                         echo '<li>';

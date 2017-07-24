@@ -10,24 +10,14 @@
 
     <!-- form -->
     <div class="add-new-form">
-        <?php
-        //flash messages
-        if ($this->session->flashdata('flash_message')) {
-            if ($this->session->flashdata('flash_message') == TRUE) {
-                echo '<div class="alert alert-success">';
-                echo '<a class="close" data-dismiss="alert">×</a>';
-                echo '<strong>Well done!</strong> new project created with success.';
-                echo '</div>';
-            } else {
-                echo '<div class="alert alert-error">';
-                echo '<a class="close" data-dismiss="alert">×</a>';
-                echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-                echo '</div>';
-            }
-        }
-        ?>
-        <?php echo validation_errors(); ?>
-        <?php echo form_open_multipart('admin/projects/add'); ?>
+
+
+        <?php $attributes = array('id' => 'frm_add_project'); ?>
+        <?php echo form_open_multipart('',$attributes); ?>
+
+        <div id="response" class="row">
+        </div>
+
         <!-- Project Name Developer -->
         <div class="row">
             <div class="input-field col s4">
@@ -77,7 +67,7 @@
         <!-- Start date End date -->
         <div class="row">
             <div class="input-field col s4">
-                <input id="project_start_price" name="project_start_price"  type="number" value="<?php echo set_value('project_start_price'); ?>">
+                <input id="project_start_price" name="project_start_price"  type="number" value="<?php echo set_value('project_start_price'); ?>" step="any">
                 <label for="project_start_price">Start Price</label>
 
             </div>
@@ -147,28 +137,28 @@
         <section class="listing ">
             <ul  class="collapsible " data-collapsible="accordion" style="border: solid 1px #333 !important;">
                 <li>
-                    <div class="collapsible-header waves-effect waves-teal">
+                    <div class="collapsible-header active waves-effect waves-teal">
                         <a >Payment Plan</a>
                     </div>
 
                     <div class="collapsible-body padd-10-0">
-                            <div class="row">
-<!--                                <div class="input-field col s3">
-                                    <label for="payment_plan_ins_number">Installment number</label>
-                                    <input id="payment_plan_ins_number" name="payment_plan_ins_number"  type="number"  >
-                                </div>-->
-                                <div class="input-field col s4">
-                                    <label for="payment_plan_date">Date</label>
-                                    <input id="payment_plan_date" name="payment_plan_date"  type="date" class="datepicker" >
-                                </div>
-                                <div class="input-field col s4">
-                                    <label for="payment_plan_amount">Amount/Percentage</label>
-                                    <input id="payment_plan_amount" name="payment_plan_amount"  type="text"  >
-                                </div>
-                                <div class="input-field col s4">
-                                    <button class="btn normal-bt add-payment-plan" type="button" >Add</button>
-                                </div>
+                        <div class="row">
+                            <!--                                <div class="input-field col s3">
+                                                                <label for="payment_plan_ins_number">Installment number</label>
+                                                                <input id="payment_plan_ins_number" name="payment_plan_ins_number"  type="number"  >
+                                                            </div>-->
+                            <div class="input-field col s4">
+                                <label for="payment_plan_date">Date</label>
+                                <input id="payment_plan_date" name="payment_plan_date"  type="date" class="datepicker" >
                             </div>
+                            <div class="input-field col s4">
+                                <label for="payment_plan_amount">Amount/Percentage</label>
+                                <input id="payment_plan_amount" name="payment_plan_amount"  type="text"  >
+                            </div>
+                            <div class="input-field col s4">
+                                <button class="btn normal-bt add-payment-plan" type="button" >Add</button>
+                            </div>
+                        </div>
                         <div class="table row">
                             <table class="striped responsive-table input-field" id="table_payment_plan">
                                 <thead>
@@ -180,7 +170,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                  
+
                                 </tbody>
                             </table>
                         </div>
@@ -188,13 +178,13 @@
                     </div>
                 </li>
             </ul>
-                
+
         </section>
         <div class="col s12">
             <br>
             <br>
             <button class="bt-form-normal negative"><a href="<?php echo site_url('admin/projects'); ?>">Cancel</a></button>
-            <button class="bt-form-normal">Submit</button>
+            <button class="bt-form-normal" id="btnAddNewProjectSubmit" >Submit</button>
         </div>
         <?php echo form_close(); ?>
 

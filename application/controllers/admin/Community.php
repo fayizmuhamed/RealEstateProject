@@ -11,16 +11,18 @@
  *
  * @author DELL
  */
-class Community  extends AdminController{
+class Community extends AdminController {
     //put your code here
-    
+
     /**
      * Responsible for auto load the model
      * @return void
      */
     public function __construct() {
         parent::__construct();
+        $this->load->model('Property_type_model');
         $this->load->model('Community_model');
+        //$this->load->model('Community_thumbnail_model');
     }
 
     /**
@@ -30,7 +32,6 @@ class Community  extends AdminController{
     public function index() {
 
         //all the posts sent by the view
-        $property_model_id = $this->uri->segment(3);
         $search_string = $this->input->post('search_string');
         $order = $this->input->post('order');
         $order_type = $this->input->post('order_type');
@@ -50,15 +51,16 @@ class Community  extends AdminController{
             $limit_end = 0;
         }
 
-        $property_types = $this->Community_model->get_property_types($property_model_id, $search_string, $order, $order_type, $config['per_page'], $limit_end);
+        $communities = $this->Community_model->get_communities_with_search($config['per_page'], $limit_end, $search_string, $order, $order_type);
 
 
-        $config['total_rows'] = $property_types == null ? 0 : count($property_types);
+        $config['total_rows'] = $communities == null ? 0 : count($communities);
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
 
-        $data['communities'] = $property_types;
+
+        $data['communities'] = $communities;
 
         //load the view
         $data['content'] = 'admin/communities/list';
@@ -66,36 +68,70 @@ class Community  extends AdminController{
         $this->load->view('includes/admin_template', $data);
     }
 
+    /**
+     * Function to load add new project page
+     */
     public function add() {
+
+        //load the view
+
+        $data['property_types'] = $this->Property_type_model->get_property_types();
+        //load the view
+        $data['content'] = 'admin/communities/add';
+        $this->load->view('includes/admin_template', $data);
+    }
+
+    /**
+     * Function to load project editing page
+     */
+    public function edit($id) {
+
+        $data['community_thumbnails'] = $this->Community_thumbnail_model->get_community_thumbnails($id);
+        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['community'] = $this->Community_model->get_community_by_id($id);
+        //load the view
+        $data['content'] = 'admin/communities/edit';
+        $this->load->view('includes/admin_template', $data);
+    }
+
+    public function save() {
 
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             //form validation
-            $this->form_validation->set_rules('property_type_name', 'Property type name', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('property_type_model', 'Parent', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('community_name', 'Community name', 'trim|required|xss_clean');
 
             //if the form has passed through the validation
-            if ($this->form_validation->run()) {
+            if ($this->form_validation->run() && $this->do_upload()) {
                 $data_to_store = array(
-                    'pt_name' => $this->input->post('property_type_name'),
-                    'pt_model_id' => $this->input->post('property_type_model')
+                    'community_name' => $this->input->post('community_name'),
+                    'community_description' => $this->input->post('community_description'),
+                    'community_location_url' => $this->input->post('community_location_url'),
+                    'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
+                    'community_dis_from_public_transport' => $this->input->post('community_dis_from_public_transport'),
+                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? "" : $this->upload_data['community_cover_image']['file_name']
                 );
-                
+
+                $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
+
                 //if the insert has returned true then we show the flash message
-                if ($this->Property_type_model->insert_property_type($data_to_store)) {
-                    $data['flash_message'] = TRUE;
+                if ($this->Community_model->insert_community($data_to_store, $thumbnail)) {
+                    $status = 'success';
+                    $message = 'New community created successfully';
                 } else {
-                    $data['flash_message'] = FALSE;
+                    $status = 'failed';
+                    $message = 'Community creation failed';
                 }
+            } else {
+                $status = 'failed';
+                $message = validation_errors();
+            }
+
+            if ($this->input->is_ajax_request()) {
+
+                exit($this->send_response($status, $message));
             }
         }
-
-        $data['property_models'] = $this->Property_model_model->get_property_models();
-
-
-        //load the view
-        $data['content'] = 'admin/communities/add';
-        $this->load->view('includes/admin_template', $data);
     }
 
     /**
@@ -103,63 +139,224 @@ class Community  extends AdminController{
      * @return void
      */
     public function update() {
-        
-        //property_type_id 
-        $id = $this->uri->segment(4);
+
 
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            
+
             //form validation
-            $this->form_validation->set_rules('property_type_name', 'Property type name', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('property_type_model', 'Parent', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('community_name', 'Community name', 'trim|required|xss_clean');
 
             //if the form has passed through the validation
-            if ($this->form_validation->run()) {
+            if ($this->form_validation->run() && $this->do_upload()) {
+
+                //project id 
+                $id = $this->input->post('community_id');
 
                 $data_to_store = array(
-                    'pt_name' => $this->input->post('property_type_name'),
-                    'pt_model_id' => $this->input->post('property_type_model')
+                    'community_name' => $this->input->post('community_name'),
+                    'community_description' => $this->input->post('community_description'),
+                    'community_location_url' => $this->input->post('community_location_url'),
+                    'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
+                    'community_dis_from_public_transport' => $this->input->post('community_dis_from_public_transport'),
+                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? $this->input->post('community_cover_image_hidden') : $this->upload_data['community_cover_image']['file_name']
                 );
-                
-                //if the insert has returned true then we show the flash message
-                if ($this->Property_type_model->update_property_type($id, $data_to_store) == TRUE) {
-                    
-                    $this->session->set_flashdata('flash_message', 'updated');
-                    
-                } else {
-                    
-                    $this->session->set_flashdata('flash_message', 'not_updated');
-                }
-                
-                redirect('admin/propertytypes');
-            }//validation run
-        }
-        
-        //if we are updating, and the data did not pass trough the validation
-        //the code below wel reload the current data
-        //product data 
-        $data['property_type'] = $this->Property_type_model->get_property_type_by_id($id);
-        
-        $data['property_models'] = $this->Property_model_model->get_property_models();
 
-        //load the view
-        //load the view
-        $data['content'] = 'admin/communities/edit';
-        $this->load->view('includes/admin_template', $data);
+                $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
+
+                //if the insert has returned true then we show the flash message
+                if ($this->Community_model->update_community($id, $data_to_store, $thumbnail) === TRUE) {
+                    $status = 'success';
+                    $message = 'Community updated successfully';
+                } else {
+                    $status = 'failed';
+                    $message = 'Community updation failed';
+                }
+            } else {
+                $status = 'failed';
+                $message = validation_errors();
+            }
+
+            if ($this->input->is_ajax_request()) {
+
+                exit($this->send_response($status, $message));
+            }
+        }
     }
-    
-    //update
+
+//update
     /**
      * Delete product by his id
      * @return void
      */
     public function delete() {
-        
+
         //product id 
         $id = $this->uri->segment(4);
-        $this->Community_model->delete_property_type($id);
-        redirect('admin/communities');
+
+        //if the insert has returned true then we show the flash message
+        if ($this->Community_model->delete_community($id)) {
+            $status = 'success';
+            $message = 'Community deleted successfully';
+            redirect('admin/communities');
+        } else {
+            $status = 'failed';
+            $message = 'Community deletion failed';
+        }
+    }
+
+    /**
+     * Delete project thumbnail by his id
+     * @return void
+     */
+    public function deleteCommunityThumbnail($community_thumbnail_id) {
+
+
+        if ($this->Community_thumbnail_model->delete_community_thumbnail($community_thumbnail_id)) {
+            $status = 'failed';
+            $message = 'Community thumbnail deletion failed';
+        } else {
+            $status = 'success';
+            $message = 'Community thumbnail deletion success';
+        }
+
+        if ($this->input->is_ajax_request()) {
+
+            exit($this->send_response($status, $message));
+        }
+    }
+
+    function do_upload() {
+
+        $upload_dir = './uploads';
+
+        if (!is_dir($upload_dir)) {
+
+            mkdir($upload_dir);
+        }
+
+        $config['upload_path'] = $upload_dir;
+
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+
+        $config['overwrite'] = false;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->community_cover_image_upload()) {
+
+            return false;
+        }
+
+        if (!$this->community_thumbnail_upload()) {
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+    function community_cover_image_upload() {
+
+        if ($_FILES['community_cover_image']['size'] != 0) {
+
+            $upload_dir = './uploads/community/cover';
+
+            if (!is_dir($upload_dir)) {
+
+                mkdir($upload_dir);
+            }
+
+            $config1['upload_path'] = $upload_dir;
+
+            $config1['allowed_types'] = 'gif|jpg|png|jpeg';
+
+            $date = new DateTime();
+
+            $file_name = 'cover_' . $date->format('Y_m_d_H_i_s');
+
+            $config1['file_name'] = $file_name;
+
+            $config1['overwrite'] = false;
+
+            $this->upload->initialize($config1);
+
+            if (!$this->upload->do_upload('community_cover_image')) {
+
+                $this->form_validation->set_message('community_cover_image', $this->upload->display_errors());
+
+                return false;
+            } else {
+
+                $this->upload_data['community_cover_image'] = $this->upload->data();
+
+                return true;
+            }
+        } else {
+
+            $previousCoverImage = $this->input->post('community_cover_image_hidden');
+
+            if (empty($previousCoverImage)) {
+
+                $this->form_validation->set_message('community_cover_image', "No file selected");
+
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    function community_thumbnail_upload() {
+
+        $upload_dir = './uploads/community/thumbnail';
+
+        if (!is_dir($upload_dir)) {
+
+            mkdir($upload_dir);
+        }
+
+        $config4['upload_path'] = $upload_dir;
+
+        $config4['allowed_types'] = 'gif|jpg|png|jpeg';
+
+        $files = $_FILES;
+
+        if (!empty($files['community_thumbnail_image']['name'][0])) {
+            $count = count($_FILES['community_thumbnail_image']['name']);
+            for ($i = 0; $i < $count; $i++) {
+                $_FILES['community_thumbnail_image']['name'] = time() . $files['community_thumbnail_image']['name'][$i];
+                $_FILES['community_thumbnail_image']['type'] = $files['community_thumbnail_image']['type'][$i];
+                $_FILES['community_thumbnail_image']['tmp_name'] = $files['community_thumbnail_image']['tmp_name'][$i];
+                $_FILES['community_thumbnail_image']['error'] = $files['community_thumbnail_image']['error'][$i];
+                $_FILES['community_thumbnail_image']['size'] = $files['community_thumbnail_image']['size'][$i];
+
+                $date = new DateTime();
+                $file_name = 'thumbnail_' . $date->format('Y_m_d_H_i_s');
+                $config4['file_name'] = $file_name;
+                $config4['overwrite'] = false;
+
+                $this->upload->initialize($config4);
+
+                if (!$this->upload->do_upload('community_thumbnail_image')) {
+
+                    $this->form_validation->set_message('community_thumbnail_image', $this->upload->display_errors());
+
+                    return false;
+                } else {
+
+                    $fileName = $this->upload->data()['file_name'];
+
+                    $images[] = $fileName;
+                }
+            }
+            $fileName = implode(',', $images);
+            $this->upload_data['community_thumbnail_image'] = $fileName;
+            return true;
+        } else {
+            return true;
+        }
     }
 
 }

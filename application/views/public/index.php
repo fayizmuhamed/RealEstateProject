@@ -178,7 +178,7 @@
                 echo '<span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: ' . $row['project_developer'] . '</span>';
                 echo '<span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: ' . $row['pt_name'] . '</span>';
                 echo '<span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: ' . $row['project_no_of_bedrooms'] . '</span>';
-                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . $row['project_start_price'] . '</span>';
+                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . '</span>';
                 echo '<span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: ' . date('d M Y', strtotime($row['project_end_date'])) . '</span>';
                 echo '<br>';
                 echo '<button class="waves-effect waves-light"><a href="' . base_url() . 'projects/' . $row['project_id'] . '">VIEW DETAILS</a></button>';
@@ -710,98 +710,35 @@
 </section>
 
 <!-- DUBAI COMMUNITY -->
-<section class="section-gap community">
+<section class="section-gap community" id="community-sec">
     <div class="container">
         <div class="heading_block-white">
             <h2>DUBAI COMMUNITIES</h2>
             <span><i></i></span>
         </div>
 
-        <div class="row">
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c1.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c2.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c3.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c4.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="#">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c5.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c6.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c7.png">
-                    </div>
-                </a>
-            </div>
-            <div class="col s12 l3 m6">
-                <a href="community-detai.html">
-                    <div class="community-card">
-                        <div class="overlay-bx">
-                            <h3>DUBAI</h3>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/c8.png">
-                    </div>
-                </a>
+        <div class="row" >
+            <div class="row" id="community_container">
+                <?php
+                foreach ($communities as $community) {
+
+                    echo '<div class="col s12 l3 m6">';
+                    echo '<a href="' . base_url() . 'communities/' . $community['community_id'] . '">';
+                    echo '<div class="community-card">';
+                    echo '<div class="overlay-bx">';
+                    echo '<h3>' . $community['community_name'] . '</h3>';
+                    echo '</div>';
+                    echo '<img src="' . base_url() . 'uploads/community/cover/' . $community['community_cover_image'] . '">';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+                ?>
             </div>
 
             <!-- More -->
             <div class="col s12 more-button-block">
-                <button class="bt-normal-red auto waves-effect waves-light"><a href="#">MORE DUBAI COMMUNITES</a></button>
+                <button id="button_community_load_more" class="bt-normal-red auto waves-effect waves-light" type="button" data-val="2">MORE DUBAI COMMUNITIES</button>
             </div>
 
         </div>
@@ -819,7 +756,7 @@
 
         <div class="row">
             <div class="col s12">
-                <p class="para"><?php echo array_key_exists("about_us_who_we_are", $configurations)? $configurations['about_us_who_we_are']:""; ?></p>
+                <p class="para"><?php echo array_key_exists("about_us_who_we_are", $configurations) ? $configurations['about_us_who_we_are'] : ""; ?></p>
                 <ul class="tabs">
                     <li class="tab col s4"><a class="active" href="#test1">VISION</a></li>
                     <li class="tab col s4"><a href="#test2">MISSION</a></li>
@@ -829,19 +766,19 @@
             <!-- Vission -->
             <div id="test1" class="col s12">
                 <h1>Vission</h1>
-                <p><?php echo array_key_exists("about_us_vision", $configurations)? $configurations['about_us_vision']:""; ?></p>
+                <p><?php echo array_key_exists("about_us_vision", $configurations) ? $configurations['about_us_vision'] : ""; ?></p>
             </div>
 
             <!-- Mission -->
             <div id="test2" class="col s12">
                 <h1>Mission</h1>
-                <p><?php echo array_key_exists("about_us_mission", $configurations)? $configurations['about_us_mission']:""; ?></p>
+                <p><?php echo array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; ?></p>
             </div>
 
             <!-- Value -->
             <div id="test3" class="col s12">
                 <h1>Value</h1>
-                <p><?php echo array_key_exists("about_us_value", $configurations)? $configurations['about_us_value']:""; ?></p>
+                <p><?php echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; ?></p>
             </div>
 
         </div>

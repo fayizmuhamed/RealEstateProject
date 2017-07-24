@@ -19,8 +19,8 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Location</th>
                     <th>Added On</th>
+                    <th>Updated On</th>
                     <th class="width-150">Action</th>
                 </tr>
             </thead>
@@ -32,11 +32,11 @@
                     echo '<tr>';
                     echo '<td>' . $i . '</td>';
                     echo '<td>' . $row['community_name'] . '</td>';
-                    echo '<td>' . $row['pt_model_name'] . '</td>';
-                    echo '<td>' . $row['pt_created_at'] . '</td>';
+                    echo '<td>' . $row['community_created_at'] . '</td>';
+                    echo '<td>' . $row['community_updated_at'] . '</td>';
                     echo '<td class="width-150 action-table">
-                  <a href="' . site_url("admin") . '/propertytypes/update/' . $row['pt_id'] . '"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>  
-                  <a href="' . site_url("admin") . '/propertytypes/delete/' . $row['pt_id'] . '"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
+                  <a href="' . site_url("admin") . '/communities/edit/' . $row['community_id'] . '"><button class="edit"><i class="zmdi zmdi-edit"></i></button></a>  
+                  <a href="' . site_url("admin") . '/communities/delete/' . $row['community_id'] . '"><button class="delete"><i class="zmdi zmdi-delete"></i></button></a>
                 </td>';
                     echo '</tr>';
                 }

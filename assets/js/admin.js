@@ -184,6 +184,7 @@ function deletePaymentPlan() {
     getAllPaymentPlans();
     return false;
 }
+;
 
 //function to get all payment plans
 function getAllPaymentPlans() {
@@ -197,41 +198,200 @@ function getAllPaymentPlans() {
         var paymentPlans = {
             'date': paymentPlanDate,
             'amount': paymentPlanAmount
-        }
+        };
         data.push(paymentPlans);
     });
 
     hiddenProjectPaymentPlans.val(JSON.stringify(data));
 
 }
+;
 
-$("#table_payment_plan tbody tr").on('click', 'button.delete-payment-plan', deletePaymentPlan);
+var deleteProjectThumbnail = function (e) {
+    e.preventDefault();
+    var btnProjectThumbnailDelete = $(this);
+
+    var projectThumbnailId = btnProjectThumbnailDelete.data('ref');
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/projects/delete_thumbnail/" + projectThumbnailId,
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+
+            console.log(data.response);
+            if (data.response === 'success') {
+                var par = btnProjectThumbnailDelete.closest('li');
+                par.remove();
+            } else {
+                alert(data.comment);
+            }
+        }
+
+    });
+    return false;
+}
+;
+
+var deleteCommunityThumbnail = function (e) {
+    e.preventDefault();
+    var btnCommunityThumbnailDelete = $(this);
+
+    var communityThumbnailId = btnCommunityThumbnailDelete.data('ref');
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/communities/delete_thumbnail/" + communityThumbnailId,
+        dataType: "json",
+        cache: false,
+        success:
+                function (data) {
+
+                    console.log(data.response);
+                    if (data.response === 'success') {
+                        var par = btnCommunityThumbnailDelete.closest('li');
+                        par.remove();
+                    } else {
+                        alert(data.comment);
+                    }
+
+                }
+
+    });
+    return false;
+}
+;
+
+var saveProject = function (e) {
+    e.preventDefault();
+    //var formData = new FormData($('#add_new_project')[0]);
+    //var dataString = $('#add_new_project').serialize();
+
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/projects/save",
+        data: new FormData(this),
+        mimeType: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data.response);
+            if (data.response === 'success') {
+                $('#frm_add_project #response').addClass('alert alert-success').html(data.comment);
+                $('#frm_add_project')[0].reset();
+                $('#frm_add_project #table_payment_plan').empty();
+            } else {
+                $('#frm_add_project #response').addClass('alert alert-error').html(data.comment);
+            }
+        }
+
+    });
+};
+
+var updateProject = function (e) {
+    e.preventDefault();
+    //var formData = new FormData($('#add_new_project')[0]);
+    //var dataString = $('#add_new_project').serialize();
+
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/projects/update",
+        data: new FormData(this),
+        mimeType: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data.response);
+            if (data.response === 'success') {
+                $('#frm_edit_project #response').addClass('alert alert-success').html(data.comment);
+                $('#frm_edit_project')[0].reset();
+                $('#frm_edit_project #table_payment_plan').empty();
+                window.location.href = document.BaseUrl + "admin/projects/";
+            } else {
+                $('#frm_edit_project #response').addClass('alert alert-error').html(data.comment);
+            }
+        }
+
+    });
+};
+
+var saveCommunity = function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/communities/save",
+        data: new FormData(this),
+        mimeType: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data.response);
+            if (data.response === 'success') {
+                $('#frm_add_community #response').addClass('alert alert-success').html(data.comment);
+                $('#frm_add_community')[0].reset();
+            } else {
+                $('#frm_add_community #response').addClass('alert alert-error').html(data.comment);
+            }
+        }
+
+    });
+};
+
+var updateCommunity = function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "admin/communities/update",
+        data: new FormData(this),
+        mimeType: "multipart/form-data",
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (data) {
+            console.log(data.response);
+            if (data.response === 'success') {
+                $('#frm_edit_community #response').addClass('alert alert-success').html(data.comment);
+                $('#frm_edit_community')[0].reset();
+                window.location.href = document.BaseUrl + "admin/communities/";
+            } else {
+                $('#frm_edit_community #response').addClass('alert alert-error').html(data.comment);
+            }
+        }
+
+    });
+};
+
+
 
 
 $(document).ready(function () {
 
-    function deleteProjectThumbnail() {
-
-        var btnProjectThumbnailDelete = $(this);
-
-        var projectThumbnailId = btnProjectThumbnailDelete.data('ref');
-        $.ajax({
-            type: "POST",
-            url: "http://localhost/RealEstateProject/admin/projects/delete_thumbnail/" + projectThumbnailId,
-            dataType: "text",
-            cache: false,
-            success:
-                    function (data) {
-                        var par = btnProjectThumbnailDelete.closest('li');
-                        par.remove();
-                    }
-
-        });
-        return false;
-    }
-    ;
 
 
+    //set onclick for thumbnail image delete in project
     $("body").on('click', '.delete_project_thumbnail', deleteProjectThumbnail);
+
+    //set onclick for thumbnail image delete in community
+    $("body").on('click', '.delete_community_thumbnail', deleteCommunityThumbnail);
+
+    //set onclick for delete button for payment plan in project
+    $("#table_payment_plan tbody tr").on('click', 'button.delete-payment-plan', deletePaymentPlan);
+
+    $("#frm_add_project").on('submit', saveProject);
+
+    $("#frm_edit_project").on('submit', updateProject);
+
+    $("#frm_add_community").on('submit', saveCommunity);
+
+    $("#frm_edit_community").on('submit', updateCommunity);
+
+
 });
+
+
+
 

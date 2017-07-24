@@ -62,8 +62,9 @@ $route['admin/home']='admin/home';
 
 $route['admin/projects']='admin/project';
 $route['admin/projects/add']='admin/project/add';
-$route['admin/projects/update']='admin/project/update';
-$route['admin/projects/update/(:any)'] = 'admin/project/update/$1';
+$route['admin/projects/save']='admin/project/save';
+$route['admin/projects/edit/(:any)']='admin/project/edit/$1';
+$route['admin/projects/update'] = 'admin/project/update';
 $route['admin/projects/delete/(:any)'] = 'admin/project/delete/$1';
 $route['admin/projects/delete_thumbnail/(:any)'] = 'admin/project/deleteProjectThumbnail/$1';
 $route['admin/projects/(:any)'] = 'admin/projects/index/$1';
@@ -77,15 +78,19 @@ $route['admin/propertytypes/(:any)'] = 'admin/property_type/index/$1';
 
 $route['admin/communities']='admin/community';
 $route['admin/communities/add']='admin/community/add';
+$route['admin/communities/save']='admin/community/save';
+$route['admin/communities/edit/(:any)']='admin/community/edit/$1';
 $route['admin/communities/update']='admin/community/update';
-$route['admin/communities/update/(:any)'] = 'admin/community/update/$1';
 $route['admin/communities/delete/(:any)'] = 'admin/community/delete/$1';
+$route['admin/communities/delete_thumbnail/(:any)'] = 'admin/community/deleteCommunityThumbnail/$1';
 $route['admin/communities/(:any)'] = 'admin/community/index/$1';
 
 $route['admin/config/about']='admin/configuration/about';
 $route['admin/config']='admin/configurations';
 
-
+$route['communities/getCommunities']='public/community/getCommunities';
+$route['communities/(:num)']='public/community/index/$1';
+$route['communities']='public/community';
 $route['projects/(:num)']='public/project/index/$1';
 $route['projects']='public/project';
 $route['default_controller'] = 'public/index';

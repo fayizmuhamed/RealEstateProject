@@ -16,7 +16,7 @@ class Property_model_model extends CI_Model {
     function __construct() {
         
     }
-    
+
     /**
      * get property type list by parent id
      */
@@ -29,8 +29,8 @@ class Property_model_model extends CI_Model {
         $this->db->from('property_models');
 
         $this->db->group_by('pm_id');
-        
-        $this->db->order_by('pm_id','Asc');
+
+        $this->db->order_by('pm_id', 'Asc');
 
         $query = $this->db->get();
 
@@ -40,7 +40,7 @@ class Property_model_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_models_with_search($search_string = null, $order = null, $order_type = 'Asc', $limit_start, $limit_end) {
+    function get_property_models_with_search($limit_start, $limit_end, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('pm_id');
         $this->db->select('pm_name');
@@ -89,8 +89,7 @@ class Property_model_model extends CI_Model {
         $this->db->where('pm_id', $id);
         $this->db->update('property_models', $data);
         $report = array();
-        $report['error'] = $this->db->_error_number();
-        $report['message'] = $this->db->_error_message();
+        $report['error'] = $this->db->error();
         if ($report !== 0) {
             return true;
         } else {

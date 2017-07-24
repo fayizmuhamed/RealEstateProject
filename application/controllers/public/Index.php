@@ -19,7 +19,7 @@ class Index extends CI_Controller {
         parent::__construct();
 
         $this->load->model('Project_model');
-        $this->load->model('Project_thumbnail_model');
+        $this->load->model('Community_model');
         $this->load->model('Configuration_model');
     }
 
@@ -29,38 +29,12 @@ class Index extends CI_Controller {
      * @return void
      */
     function index() {
-//all the posts sent by the view
-        $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
 
-        //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/projects';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
-
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $limit_end = ($page * $config['per_page']) - $config['per_page'];
-        if ($limit_end < 0) {
-            $limit_end = 0;
-        }
-
-        //load the view
-        $projects = $this->Project_model->get_projects_with_search($search_string, $order, $order_type, $config['per_page'], $limit_end);
-
-
-        $config['total_rows'] = $projects == null ? 0 : count($projects);
-
-        //initializate the panination helper 
-        $this->pagination->initialize($config);
         
         $data['configurations'] = $this->Configuration_model->get_configurations_as_key_map();
 
-        $data['projects'] = $projects;
+        $data['projects'] = $this->Project_model->get_latest_projects(5);
+        $data['communities'] = $this->Community_model->get_communities_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, 'community_updated_at', 'DESC');
         //load the view
         $data['content'] = 'public/index';
         $this->load->view('includes/public/template_home', $data);

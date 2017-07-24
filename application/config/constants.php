@@ -93,3 +93,6 @@ define('ASSET_PATH','assets/');
  */
 defined('USER_TYPE_ADMIN') OR define('USER_TYPE_ADMIN', 1);
 defined('USER_TYPE_AGENT') OR define('USER_TYPE_AGENT', 2);
+
+
+defined('INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE') OR define('INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE', 4);

@@ -22,7 +22,6 @@ class Project extends AdminController {
         parent::__construct();
         $this->load->model('Property_type_model');
         $this->load->model('Project_model');
-        $this->load->model('Project_thumbnail_model');
     }
 
     /**
@@ -51,7 +50,7 @@ class Project extends AdminController {
             $limit_end = 0;
         }
 
-        $projects = $this->Project_model->get_projects_with_search($search_string, $order, $order_type, $config['per_page'], $limit_end);
+        $projects = $this->Project_model->get_projects_with_search($config['per_page'], $limit_end, $search_string, $order, $order_type);
 
 
         $config['total_rows'] = $projects == null ? 0 : count($projects);
@@ -67,11 +66,42 @@ class Project extends AdminController {
         $this->load->view('includes/admin_template', $data);
     }
 
-//index
-
+    /**
+     * Function to load add new project page
+     */
     public function add() {
+
+        //load the view
+
+        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['content'] = 'admin/projects/add';
+        $this->load->view('includes/admin_template', $data);
+    }
+
+    /**
+     * Function to load project editing page
+     */
+    public function edit($id) {
+
+        //project id 
+        //$id = $this->uri->segment(4);
+        //project data 
+        $data['project_thumbnails'] = $this->Project_thumbnail_model->get_project_thumbnails($id);
+        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['project'] = $this->Project_model->get_projects_by_id($id);
+
+
+        //load the view
+        $data['content'] = 'admin/projects/edit';
+        $this->load->view('includes/admin_template', $data);
+    }
+
+    public function save() {
+
+
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
             //form validation
             $this->form_validation->set_rules('project_reference', 'Project Number', 'trim|required|xss_clean');
             $this->form_validation->set_rules('project_name', 'Project Name', 'trim|required|xss_clean');
@@ -83,7 +113,6 @@ class Project extends AdminController {
 
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
-
 
                 $data_to_store = array(
                     'project_reference' => $this->input->post('project_reference'),
@@ -99,27 +128,34 @@ class Project extends AdminController {
                     'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? "" : $this->upload_data['project_cover_image']['file_name'],
                     'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? "" : $this->upload_data['project_brochure']['file_name'],
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? "" : $this->upload_data['project_floor_plan']['file_name'],
-                    'project_payment_plans' => $this->input->post('project_payment_plans')
+                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden')
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
 
                 //if the insert has returned true then we show the flash message
-                if ($this->insert_project($data_to_store, $thumbnail)) {
-
-                    $this->session->set_flashdata('flash_message', TRUE);
-                    redirect(current_url());
+                if ($this->Project_model->insert_project($data_to_store, $thumbnail)) {
+                    $status = 'success';
+                    $message = 'New project created successfully';
                 } else {
-                    $this->session->set_flashdata('flash_message', FALSE);
+                    $status = 'failed';
+                    $message = 'New project creation failed';
                 }
+            } else {
+                $status = 'failed';
+                $message = validation_errors();
             }
+
+            if ($this->input->is_ajax_request()) {
+
+                exit($this->send_response($status, $message));
+            }
+
+//            else {
+//                $this->session->set_flashdata('flash_message', $status);
+//                redirect(current_url());
+//            }
         }
-
-        //load the view
-
-        $data['property_types'] = $this->Property_type_model->get_property_types();
-        $data['content'] = 'admin/projects/add';
-        $this->load->view('includes/admin_template', $data);
     }
 
     /**
@@ -127,10 +163,9 @@ class Project extends AdminController {
      * @return void
      */
     public function update() {
-//project id 
-        $id = $this->uri->segment(4);
 
-//if save button was clicked, get the data sent via post
+
+        //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             //form validation
@@ -142,9 +177,12 @@ class Project extends AdminController {
             $this->form_validation->set_rules('project_start_date', 'Start Date', 'trim|required|xss_clean');
             $this->form_validation->set_rules('project_end_date', 'End Date', 'trim|required|xss_clean');
 
-            $test=$this->input->post('project_payment_plan_hidden');
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
+
+                //project id 
+                $id = $this->input->post('project_id');
+
                 $data_to_store = array(
                     'project_reference' => $this->input->post('project_reference'),
                     'project_name' => $this->input->post('project_name'),
@@ -166,26 +204,27 @@ class Project extends AdminController {
 
 
                 //if the insert has returned true then we show the flash message
-                if ($this->update_project($id, $data_to_store, $thumbnail)) {
-                    $this->session->set_flashdata('flash_message', 'updated');
+                if ($this->Project_model->update_project($id, $data_to_store, $thumbnail)) {
+                    $status = 'success';
+                    $message = 'Project updated successfully';
                 } else {
-                    $this->session->set_flashdata('flash_message', 'not_updated');
+                    $status = 'failed';
+                    $message = 'Project updation failed';
                 }
-                redirect('admin/projects');
+            } else {
+                $status = 'failed';
+                $message = validation_errors();
             }
+
+            if ($this->input->is_ajax_request()) {
+
+                exit($this->send_response($status, $message));
+            }
+//            else {
+//                $this->session->set_flashdata('flash_message', $status);
+//                redirect('admin/projects');
+//            }
         }
-        //if we are updating, and the data did not pass trough the validation
-        //the code below wel reload the current data
-        //
-        //project data 
-        $data['project_thumbnails'] = $this->Project_thumbnail_model->get_project_thumbnails($id);
-        $data['property_types'] = $this->Property_type_model->get_property_types();
-        $data['project'] = $this->Project_model->get_projects_by_id($id);
-
-
-        //load the view
-        $data['content'] = 'admin/projects/edit';
-        $this->load->view('includes/admin_template', $data);
     }
 
 //update
@@ -197,22 +236,17 @@ class Project extends AdminController {
 
         $id = $this->uri->segment(4);
 
-        $this->db->trans_start(); # Starting Transaction
-
-        $this->db->trans_strict(FALSE);
-
-        $this->Project_model->delete_project($id);
-        $this->Project_thumbnail_model->delete_project_thumbnail_by_project_id($id);
-
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() === FALSE) {
-            return false;
-        } else {
+        //if the insert has returned true then we show the flash message
+        if ($this->Project_model->delete_project($id)) {
+            $status = 'success';
+            $message = 'Project deleted successfully';
             redirect('admin/projects');
+        } else {
+            $status = 'failed';
+            $message = 'Project deletion failed';
         }
     }
-    
+
     /**
      * Delete project thumbnail by his id
      * @return void
@@ -228,11 +262,17 @@ class Project extends AdminController {
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
-            return false;
+            $status = 'failed';
+            $message='Project thumbnail deletion failed';
         } else {
-            return true;
+            $status = 'success';
+            $message='Project thumbnail deletion success';
         }
-        
+
+        if ($this->input->is_ajax_request()) {
+
+            exit($this->send_response($status, $message));
+        }
     }
 
     function do_upload() {
@@ -312,8 +352,8 @@ class Project extends AdminController {
                 return true;
             }
         } else {
-            
-            $previousCoverImage=$this->input->post('project_cover_image_hidden');
+
+            $previousCoverImage = $this->input->post('project_cover_image_hidden');
 
             if (empty($previousCoverImage)) {
 
@@ -457,56 +497,6 @@ class Project extends AdminController {
             }
         } else {
 
-            return true;
-        }
-    }
-
-    /**
-     * Transaction based project insert
-     * @param type $data
-     * @param type $thumbnails
-     * @return boolean
-     */
-    function insert_project($data, $thumbnails) {
-
-        $this->db->trans_start(); # Starting Transaction
-
-        $this->db->trans_strict(FALSE);
-
-        $project_id = $this->Project_model->insert_project($data);
-
-        $this->Project_thumbnail_model->insert_project_thumbnail($project_id, $thumbnails);
-
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() === FALSE) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Transaction based project update
-     * @param type $data
-     * @param type $thumbnails
-     * @return boolean
-     */
-    function update_project($id, $data, $thumbnails) {
-
-        $this->db->trans_start(); # Starting Transaction
-
-        $this->db->trans_strict(FALSE);
-
-        $this->Project_model->update_project($id, $data);
-
-        $this->Project_thumbnail_model->insert_project_thumbnail($id, $thumbnails);
-
-        $this->db->trans_complete();
-
-        if ($this->db->trans_status() === FALSE) {
-            return false;
-        } else {
             return true;
         }
     }

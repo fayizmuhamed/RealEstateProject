@@ -30,7 +30,7 @@
                 </ul>
             </div>
             <div class="col s12 m2 l2">
-                <a href="<?php echo base_url(); ?>" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
+                <a href="<?php echo base_url(); ?>#project-hero" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
             </div>
         </div>
         <div class="row">
@@ -69,7 +69,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-money-box"></i>
-                                    <strong>Starting Price</strong>: <?php echo $row['project_start_price']; ?>
+                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?>
                                 </span>
 
                                 <span>
@@ -115,7 +115,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-money-box"></i>
-                                    <strong>Starting Price</strong>: <?php echo $row['project_start_price']; ?>
+                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?>
                                 </span>
 
                                 <span>

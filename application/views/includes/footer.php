@@ -8,6 +8,11 @@
 <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/croppie.css" />
 <script>
+    
+    document.BaseUrl='<?php echo base_url();?>';
+    
+</script>
+<script>
     tinymce.init({ 
         selector:'.editor',
         forced_root_block : ""
