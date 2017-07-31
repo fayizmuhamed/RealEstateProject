@@ -1,191 +1,73 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Bridges & Allies</title>
-	<!-- style -->
-	<link rel="stylesheet" href="stylesheets/materialize.css">
-	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" href="stylesheets/animations.css" type="text/css">
-	<link rel="stylesheet" href="stylesheets/flexslider.css" type="text/css">
-</head>
-<body class="inner-bg">
-
 
 <!-- filter -->
 <div class="filter">
-	<a class="modal-trigger" href="#modal1"><img src="images/filter.svg"></a>
+    <a class="modal-trigger" href="#modal-filter"><img src="<?php echo base_url(); ?>assets/images/filter.svg"></a>
 </div>
- 
-
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal bottom-sheet">
+<!-- Modal Structure -->
+<div id="modal-filter" class="modal bottom-sheet">
     <div class="modal-content">
-      <h4>Flter</h4>
-      <div class="filters">
-      	 <div class="input-field col s12">
-		    <select multiple>
-		      <option value="" selected>Property Type</option>
-		      <option value="1">Apartment</option>
-		      <option value="2">Villas</option>
-		      <option value="3">Residential</option>
-		      <option value="4">Retail</option>
-		      <option value="5">Official</option>
-		      <option value="6">Commercial</option>
-		    </select>
-		  </div>
-		    <p class="range-field">
-		      <span>Bed Room</span>
-		      <input type="range" id="test9" min="0" max="100" />
-		    </p>
+        <h4>Flter</h4>
+        <div class="filters">
+            <div class="input-field col s12">
+                <select multiple>
+                    <option value="" selected>Property Type</option>
+                    <option value="1">Apartment</option>
+                    <option value="2">Villas</option>
+                    <option value="3">Residential</option>
+                    <option value="4">Retail</option>
+                    <option value="5">Official</option>
+                    <option value="6">Commercial</option>
+                </select>
+            </div>
+            <div class="input-field col s12">
+                <select multiple>
+                    <option value="" selected>Bed Room</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+             <div class="input-field col s12">
+                <select multiple>
+                    <option value="" selected>Budget</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+           
 
-		    <p class="range-field">
-		      <span>Budget</span>
-		      <input type="range" id="test8" min="0" max="10000" />
-		    </p>
+            <p class="range-field">
+                <input type="text" placeholder="Size" />
+            </p>
 
-		    <p class="range-field">
-		      <input type="text" placeholder="Size" />
-		    </p>
-
-		    <button><a href="#">Search</a></button>
-		    <button class="cancel-b modal-close"><a href="#">Cncel</a></button>
+            <button><a href="#">Search</a></button>
+            <button class="cancel-b modal-close"><a href="#">Cancel</a></button>
 
 
-      </div>
+        </div>
     </div>
-   
-  </div>
 
-
- <!-- Make Enquiry Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Make Enquiry</h4>
-      <div class="b-m">
-      	<form>
-      		<div class="col l12 m12 s12"><input type="text" placeholder="Name" name=""></div>
-      		<div class="col l12 m12 s12"><input type="text" placeholder="Mobile Number" name=""></div>
-      		<div class="col l12 m12 s12"><input type="text" placeholder="E-mail" name=""></div>
-      		<div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
-      		<div class="col l12 m12 s12">
-      			<button class="waves-effect waves-light"><a href="#">Send</a></button>
-      			<button class="cancel modal-close waves-effect waves-light"><a href="#">Cancel</a></button>
-      		</div>
-      	</form>
-      </div>
-    </div>
-  </div>
-
-<!-- Side Navigtion -->
-<ul id="slide-out" class="side-nav">
-	<li><div class="userView">
-	  <div class="background">
-	  </div>
-	  <a href="#!user"><img class="circle" src="images/header-logo.svg"></a>
-	  <a href="#!email"><span class="white-text email">Bridges & Allies</span></a>
-	</div></li>
-	<li><a href="#who">WHO WE ARE</a></li>
-	<li><a href="testimonial.html">TESTIMONIAL</a></li>
-	<li><a href="team.html">TEAMS</a></li>
-	<li><a href="contact.html">CONTACT</a></li>
-	<li><a href="buy.html">BUY</a></li>
-	<li><a href="rent.html">RENT</a></li>
-	<li><a href="project.html">PROJECT</a></li>
-	<li><a href="property-owner.html">PROPERTY OWNER</a></li>
-	<li><a href="infoguide.html">INFO GUIDE</a></li>
-	<li><a href="career.html">CAREER</a></li>
-</ul>
-
-
-<!-- Banner -->
-<section class="banner inner">
-	<div class="container">
-		<!-- Navigation -->
-		<div class="header-inner">
-			<div class="row menu-bar">
-				<div class="col s12">
-					<div class="logo-header"><a href="index.html"><img src="images/header-logo.svg"></a></div>
-					<div class="menu-header">
-						<ul id="dropdown1" class="dropdown-content">
-						  <li><a href="#who">WHO WE ARE</a></li>
-						  <li><a href="testimonial.html">TESTIMONIAL</a></li>
-						  <li><a href="team.html">TEAMS</a></li>
-						  <li><a href="contact.html">CONTACT</a></li>
-						</ul>
-						<ul class="main-menu">
-							<li><a href="#!" class="dropdown-button" data-activates="dropdown1">ABOUT</a></li>
-							<li><a href="buy.html">BUY</a></li>
-							<li><a href="#">RENT</a></li>
-							<li><a href="project.html">PROJECT</a></li>
-							<li><a href="property-owner.html">PROPERTY OWNER</a></li>
-							<li><a href="#">INFO GUIDE</a></li>
-							<li><a href="#">CAREER</a></li>
-						</ul>
-						<!-- Mobile Menu -->
-						<a href="#" data-activates="slide-out" class="button-collapse right mob-menu">
-						<span class="zmdi zmdi-menu"></span>
-						</a>
-					</div>
-					<div class="search">
-						<div class="filter-search">
-							<ul>
-								<li><a href="#" class="active">BUY</a></li>
-								<li><a href="#">RENT</a></li>
-							</ul>
-						</div>
-						<div class="search-form">
-							<form>
-							<div class="searchfeild">
-								<div class="search-text"><input type="text" name="" placeholder=" Location or Building e.g. Downtown Dubai or Cayan Tower"></div>
-								<div class="search-select">
-									<select class="browser-default">
-									    <option value="" disabled selected>Bedrooms</option>
-									    <option value="1">Option 1</option>
-									    <option value="2">Option 2</option>
-									    <option value="3">Option 3</option>
-									 </select>
-								</div>
-								<div class="search-select">
-									<select class="browser-default">
-									    <option value="" disabled selected>Budget</option>
-									    <option value="1">Option 1</option>
-									    <option value="2">Option 2</option>
-									    <option value="3">Option 3</option>
-									 </select>
-								</div>
-								
-							</div>
-							<div class="searchaction">
-								<button>Search</button>
-							</div>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-
-
+</div>
 <!-- FEATURED PROPERTIES FOR SALE -->
 <section class="section-gap-inner">
 	<div class="container">
 		<div class="row bredcrums">
 			<div class="col s10 m10 l10">
 				 <ul>
-				 	<li><a href="#">HOME</a></li>
+				 	<li><a href="<?php echo base_url(); ?>">HOME</a></li>
 				 	<li><i class="zmdi zmdi-chevron-right"></i></li>
-				 	<li><a href="#" class="active-bred">BUY</a></li>
+				 	<li><a href="#" class="active-bred">RENT</a></li>
 				 </ul>
 			</div>
 			<div class="col s2 m2 l2">
-				 <a href="#" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
+				 <a href="<?php echo base_url(); ?>" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
 			</div>
 		</div>
 		<div class="row inner-tab">
@@ -194,11 +76,11 @@
 		        <li class="tab"><a class="active" href="#test1">ALL</a></li>
 		        <li class="tab"><a href="#test2">READY RESIDNETIAL</a></li>
 		        <li class="tab"><a href="#test3">READY COMMERCIAL</a></li>
-		        <li class="tab"><a href="#test4">OFFPLAN PROPERTIES</a></li>
-		        <li class="tab"><a href="#test5">FEATURED PROPERTIES</a></li>
+		        <li class="tab"><a href="#test4">OFFPLAN</a></li>
+		        <li class="tab"><a href="#test5">FEATURED</a></li>
 		        <li class="tab"><a href="#test6">PLOTS</a></li>
-		        <li class="tab"><a href="infogide.html" target="_blank">BUYERS GUIDE</a></li>
-		        <li class="tab"><a href="#test7" target="_blank">MEET SALES TEAM</a></li>
+		        <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">TENANT'S GUIDE</a></li>
+		        <li class="tab"><a href="<?php echo base_url(); ?>teams" target="_self">MEET RENT TEAM</a></li>
 		      </ul>
 		    </div>
 
@@ -217,7 +99,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="<?php echo base_url(); ?>rentdetail">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -246,7 +128,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -275,7 +157,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -304,7 +186,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -333,7 +215,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -362,7 +244,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -391,7 +273,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -420,7 +302,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -459,7 +341,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -488,7 +370,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -517,7 +399,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -546,7 +428,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -575,7 +457,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -604,7 +486,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -633,7 +515,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -662,7 +544,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -700,7 +582,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -729,7 +611,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -758,7 +640,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="#">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -787,7 +669,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -816,7 +698,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -845,7 +727,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="rent-detail.html">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -874,7 +756,7 @@
 							<li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
 							</ul>
 						<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-						<button class="view-b"><a href="buy-detail.html">View Detail</a></button>
+						<button class="view-b"><a href="#">View Detail</a></button>
 						</div>
 
 						<div class="property-thumb">
@@ -1651,157 +1533,157 @@
 			
 		    </div>
 
-			<div id="test7" class="col s12">
-		    	<div class="row agent-det">
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-					<div class="col s12 m4 l3">
-						<div class="agent-card">
-							<div class="agent-image">
-								<div class="view"><button><a href="#">View Profile</a></button></div>
-								<img src="images/7.jpg">
-							</div>
-							<div class="agent-name">
-								<h3>Thomas Miller</h3>
-								<span>Business Development Manger</span>
-							</div>
-							<div class="spcial">
-								<span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-								<span><strong>From</strong>United Arab Emirates</span>
-								<span><strong>Speaks</strong>English, Hindi, Arabic</span>
-							</div>
-						</div>
-					</div>
-
-					<!-- more -->
-					<div class="col s12 more-center">
-						<button class="bt-normal"><a href="#">VIEW MORE</a></button>
-					</div>
-
-				</div>
-
-			<div class="col s12 more-button-block">
-				<button class="bt-normal waves-effect waves-light"><a href="#">VIEW MORE</a></button>
-			</div>
-			
-		    </div>
+                    <!--			<div id="test7" class="col s12">
+                                            <div class="row agent-det">
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="col s12 m4 l3">
+                                                                    <div class="agent-card">
+                                                                            <div class="agent-image">
+                                                                                    <div class="view"><button><a href="#">View Profile</a></button></div>
+                                                                                    <img src="images/7.jpg">
+                                                                            </div>
+                                                                            <div class="agent-name">
+                                                                                    <h3>Thomas Miller</h3>
+                                                                                    <span>Business Development Manger</span>
+                                                                            </div>
+                                                                            <div class="spcial">
+                                                                                    <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
+                                                                                    <span><strong>From</strong>United Arab Emirates</span>
+                                                                                    <span><strong>Speaks</strong>English, Hindi, Arabic</span>
+                                                                            </div>
+                                                                    </div>
+                                                            </div>
+                    
+                                                             more 
+                                                            <div class="col s12 more-center">
+                                                                    <button class="bt-normal"><a href="#">VIEW MORE</a></button>
+                                                            </div>
+                    
+                                                    </div>
+                    
+                                            <div class="col s12 more-button-block">
+                                                    <button class="bt-normal waves-effect waves-light"><a href="#">VIEW MORE</a></button>
+                                            </div>
+                                            
+                                        </div>-->
 		   
 
 		   
@@ -1809,139 +1691,3 @@
 		</div>
 	</div>
 </section>
-
-
-
-
-
-<!-- footer -->
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col s12 l4 m12 border-right ">
-				<img src="images/logo.svg">
-				<br>
-				<h2>ADDRESS</h2>
-				<p>P.O. Box 261036, Plot No. S 20119,<br> Jebel Ali Free Zone (South),<br> Dubai. United Arab Emirates.</p>
-				<p>Opening Hours&nbsp;<strong>9:00 AM to 6:00 PM</strong></p>
-
-				<ul class="social">
-					<li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-					<li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
-					<li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
-		 			<li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
-				</ul>
-				
-			</div>
-			<div class="col s12 l4 m12 border-right links-f">
-				<ul>
-				<h2>LINKS</h2>
-				<br>
-				<li><a href="#">About us</a></li>
-				<li><a href="#">Featured Properties for Sale</a></li>
-				<li><a href="#">Features Properties for Rent</a></li>
-				<li><a href="#">Projects</a></li>
-				<li><a href="#">List your Property</a></li>
-				<li><a href="#">Careers</a></li>
-				<li><a href="#">Contact us</a></li>
-				</ul>
-				
-			</div>
-			<div class="col s12 l4 m12">
-				<h2>Quick Enquiry</h2>
-				<form>
-					<div>
-						<input type="text" placeholder="Name" name="">
-					</div>
-					<div>
-						<input type="text" placeholder="Phone Number" name="">
-					</div>
-					<div>
-						<input type="text" placeholder="E-mail" name="">
-					</div>
-					<div>
-						<textarea placeholder="Mesage"></textarea>
-					</div>
-					<br>
-					<div>
-						<button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	<div class="sub-footer">
-		<div class="container">
-			<div class="row">
-			<div class="col s12 l6 m6"><p>2017 All Right Reserved</p></div>
-			<div class="col s12 l6 m6">
-				<ul>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">HELP</a></li>
-					<li><a href="#">PRIVACY</a></li>
-					<li><a href="#">TERM</a></li>    
-				</ul>
-			</div>
-			</div>
-		</div>
-	</div>
-</footer>
-
-<!-- Scripts -->
-<!--Import jQuery before materialize.js-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-
-
-<!-- Push Nav Mobile -->
-<script type="text/javascript">
-  $(".button-collapse").sideNav();
-</script>
-<script type="text/javascript">
-	 $('.tap-target').tapTarget('open');
-  $('.tap-target').tapTarget('close');
-</script>
-
-
- <script>
-$(document).ready(function() {
-  // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-  $('.modal-trigger').leanModal();
-});
-</script>     
-
-
-
-<!-- Dropdown button -->
-<script type="text/javascript">
-	$(".dropdown-button").dropdown();
-</script>
-
- <script>
-	 $(document).ready(function() {
-	 $('select').material_select();
-	});
-</script>
-
-<script type="text/javascript">
-$(function(){
-var slider = document.getElementById('test5');
-noUiSlider.create(slider, {
- start: [20, 80],
- connect: true,
- step: 1,
- range: {
-   'min': 0,
-   'max': 100
- },
- format: wNumb({
-   decimals: 0
- })
-});
-})
-</script>
-
-      
-
-</body>
-</html>

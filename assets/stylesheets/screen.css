@@ -258,7 +258,7 @@ body {
 
 /* line 165, ../sass/layout/_base.scss */
 .inner-tab .tabs .tab a {
-  font-size: 8px;
+  font-size: 10px;
   color: #19223D;
   line-height: 40px;
   border: 1px solid rgba(225, 225, 225, 0.73);
@@ -446,7 +446,12 @@ body {
 }
 
 /* line 308, ../sass/layout/_base.scss */
-.collapsible {
+/*.collapsible {
+  border: none !important;
+  box-shadow: none !important;
+}*/
+
+.collapsible-no-boarder {
   border: none !important;
   box-shadow: none !important;
 }

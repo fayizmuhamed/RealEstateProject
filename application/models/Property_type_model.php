@@ -17,7 +17,7 @@ class Property_type_model extends CI_Model {
         
     }
     
-    function get_property_type_by_id($id) {
+    function find_by_id($id) {
         
         $this->db->select('pt_id');
         $this->db->select('pt_name');
@@ -36,7 +36,7 @@ class Property_type_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_types() {
+    function find_all() {
 
         $this->db->select('pt_id');
         $this->db->select('pt_name');
@@ -60,7 +60,7 @@ class Property_type_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_types_with_search($limit_start, $limit_end, $property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('pt_id');
         $this->db->select('pt_name');
@@ -90,7 +90,7 @@ class Property_type_model extends CI_Model {
             $this->db->order_by('pt_id', $order_type);
         }
 
-        $this->db->limit($limit_start, $limit_end);
+        $this->db->limit($limit, $offset);
 
         $query = $this->db->get();
 
@@ -102,7 +102,7 @@ class Property_type_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_property_type($data) {
+    function insert($data) {
         $insert = $this->db->insert('property_types', $data);
         return $insert;
     }
@@ -112,7 +112,7 @@ class Property_type_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_property_type($id, $data) {
+    function update($id, $data) {
         $this->db->where('pt_id', $id);
         $this->db->update('property_types', $data);
         $report = array();
@@ -129,7 +129,7 @@ class Property_type_model extends CI_Model {
      * @param int $id - product id
      * @return boolean
      */
-    function delete_property_type($id) {
+    function delete($id) {
         $this->db->where('pt_id', $id);
         $this->db->delete('property_types');
     }

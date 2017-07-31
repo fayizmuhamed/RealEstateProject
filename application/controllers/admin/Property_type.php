@@ -46,12 +46,12 @@ class Property_type extends AdminController {
         $page = $this->uri->segment(3);
 
         //math to get the initial record to be select in the database
-        $limit_end = ($page * $config['per_page']) - $config['per_page'];
-        if ($limit_end < 0) {
-            $limit_end = 0;
+        $offset = ($page * $config['per_page']) - $config['per_page'];
+        if ($offset < 0) {
+            $offset = 0;
         }
 
-        $property_types = $this->Property_type_model->get_property_types_with_search($config['per_page'], $limit_end,$property_model_id, $search_string, $order, $order_type );
+        $property_types = $this->Property_type_model->find_with_search($config['per_page'], $offset,$property_model_id, $search_string, $order, $order_type );
 
 
         $config['total_rows'] = $property_types == null ? 0 : count($property_types);
@@ -83,7 +83,7 @@ class Property_type extends AdminController {
                 );
                 
                 //if the insert has returned true then we show the flash message
-                if ($this->Property_type_model->insert_property_type($data_to_store)) {
+                if ($this->Property_type_model->insert($data_to_store)) {
                     $data['flash_message'] = TRUE;
                 } else {
                     $data['flash_message'] = FALSE;
@@ -91,7 +91,7 @@ class Property_type extends AdminController {
             }
         }
 
-        $data['property_models'] = $this->Property_model_model->get_property_models();
+        $data['property_models'] = $this->Property_model_model->find_all();
 
 
         //load the view
@@ -124,7 +124,7 @@ class Property_type extends AdminController {
                 );
                 
                 //if the insert has returned true then we show the flash message
-                if ($this->Property_type_model->update_property_type($id, $data_to_store) == TRUE) {
+                if ($this->Property_type_model->update($id, $data_to_store) == TRUE) {
                     
                     $this->session->set_flashdata('flash_message', 'updated');
                     
@@ -140,9 +140,9 @@ class Property_type extends AdminController {
         //if we are updating, and the data did not pass trough the validation
         //the code below wel reload the current data
         //product data 
-        $data['property_type'] = $this->Property_type_model->get_property_type_by_id($id);
+        $data['property_type'] = $this->Property_type_model->find_by_id($id);
         
-        $data['property_models'] = $this->Property_model_model->get_property_models();
+        $data['property_models'] = $this->Property_model_model->find_all();
 
         //load the view
         //load the view
@@ -159,7 +159,7 @@ class Property_type extends AdminController {
         
         //product id 
         $id = $this->uri->segment(4);
-        $this->Property_type_model->delete_property_type($id);
+        $this->Property_type_model->delete($id);
         redirect('admin/propertytypes');
     }
 

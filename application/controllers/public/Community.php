@@ -68,12 +68,12 @@ class Community extends PublicController{
         } else {
             
             //load the view
-            $community = $this->Community_model->get_community_by_id($id);
+            $community = $this->Community_model->find_by_id($id);
 
             $data['community'] = $community;
-            $data['community_thumbnails'] = $this->Community_thumbnail_model->get_community_thumbnails($id);
+            $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
             //load the view
-            $data['content'] = 'public/community-detail';
+            $data['content'] = 'public/community_detail';
             $this->load->view('includes/public/template', $data);
         }
     }
@@ -84,12 +84,12 @@ class Community extends PublicController{
 
 
         //math to get the initial record to be select in the database
-        $limit_end = ($page * INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE) - INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE;
-        if ($limit_end < 0) {
-            $limit_end = 0;
+        $offset = ($page * INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE) - INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE;
+        if ($offset < 0) {
+            $offset = 0;
         }
 
-        $communities = $this->Community_model->get_communities_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, $limit_end, NULL, 'community_updated_at', 'DESC');
+        $communities = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, $offset, NULL, NULL,NULL);
 
         foreach ($communities as $community) {
 

@@ -1,26 +1,24 @@
 </div>
 
-<!--Import jQuery before materialize.js-->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquary.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>
+
 <script src="<?php echo base_url(); ?>tinymce/tinymce.min.js"></script>
 <!--        <script src="<?php echo base_url(); ?>assets/js/index.js"></script>-->
 <script src="<?php echo base_url(); ?>assets/js/admin.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/croppie.css" />
 <script>
-    
-    document.BaseUrl='<?php echo base_url();?>';
-    
+
+    document.BaseUrl = '<?php echo base_url(); ?>';
+
 </script>
 <script>
-    tinymce.init({ 
-        selector:'.editor',
-        forced_root_block : ""
+    tinymce.init({
+        selector: '.editor',
+        forced_root_block: ""
     });</script>
 <script type="text/javascript">
     $(".button-collapse").sideNav();
     $(".dropdown-button").dropdown();
-    
+
 </script>
 <!-- Select Box -->
 <script type="text/javascript">
@@ -42,15 +40,20 @@
         }
 
     });
-     $('.datepicker').on('change',function(){
-         $(this).next().find('.picker__close').click();
-     });
+    $('.datepicker').on('change', function () {
+        $(this).next().find('.picker__close').click();
+    });
 //     onSet: function () {
 //            if ('select' in arg) {
 //                this.close();
 //            }
 //        },
-</script>     
+</script>  
+<script>
+    $(document).ready(function () {
+        $('.tooltipped').tooltip({delay: 50});
+    });
+</script>
 </body>
 </html>
 

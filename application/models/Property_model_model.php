@@ -20,7 +20,7 @@ class Property_model_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_models() {
+    function find_all() {
 
         $this->db->select('pm_id');
         $this->db->select('pm_name');
@@ -40,7 +40,7 @@ class Property_model_model extends CI_Model {
     /**
      * get property type list by parent id
      */
-    function get_property_models_with_search($limit_start, $limit_end, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('pm_id');
         $this->db->select('pm_name');
@@ -63,7 +63,7 @@ class Property_model_model extends CI_Model {
             $this->db->order_by('pm_id', $order_type);
         }
 
-        $this->db->limit($limit_start, $limit_end);
+        $this->db->limit($limit, $offset);
 
         $query = $this->db->get();
 
@@ -75,7 +75,7 @@ class Property_model_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_property_model($data) {
+    function insert($data) {
         $insert = $this->db->insert('property_models', $data);
         return $insert;
     }
@@ -85,7 +85,7 @@ class Property_model_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_property_model($id, $data) {
+    function update($id, $data) {
         $this->db->where('pm_id', $id);
         $this->db->update('property_models', $data);
         $report = array();
@@ -102,7 +102,7 @@ class Property_model_model extends CI_Model {
      * @param int $id - product id
      * @return boolean
      */
-    function delete_property_model($id) {
+    function delete($id) {
         $this->db->where('pm_id', $id);
         $this->db->delete('property_model');
     }

@@ -21,7 +21,7 @@ class Community_model extends CI_Model {
     /**
      * get community list 
      */
-    function get_communities() {
+    function find_all() {
 
         $this->db->select('*');
         $this->db->from('communities');
@@ -36,7 +36,7 @@ class Community_model extends CI_Model {
     /**
      * get community list 
      */
-    function get_latest_communities($count) {
+    function find_with_limit($count) {
 
         $this->db->select('*');
         $this->db->from('communities');
@@ -51,7 +51,7 @@ class Community_model extends CI_Model {
     /**
      * get community list 
      */
-    function get_community_by_id($id) {
+    function find_by_id($id) {
 
         $this->db->select('*');
         $this->db->from('communities');
@@ -67,7 +67,7 @@ class Community_model extends CI_Model {
     /**
      * get community list with search by name
      */
-    function get_communities_with_search($limit_start, $limit_end, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('*');
         $this->db->from('communities');
@@ -85,7 +85,7 @@ class Community_model extends CI_Model {
             $this->db->order_by('community_id', $order_type);
         }
 
-        $this->db->limit($limit_start, $limit_end);
+        $this->db->limit($limit, $offset);
 
         $query = $this->db->get();
 
@@ -98,7 +98,7 @@ class Community_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_community($data, $thumbnails) {
+    function insert($data, $thumbnails) {
 
         $this->db->trans_start(); # Starting Transaction
 
@@ -108,7 +108,7 @@ class Community_model extends CI_Model {
 
         $community_id = $this->db->insert_id();
 
-        $this->Community_thumbnail_model->insert_community_thumbnail($community_id, $thumbnails);
+        $this->Community_thumbnail_model->insert($community_id, $thumbnails);
 
         return $this->db->trans_complete();
 
@@ -120,7 +120,7 @@ class Community_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_community($id, $data, $thumbnails) {
+    function update($id, $data, $thumbnails) {
 
         $this->db->trans_start(); # Starting Transaction
 
@@ -129,7 +129,7 @@ class Community_model extends CI_Model {
         $this->db->where('community_id', $id);
         $this->db->update('communities', $data);
       
-        $this->Community_thumbnail_model->insert_community_thumbnail($id, $thumbnails);
+        $this->Community_thumbnail_model->insert($id, $thumbnails);
 
         return $this->db->trans_complete();
 
@@ -143,7 +143,7 @@ class Community_model extends CI_Model {
      * @param int $id - community id
      * @return boolean
      */
-    function delete_community($id) {
+    function delete($id) {
       
 
         $this->db->trans_start(); # Starting Transaction
@@ -154,7 +154,7 @@ class Community_model extends CI_Model {
         
         $this->db->delete('communities');
         
-        $this->Community_thumbnail_model->delete_community_thumbnail_by_community_id($id);
+        $this->Community_thumbnail_model->delete_by_community_id($id);
 
         return $this->db->trans_complete();
 

@@ -22,7 +22,7 @@ class Configuration_model extends CI_Model {
     /**
      * get configuration list
      */
-    function get_configurations() {
+    function find_all() {
 
         $this->db->select('config_key');
         $this->db->select('config_value');
@@ -35,7 +35,7 @@ class Configuration_model extends CI_Model {
     /**
      * get configuration by key
      */
-    function get_configurations_by_key($key) {
+    function find_by_key($key) {
 
         $this->db->select('config_key');
         $this->db->select('config_value');
@@ -50,7 +50,7 @@ class Configuration_model extends CI_Model {
     /**
      * get configuration map with key and value
      */
-    function get_configurations_as_key_map() {
+    function find_as_key_map() {
 
         $this->db->select('config_key');
         $this->db->select('config_value');
@@ -72,7 +72,7 @@ class Configuration_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_multiple_configaurations($data) {
+    function insert_multiple($data) {
 
         $this->db->trans_start(); # Starting Transaction
 
@@ -80,9 +80,9 @@ class Configuration_model extends CI_Model {
 
         foreach ($data as $data_each) {
 
-            $row = $this->get_configurations_by_key($data_each['config_key']);
+            $row = $this->find_by_key($data_each['config_key']);
             
-            if($row==NULL?$this->insert_configuration( $data_each):$this->update_configuration($data_each['config_key'], $data_each)){
+            if($row==NULL?$this->insert( $data_each):$this->update($data_each['config_key'], $data_each)){
                 
                 continue;
             }else{
@@ -105,7 +105,7 @@ class Configuration_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_configuration($data) {
+    function insert($data) {
         $insert = $this->db->insert('configurations', $data);
         return $insert;
     }
@@ -115,7 +115,7 @@ class Configuration_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_configuration($key, $data) {
+    function update($key, $data) {
         $this->db->where('config_key', $key);
         $this->db->update('configurations', $data);
         $report = array();

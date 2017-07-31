@@ -39,12 +39,12 @@
         <!-- Property Type Property Location -->
         <div class="row">
             <div class="input-field col s6">
-                <select id="parent_property_type" name="property_type_model" multiple="">
+                <select id="property_type_model" name="property_type_model">
                     <option value="" disabled selected>Property Model</option>
                     <?php                            
-                     foreach ($property_models as $row) {
+                     foreach ($property_models as $property_model) {
                          
-                          echo  '<option value="'.$row['pm_id'].'">'.$row['pm_name'].'</option>';
+                          echo  '<option value="'.$property_model['pm_id'].'"'. set_select('property_type_model',$property_model['pm_id']) . '>' .$property_model['pm_name'].'</option>';
                      }?>
                 </select>
             </div>

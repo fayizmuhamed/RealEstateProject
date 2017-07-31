@@ -24,11 +24,11 @@
             </div>
             <div class="input-field col s6">
                 <select id="community_property_type" name="community_property_type" >
-                    <option value="" disabled value="<?php echo set_select('community_property_type', "", TRUE); ?>">Property Type</option>
+                    <option value="" disabled selected>Property Type</option>
                     <?php
-                    foreach ($property_types as $row) {
+                    foreach ($property_types as $property_type) {
 
-                        echo '<option value="' . $row['pt_id'] . '"' . set_select('community_property_type', $row['pt_id']) . '>' . $row['pt_name'] . '</option>';
+                        echo '<option value="' . $property_type['pt_id'] . '"' . set_select('community_property_type',$property_type['pt_id']) . '>' . $property_type['pt_name'] . '</option>';
                     }
                     ?>
                 </select>

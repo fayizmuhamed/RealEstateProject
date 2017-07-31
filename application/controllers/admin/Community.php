@@ -46,12 +46,12 @@ class Community extends AdminController {
         $page = $this->uri->segment(3);
 
         //math to get the initial record to be select in the database
-        $limit_end = ($page * $config['per_page']) - $config['per_page'];
-        if ($limit_end < 0) {
-            $limit_end = 0;
+        $offset = ($page * $config['per_page']) - $config['per_page'];
+        if ($offset < 0) {
+            $offset = 0;
         }
 
-        $communities = $this->Community_model->get_communities_with_search($config['per_page'], $limit_end, $search_string, $order, $order_type);
+        $communities = $this->Community_model->find_with_search($config['per_page'], $offset, $search_string, $order, $order_type);
 
 
         $config['total_rows'] = $communities == null ? 0 : count($communities);
@@ -75,7 +75,7 @@ class Community extends AdminController {
 
         //load the view
 
-        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['property_types'] = $this->Property_type_model->find_all();
         //load the view
         $data['content'] = 'admin/communities/add';
         $this->load->view('includes/admin_template', $data);
@@ -86,9 +86,10 @@ class Community extends AdminController {
      */
     public function edit($id) {
 
-        $data['community_thumbnails'] = $this->Community_thumbnail_model->get_community_thumbnails($id);
-        $data['property_types'] = $this->Property_type_model->get_property_types();
-        $data['community'] = $this->Community_model->get_community_by_id($id);
+        $communities = $this->Community_model->find_by_id($id);
+        $data['community'] = $communities == null ? [] : $communities[0];
+        $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
+        $data['property_types'] = $this->Property_type_model->find_all();
         //load the view
         $data['content'] = 'admin/communities/edit';
         $this->load->view('includes/admin_template', $data);
@@ -100,11 +101,13 @@ class Community extends AdminController {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             //form validation
             $this->form_validation->set_rules('community_name', 'Community name', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('community_property_type', 'Community property type', 'trim|required|xss_clean');
 
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
                 $data_to_store = array(
                     'community_name' => $this->input->post('community_name'),
+                    'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => $this->input->post('community_location_url'),
                     'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
@@ -115,7 +118,7 @@ class Community extends AdminController {
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
 
                 //if the insert has returned true then we show the flash message
-                if ($this->Community_model->insert_community($data_to_store, $thumbnail)) {
+                if ($this->Community_model->insert($data_to_store, $thumbnail)) {
                     $status = 'success';
                     $message = 'New community created successfully';
                 } else {
@@ -146,6 +149,7 @@ class Community extends AdminController {
 
             //form validation
             $this->form_validation->set_rules('community_name', 'Community name', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('community_property_type', 'Community property type', 'trim|required|xss_clean');
 
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
@@ -155,6 +159,7 @@ class Community extends AdminController {
 
                 $data_to_store = array(
                     'community_name' => $this->input->post('community_name'),
+                    'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => $this->input->post('community_location_url'),
                     'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
@@ -165,7 +170,7 @@ class Community extends AdminController {
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
 
                 //if the insert has returned true then we show the flash message
-                if ($this->Community_model->update_community($id, $data_to_store, $thumbnail) === TRUE) {
+                if ($this->Community_model->update($id, $data_to_store, $thumbnail) === TRUE) {
                     $status = 'success';
                     $message = 'Community updated successfully';
                 } else {
@@ -195,7 +200,7 @@ class Community extends AdminController {
         $id = $this->uri->segment(4);
 
         //if the insert has returned true then we show the flash message
-        if ($this->Community_model->delete_community($id)) {
+        if ($this->Community_model->delete($id)) {
             $status = 'success';
             $message = 'Community deleted successfully';
             redirect('admin/communities');
@@ -212,7 +217,7 @@ class Community extends AdminController {
     public function deleteCommunityThumbnail($community_thumbnail_id) {
 
 
-        if ($this->Community_thumbnail_model->delete_community_thumbnail($community_thumbnail_id)) {
+        if ($this->Community_thumbnail_model->delete($community_thumbnail_id)) {
             $status = 'failed';
             $message = 'Community thumbnail deletion failed';
         } else {

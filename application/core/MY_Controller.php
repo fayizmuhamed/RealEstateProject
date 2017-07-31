@@ -10,7 +10,7 @@ class CommonController extends CI_Controller {
 
     public function send_response($status, $message) {
 
-        $arr = array('response' => $status, 'comment' => $message);
+        $arr = array('status' => $status, 'data' => $message);
         return json_encode($arr);
     }
 
@@ -43,8 +43,15 @@ class AdminController extends CommonController {
 
 class PublicController extends CommonController {
 
+    public $configurations=[];
+    
     public function __construct() {
         parent::__construct();
+        $this->load->model('Configuration_model');
+        
+        $this->configurations = $this->Configuration_model->find_as_key_map();
+        
+        $this->load->vars($this->configurations);
     }
 
 }

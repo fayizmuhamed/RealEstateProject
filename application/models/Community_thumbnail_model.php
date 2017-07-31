@@ -20,7 +20,7 @@ class Community_thumbnail_model extends CI_Model {
     /**
      * get community thumbnail list 
      */
-    function get_community_thumbnails($community_id) {
+    function find_all($community_id) {
 
         $this->db->select('*');
         $this->db->from('community_thumbnails');
@@ -36,7 +36,7 @@ class Community_thumbnail_model extends CI_Model {
     /**
      * get community thumbnail list 
      */
-    function get_community_thumbnail_by_id($community_thumbnail_id) {
+    function find_by_id($community_thumbnail_id) {
 
         $this->db->select('*');
         $this->db->from('community_thumbnails');
@@ -54,7 +54,7 @@ class Community_thumbnail_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_community_thumbnail($community_id, $filenames) {
+    function insert($community_id, $filenames) {
 
         if ($filenames != '') {
             $filename = explode(',', $filenames);
@@ -80,8 +80,8 @@ class Community_thumbnail_model extends CI_Model {
      * @param int $community_thumbnail_id - community thumbnail id
      * @return boolean
      */
-    function delete_community_thumbnail($community_thumbnail_id) {
-        $row = $this->get_community_thumbnail_by_id($community_thumbnail_id);
+    function delete($community_thumbnail_id) {
+        $row = $this->find_by_id($community_thumbnail_id);
         if (!empty($row)) {
             
             $this->db->where('community_thumbnail_id', $community_thumbnail_id);
@@ -95,7 +95,7 @@ class Community_thumbnail_model extends CI_Model {
      * @param int $community_id - community  id
      * @return boolean
      */
-    function delete_community_thumbnail_by_community_id($community_id) {
+    function delete_by_community_id($community_id) {
         $this->db->where('community_id', $community_id);
         $this->db->delete('community_thumbnails');
     }

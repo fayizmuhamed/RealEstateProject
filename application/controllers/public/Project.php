@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Project extends CI_Controller {
+class Project extends PublicController {
 
     //put your code here
 
@@ -46,13 +46,13 @@ class Project extends CI_Controller {
             $page = $this->uri->segment(3);
 
             //math to get the initial record to be select in the database
-            $limit_end = ($page * $config['per_page']) - $config['per_page'];
-            if ($limit_end < 0) {
-                $limit_end = 0;
+            $offset = ($page * $config['per_page']) - $config['per_page'];
+            if ($offset < 0) {
+                $offset = 0;
             }
 
             //load the view
-            $projects = $this->Project_model->get_projects_with_search($search_string, $order, $order_type, $config['per_page'], $limit_end);
+            $projects = $this->Project_model->find_with_search($config['per_page'], $offset,$search_string, $order, $order_type);
 
 
             $config['total_rows'] = $projects == null ? 0 : count($projects);
@@ -66,12 +66,12 @@ class Project extends CI_Controller {
             $this->load->view('includes/public/template', $data);
         } else {
 //load the view
-            $project = $this->Project_model->get_projects_by_id($id);
+            $project = $this->Project_model->find_by_id($id);
 
             $data['project'] = $project;
-            $data['project_thumbnails'] = $this->Project_thumbnail_model->get_project_thumbnails($id);
+            $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
             //load the view
-            $data['content'] = 'public/project-detail';
+            $data['content'] = 'public/project_detail';
             $this->load->view('includes/public/template', $data);
         }
     }
@@ -84,7 +84,7 @@ class Project extends CI_Controller {
     function view() {
 
         //load the view
-        $data['content'] = 'public/project-detail';
+        $data['content'] = 'public/project_detail';
         $this->load->view('includes/public/template', $data);
     }
 

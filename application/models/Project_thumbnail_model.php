@@ -20,7 +20,7 @@ class Project_thumbnail_model extends CI_Model {
     /**
      * get project thumbnail list 
      */
-    function get_project_thumbnails($project_id) {
+    function find_all($project_id) {
 
         $this->db->select('*');
         $this->db->from('project_thumbnails');
@@ -36,7 +36,7 @@ class Project_thumbnail_model extends CI_Model {
     /**
      * get project thumbnail list 
      */
-    function get_project_thumbnail_by_id($project_thumbnail_id) {
+    function find_by_id($project_thumbnail_id) {
 
         $this->db->select('*');
         $this->db->from('project_thumbnails');
@@ -54,7 +54,7 @@ class Project_thumbnail_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_project_thumbnail($project_id, $filenames) {
+    function insert($project_id, $filenames) {
 
         if ($filenames != '') {
             $filename = explode(',', $filenames);
@@ -80,8 +80,8 @@ class Project_thumbnail_model extends CI_Model {
      * @param int $project_thumbnail_id - project thumbnail id
      * @return boolean
      */
-    function delete_project_thumbnail($project_thumbnail_id) {
-        $row = $this->get_project_thumbnail_by_id($project_thumbnail_id);
+    function delete($project_thumbnail_id) {
+        $row = $this->find_by_id($project_thumbnail_id);
         if (!empty($row)) {
             
             $this->db->where('project_thumbnail_id', $project_thumbnail_id);
@@ -95,7 +95,7 @@ class Project_thumbnail_model extends CI_Model {
      * @param int $project_thumbnail_id - project thumbnail id
      * @return boolean
      */
-    function delete_project_thumbnail_by_project_id($project_id) {
+    function delete_by_project_id($project_id) {
         $this->db->where('project_id', $project_id);
         $this->db->delete('project_thumbnails');
     }

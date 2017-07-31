@@ -45,12 +45,12 @@ class Project extends AdminController {
         $page = $this->uri->segment(3);
 
         //math to get the initial record to be select in the database
-        $limit_end = ($page * $config['per_page']) - $config['per_page'];
-        if ($limit_end < 0) {
-            $limit_end = 0;
+        $offset = ($page * $config['per_page']) - $config['per_page'];
+        if ($offset < 0) {
+            $offset = 0;
         }
 
-        $projects = $this->Project_model->get_projects_with_search($config['per_page'], $limit_end, $search_string, $order, $order_type);
+        $projects = $this->Project_model->find_with_search($config['per_page'], $offset, $search_string, $order, $order_type);
 
 
         $config['total_rows'] = $projects == null ? 0 : count($projects);
@@ -73,7 +73,7 @@ class Project extends AdminController {
 
         //load the view
 
-        $data['property_types'] = $this->Property_type_model->get_property_types();
+        $data['property_types'] = $this->Property_type_model->find_all();
         $data['content'] = 'admin/projects/add';
         $this->load->view('includes/admin_template', $data);
     }
@@ -83,12 +83,12 @@ class Project extends AdminController {
      */
     public function edit($id) {
 
-        //project id 
-        //$id = $this->uri->segment(4);
+        
         //project data 
-        $data['project_thumbnails'] = $this->Project_thumbnail_model->get_project_thumbnails($id);
-        $data['property_types'] = $this->Property_type_model->get_property_types();
-        $data['project'] = $this->Project_model->get_projects_by_id($id);
+        $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
+        $data['property_types'] = $this->Property_type_model->find_all();
+        $projects = $this->Project_model->find_by_id($id);
+        $data['project'] = $projects == null ? [] : $projects[0];
 
 
         //load the view
@@ -134,7 +134,7 @@ class Project extends AdminController {
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
 
                 //if the insert has returned true then we show the flash message
-                if ($this->Project_model->insert_project($data_to_store, $thumbnail)) {
+                if ($this->Project_model->insert($data_to_store, $thumbnail)) {
                     $status = 'success';
                     $message = 'New project created successfully';
                 } else {
@@ -204,7 +204,7 @@ class Project extends AdminController {
 
 
                 //if the insert has returned true then we show the flash message
-                if ($this->Project_model->update_project($id, $data_to_store, $thumbnail)) {
+                if ($this->Project_model->update($id, $data_to_store, $thumbnail)) {
                     $status = 'success';
                     $message = 'Project updated successfully';
                 } else {
@@ -237,7 +237,7 @@ class Project extends AdminController {
         $id = $this->uri->segment(4);
 
         //if the insert has returned true then we show the flash message
-        if ($this->Project_model->delete_project($id)) {
+        if ($this->Project_model->delete($id)) {
             $status = 'success';
             $message = 'Project deleted successfully';
             redirect('admin/projects');
@@ -257,16 +257,16 @@ class Project extends AdminController {
 
         $this->db->trans_strict(FALSE);
 
-        $this->Project_thumbnail_model->delete_project_thumbnail($project_thumbnail_id);
+        $this->Project_thumbnail_model->delete($project_thumbnail_id);
 
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
             $status = 'failed';
-            $message='Project thumbnail deletion failed';
+            $message = 'Project thumbnail deletion failed';
         } else {
             $status = 'success';
-            $message='Project thumbnail deletion success';
+            $message = 'Project thumbnail deletion success';
         }
 
         if ($this->input->is_ajax_request()) {

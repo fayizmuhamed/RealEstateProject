@@ -21,7 +21,7 @@ class Project_model extends CI_Model {
     /**
      * get projects list 
      */
-    function get_projects() {
+    function find_all() {
 
         $this->db->select('*,pt_name');
         $this->db->from('projects');
@@ -37,7 +37,7 @@ class Project_model extends CI_Model {
     /**
      * get projects list 
      */
-    function get_latest_projects($count) {
+    function find_latest_with_limit($count) {
 
         $this->db->select('*,pt_name');
         $this->db->from('projects');
@@ -53,7 +53,7 @@ class Project_model extends CI_Model {
     /**
      * get projects list 
      */
-    function get_projects_by_id($project_id) {
+    function find_by_id($project_id) {
 
         $this->db->select('*,pt_name');
         $this->db->from('projects');
@@ -70,7 +70,7 @@ class Project_model extends CI_Model {
     /**
      * get projects list by search conditions
      */
-    function get_projects_with_search($limit_start, $limit_end, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
 
         $this->db->select('*,pt_name');
         $this->db->from('projects');
@@ -89,7 +89,7 @@ class Project_model extends CI_Model {
             $this->db->order_by('project_id', $order_type);
         }
 
-        $this->db->limit($limit_start, $limit_end);
+        $this->db->limit($limit, $offset);
 
         $query = $this->db->get();
 
@@ -101,7 +101,7 @@ class Project_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean 
      */
-    function insert_project($data, $thumbnails) {
+    function insert($data, $thumbnails) {
 
         $this->db->trans_start(); # Starting Transaction
 
@@ -111,7 +111,7 @@ class Project_model extends CI_Model {
 
         $project_id = $this->db->insert_id();
 
-        $this->Project_thumbnail_model->insert_project_thumbnail($project_id, $thumbnails);
+        $this->Project_thumbnail_model->insert($project_id, $thumbnails);
 
         return $this->db->trans_complete();
     }
@@ -121,7 +121,7 @@ class Project_model extends CI_Model {
      * @param array $data - associative array with data to store
      * @return boolean
      */
-    function update_project($id, $data, $thumbnails) {
+    function update($id, $data, $thumbnails) {
 
         $this->db->trans_start(); # Starting Transaction
 
@@ -130,7 +130,7 @@ class Project_model extends CI_Model {
         $this->db->where('project_id', $id);
         $this->db->update('projects', $data);
 
-        $this->Project_thumbnail_model->insert_project_thumbnail($id, $thumbnails);
+        $this->Project_thumbnail_model->insert($id, $thumbnails);
 
         return $this->db->trans_complete();
     }
@@ -140,13 +140,13 @@ class Project_model extends CI_Model {
      * @param int $id - product id
      * @return boolean
      */
-    function delete_project($id) {
+    function delete($id) {
         
         $this->db->trans_start(); # Starting Transaction
 
         $this->db->trans_strict(FALSE);
         
-        $this->Project_thumbnail_model->delete_project_thumbnail_by_project_id($id);
+        $this->Project_thumbnail_model->delete_by_project_id($id);
 
         $this->db->where('project_id', $id);
         

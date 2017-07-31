@@ -83,7 +83,7 @@ $(".image-upload").change(function (e) {
         var img = new Image();
         img.onload = function (e) {
 
-            if (typeof min_width != 'undefined' && this.width < min_width) {
+            if (typeof min_width !== 'undefined' && this.width < min_width) {
 
                 txtImageUploadError.html("Minimum image width " + min_width + "px required");
                 fupImageUpload.val('');
@@ -92,7 +92,7 @@ $(".image-upload").change(function (e) {
                 return false;
             }
 
-            if (typeof min_height != 'undefined' && this.height < min_height) {
+            if (typeof min_height !== 'undefined' && this.height < min_height) {
 
                 txtImageUploadError.html("Minimum image height " + min_width + "px required");
                 fupImageUpload.val('');
@@ -101,7 +101,7 @@ $(".image-upload").change(function (e) {
                 return false;
             }
 
-            if (typeof max_width != 'undefined' && this.width > max_width) {
+            if (typeof max_width !== 'undefined' && this.width > max_width) {
 
                 txtImageUploadError.html("Maximum image width " + min_width + "px only");
                 fupImageUpload.val('');
@@ -110,7 +110,7 @@ $(".image-upload").change(function (e) {
                 return false;
             }
 
-            if (typeof max_height != 'undefined' && this.height > max_height) {
+            if (typeof max_height !== 'undefined' && this.height > max_height) {
 
                 txtImageUploadError.html("Maximum image height " + min_width + "px only");
                 fupImageUpload.val('');
@@ -217,14 +217,14 @@ var deleteProjectThumbnail = function (e) {
         url: document.BaseUrl + "admin/projects/delete_thumbnail/" + projectThumbnailId,
         dataType: "json",
         cache: false,
-        success: function (data) {
+        success: function (response) {
 
-            console.log(data.response);
-            if (data.response === 'success') {
+            console.log(response.status);
+            if (response.status === 'success') {
                 var par = btnProjectThumbnailDelete.closest('li');
                 par.remove();
             } else {
-                alert(data.comment);
+                alert(response.data);
             }
         }
 
@@ -244,14 +244,14 @@ var deleteCommunityThumbnail = function (e) {
         dataType: "json",
         cache: false,
         success:
-                function (data) {
+                function (response) {
 
-                    console.log(data.response);
-                    if (data.response === 'success') {
+                    console.log(response.status);
+                    if (response.status === 'success') {
                         var par = btnCommunityThumbnailDelete.closest('li');
                         par.remove();
                     } else {
-                        alert(data.comment);
+                        alert(response.data);
                     }
 
                 }
@@ -274,14 +274,14 @@ var saveProject = function (e) {
         processData: false,
         contentType: false,
         dataType: "json",
-        success: function (data) {
-            console.log(data.response);
-            if (data.response === 'success') {
-                $('#frm_add_project #response').addClass('alert alert-success').html(data.comment);
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_add_project #response').addClass('alert alert-success').html(response.data);
                 $('#frm_add_project')[0].reset();
                 $('#frm_add_project #table_payment_plan').empty();
             } else {
-                $('#frm_add_project #response').addClass('alert alert-error').html(data.comment);
+                $('#frm_add_project #response').addClass('alert alert-error').html(response.data);
             }
         }
 
@@ -301,15 +301,15 @@ var updateProject = function (e) {
         processData: false,
         contentType: false,
         dataType: "json",
-        success: function (data) {
-            console.log(data.response);
-            if (data.response === 'success') {
-                $('#frm_edit_project #response').addClass('alert alert-success').html(data.comment);
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_edit_project #response').addClass('alert alert-success').html(response.data);
                 $('#frm_edit_project')[0].reset();
                 $('#frm_edit_project #table_payment_plan').empty();
                 window.location.href = document.BaseUrl + "admin/projects/";
             } else {
-                $('#frm_edit_project #response').addClass('alert alert-error').html(data.comment);
+                $('#frm_edit_project #response').addClass('alert alert-error').html(response.data);
             }
         }
 
@@ -327,13 +327,13 @@ var saveCommunity = function (e) {
         processData: false,
         contentType: false,
         dataType: "json",
-        success: function (data) {
-            console.log(data.response);
-            if (data.response === 'success') {
-                $('#frm_add_community #response').addClass('alert alert-success').html(data.comment);
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_add_community #response').addClass('alert alert-success').html(response.data);
                 $('#frm_add_community')[0].reset();
             } else {
-                $('#frm_add_community #response').addClass('alert alert-error').html(data.comment);
+                $('#frm_add_community #response').addClass('alert alert-error').html(response.data);
             }
         }
 
@@ -351,14 +351,14 @@ var updateCommunity = function (e) {
         processData: false,
         contentType: false,
         dataType: "json",
-        success: function (data) {
-            console.log(data.response);
-            if (data.response === 'success') {
-                $('#frm_edit_community #response').addClass('alert alert-success').html(data.comment);
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_edit_community #response').addClass('alert alert-success').html(response.data);
                 $('#frm_edit_community')[0].reset();
                 window.location.href = document.BaseUrl + "admin/communities/";
             } else {
-                $('#frm_edit_community #response').addClass('alert alert-error').html(data.comment);
+                $('#frm_edit_community #response').addClass('alert alert-error').html(response.data);
             }
         }
 

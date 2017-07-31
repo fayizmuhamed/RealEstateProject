@@ -40,7 +40,7 @@
 
 <!-- Quick Contact -->
 <div class="quick-contact">
-    <a class="modal-trigger" data-target="modal2"><img src="<?php echo base_url(); ?>assets/images/contact.svg"></a>
+    <a class="modal-trigger" data-target="modal2" ><img src="<?php echo base_url(); ?>assets/images/contact.svg"></a>
 </div>
 
 <!-- Banner -->
@@ -49,67 +49,7 @@
         <!-- Navigation -->
         <header id="header">
             <div class="container">
-                <div class="row menu-bar">
-                    <div class="col s12">
-                        <div class="logo-header"><a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/images/header-logo.svg"></a></div>
-                        <div class="menu-header">
-                            <ul id="dropdown1" class="dropdown-content">
-                                <li><a href="#who">WHO WE ARE</a></li>
-                                <li><a href="testimonial.html">TESTIMONIAL</a></li>
-                                <li><a href="team.html">TEAMS</a></li>
-                                <li><a href="contact.html">CONTACT</a></li>
-                            </ul>
-                            <ul class="main-menu">
-                                <li><a href="#!" class="dropdown-button" data-activates="dropdown1">ABOUT</a></li>
-                                <li><a href="buy.html">BUY</a></li>
-                                <li><a href="#">RENT</a></li>
-                                <li><a href="<?php echo base_url(); ?>projects">PROJECT</a></li>
-                                <li><a href="property-owner.html">PROPERTY OWNER</a></li>
-                                <li><a href="#">INFO GUIDE</a></li>
-                                <li><a href="#">CAREER</a></li>
-                            </ul>
-                            <!-- Mobile Menu -->
-                            <a href="#" data-activates="slide-out" class="button-collapse right mob-menu">
-                                <span class="zmdi zmdi-menu"></span>
-                            </a>
-                        </div>
-                        <div class="search">
-                            <div class="filter-search">
-                                <ul>
-                                    <li><a href="#" class="active">BUY</a></li>
-                                    <li><a href="#">RENT</a></li>
-                                </ul>
-                            </div>
-                            <div class="search-form">
-                                <form>
-                                    <div class="searchfeild">
-                                        <div class="search-text"><input type="text" name="" placeholder=" Location or Building e.g. Downtown Dubai or Cayan Tower"></div>
-                                        <div class="search-select">
-                                            <select class="browser-default">
-                                                <option value="" disabled selected>Bedrooms</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
-                                            </select>
-                                        </div>
-                                        <div class="search-select">
-                                            <select class="browser-default">
-                                                <option value="" disabled selected>Budget</option>
-                                                <option value="1">Option 1</option>
-                                                <option value="2">Option 2</option>
-                                                <option value="3">Option 3</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                    <div class="searchaction">
-                                        <button class="waves-effect waves-light">Search</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                 <?php  $this->load->view('includes/public/header_menu'); ?>
             </div>
         </header>
         <div class="banner-text">
@@ -450,7 +390,7 @@
             </ul>
         </div>
         <div class="col s12 more-button-block">
-            <button class="bt-normal-red"><a href="#">VIEW ALL PROPERTIES</a></button>
+            <button class="bt-normal-red"><a href="<?php echo base_url(); ?>buy">VIEW ALL PROPERTIES</a></button>
         </div>
 
     </div>
@@ -703,7 +643,7 @@
             </ul>
         </div>
         <div class="col s12 more-button-block">
-            <button class="bt-normal waves-effect waves-light"><a href="#">VIEW ALL PROPERTIES</a></button>
+            <button class="bt-normal waves-effect waves-light"><a href="<?php echo base_url(); ?>rent">VIEW ALL PROPERTIES</a></button>
         </div>
 
     </div>
@@ -756,29 +696,37 @@
 
         <div class="row">
             <div class="col s12">
-                <p class="para"><?php echo array_key_exists("about_us_who_we_are", $configurations) ? $configurations['about_us_who_we_are'] : ""; ?></p>
+                <p class="para">
+                    <?php 
+                echo isset($about_us_who_we_are)?$about_us_who_we_are:'';
+// array_key_exists("about_us_who_we_are", var_dump($configurations)) ? var_dump($configurations)['about_us_who_we_are'] : ""; ?></p>
                 <ul class="tabs">
-                    <li class="tab col s4"><a class="active" href="#test1">VISION</a></li>
-                    <li class="tab col s4"><a href="#test2">MISSION</a></li>
-                    <li class="tab col s4"><a href="#test3">VALUE</a></li>
+                    <li class="tab col s4"><a class="active" href="#vision">VISION</a></li>
+                    <li class="tab col s4"><a href="#mission">MISSION</a></li>
+                    <li class="tab col s4"><a href="#value">VALUE</a></li>
                 </ul>
             </div>
-            <!-- Vission -->
-            <div id="test1" class="col s12">
-                <h1>Vission</h1>
-                <p><?php echo array_key_exists("about_us_vision", $configurations) ? $configurations['about_us_vision'] : ""; ?></p>
+            <div id="vision" class="col s12">
+                <h1>Vision</h1>
+                <p><?php 
+echo isset($about_us_vision)?$about_us_vision:'';
+//echo  array_key_exists("about_us_vision", $this->$configurations) ? $this->$configurations['about_us_vision'] : ""; ?></p>
             </div>
 
             <!-- Mission -->
-            <div id="test2" class="col s12">
+            <div id="mission" class="col s12">
                 <h1>Mission</h1>
-                <p><?php echo array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; ?></p>
+                <p><?php 
+                echo isset($about_us_mission)?$about_us_mission:'';
+//echo $about_us_mission;array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; ?></p>
             </div>
 
             <!-- Value -->
-            <div id="test3" class="col s12">
+            <div id="value" class="col s12">
                 <h1>Value</h1>
-                <p><?php echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; ?></p>
+                <p><?php 
+                echo isset($about_us_value)?$about_us_value:'';
+//echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; ?></p>
             </div>
 
         </div>

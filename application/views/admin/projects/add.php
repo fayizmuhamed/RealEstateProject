@@ -37,11 +37,11 @@
         <div class="row">
             <div class="input-field col s4">
                 <select id="project_property_type" name="project_property_type" >
-                    <option value="" disabled value="<?php echo set_select('project_property_type', "", TRUE); ?>">Property Type</option>
+                    <option value="" disabled <?php echo set_select('project_property_type', "", TRUE); ?>>Property Type</option>
                     <?php
-                    foreach ($property_types as $row) {
+                    foreach ($property_types as $property_type) {
 
-                        echo '<option value="' . $row['pt_id'] . '"' . set_select('project_property_type', $row['pt_id']) . '>' . $row['pt_name'] . '</option>';
+                        echo '<option value="' . $property_type['pt_id'] . '"' . set_select('project_property_type',$property_type['pt_id']) . '>' . $property_type['pt_name'] . '</option>';
                     }
                     ?>
                 </select>
@@ -135,8 +135,8 @@
             </div>
         </div>
         <section class="listing ">
-            <ul  class="collapsible " data-collapsible="accordion" style="border: solid 1px #333 !important;">
-                <li>
+            <ul  class="collapsible" data-collapsible="accordion" >
+                <li >
                     <div class="collapsible-header active waves-effect waves-teal">
                         <a >Payment Plan</a>
                     </div>

@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Index extends CI_Controller {
+class Index extends PublicController {
 
     //put your code here
 
@@ -20,7 +20,6 @@ class Index extends CI_Controller {
 
         $this->load->model('Project_model');
         $this->load->model('Community_model');
-        $this->load->model('Configuration_model');
     }
 
     /**
@@ -31,13 +30,20 @@ class Index extends CI_Controller {
     function index() {
 
         
-        $data['configurations'] = $this->Configuration_model->get_configurations_as_key_map();
+       // $data['configurations'] = $this->Configuration_model->find_as_key_map();
 
-        $data['projects'] = $this->Project_model->get_latest_projects(5);
-        $data['communities'] = $this->Community_model->get_communities_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, 'community_updated_at', 'DESC');
+        $data['projects'] = $this->Project_model->find_latest_with_limit(INDEX_PAGE_PROJECT_COUNT);
+        $data['communities'] = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, NULL, NULL);
         //load the view
         $data['content'] = 'public/index';
         $this->load->view('includes/public/template_home', $data);
     }
 
+    
+    function infoGuide(){
+        //load the view
+        $data['content'] = 'public/info_guide';
+        $this->load->view('includes/public/template', $data);
+    }
+    
 }

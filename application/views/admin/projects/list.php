@@ -17,7 +17,7 @@
         <table class="striped responsive-table">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Sl No</th>
                     <th>Name</th>
                     <th>Reference</th>
                     <th>Location</th>

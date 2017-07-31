@@ -17,16 +17,16 @@
         <!-- Project Name Developer -->
         <div class="row">
             <div class="input-field col s4">
-                <input id="project_reference" type="text" name="project_reference" class="validate" value="<?php echo $project[0]['project_reference']; ?>">
+                <input id="project_reference" type="text" name="project_reference" class="validate" value="<?php echo $project['project_reference']; ?>">
                 <label class="active" for="project_reference">Project Reference</label>
-                <input type="hidden" id="project_id" name="project_id" value="<?php echo $project[0]['project_id']; ?>"/>
+                <input type="hidden" id="project_id" name="project_id" value="<?php echo $project['project_id']; ?>"/>
             </div>
             <div class="input-field col s4">
-                <input id="project_name" type="text" name="project_name" class="validate" value="<?php echo $project[0]['project_name']; ?>">
+                <input id="project_name" type="text" name="project_name" class="validate" value="<?php echo $project['project_name']; ?>">
                 <label class="active" for="project_name">Project Name</label>
             </div>
             <div class="input-field col s4">
-                <input id="project_developer" type="text" name="project_developer"  class="validate" value="<?php echo $project[0]['project_developer']; ?>">
+                <input id="project_developer" type="text" name="project_developer"  class="validate" value="<?php echo $project['project_developer']; ?>">
                 <label class="active" for="project_developer">Developer</label>
             </div>
         </div>
@@ -36,14 +36,14 @@
                 <select id="project_property_type" name="project_property_type" >
                     <option value="" disabled selected>Property Type</option>
                     <?php
-                    foreach ($property_types as $row) {
+                    foreach ($property_types as $property_type) {
 
-                        if ($row['pt_id'] == $project[0]['project_property_type']) {
+                        if ($property_type['pt_id'] == $project['project_property_type']) {
 
-                            echo '<option value="' . $row['pt_id'] . '" selected="selected">' . $row['pt_name'] . '</option>';
+                            echo '<option value="' . $property_type['pt_id'] . '" selected="selected">' . $property_type['pt_name'] . '</option>';
                         } else {
 
-                            echo '<option value="' . $row['pt_id'] . '">' . $row['pt_name'] . '</option>';
+                            echo '<option value="' . $property_type['pt_id'] . '">' . $property_type['pt_name'] . '</option>';
                         }
                     }
                     ?>
@@ -51,7 +51,7 @@
                 </select>
             </div>
             <div class="input-field col s4">
-                <input id="project_location" type="text" name="project_location"  class="validate" value="<?php echo $project[0]['project_location']; ?>">
+                <input id="project_location" type="text" name="project_location"  class="validate" value="<?php echo $project['project_location']; ?>">
                 <label class="active" for="project_location">Property Location</label>
             </div>
             <!--            <div class="input-field col s4">
@@ -63,7 +63,7 @@
                             </select>
                         </div>-->
             <div class="input-field col s4">
-                <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project[0]['project_no_of_bedrooms']); ?>" >
+                <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project['project_no_of_bedrooms']); ?>" >
                 <label class="active" for="project_no_of_bedrooms">No of bedrooms</label>
             </div>
         </div>
@@ -71,23 +71,23 @@
         <!-- Start date End date -->
         <div class="row">
             <div class="input-field col s4">
-                <input id="project_start_price" name="project_start_price"   type="number" value="<?php echo set_value('project_start_price', $project[0]['project_start_price']); ?>"  step="any">
+                <input id="project_start_price" name="project_start_price"   type="number" value="<?php echo set_value('project_start_price', $project['project_start_price']); ?>"  step="any">
                 <label for="project_start_price">Start Price</label>
 
             </div>
             <div class="input-field col s4">
                 <label for="project_start_date">Start Date</label>
-                <input id="project_start_date" name="project_start_date"  type="date" class="datepicker" value="<?php echo $project[0]['project_start_date']; ?>">
+                <input id="project_start_date" name="project_start_date"  type="date" class="datepicker" value="<?php echo $project['project_start_date']; ?>">
             </div>
             <div class="input-field col s4">
                 <label for="project_end_date">End Date</label>
-                <input type="date" class="datepicker" id ="project_end_date" name="project_end_date" value="<?php echo $project[0]['project_end_date']; ?>">
+                <input type="date" class="datepicker" id ="project_end_date" name="project_end_date" value="<?php echo $project['project_end_date']; ?>">
             </div>
         </div>
 
         <div class="row">
             <div class="input-field col s12">
-                <textarea id="project_description" class="materialize-textarea" name="project_description" ><?php echo $project[0]['project_description']; ?></textarea>
+                <textarea id="project_description" class="materialize-textarea" name="project_description" ><?php echo $project['project_description']; ?></textarea>
                 <label for="project_description">Description</label>
             </div>
         </div>
@@ -99,10 +99,10 @@
                     <span>File</span>
                     <!--                    data-max-width="300" data-max-height="300" data-min-width="300" data-min-height="300"-->
                     <input type="file" name="project_cover_image" class="image-upload" id="project_cover_image" accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|images/*" >
-                    <input type="hidden" id="project_cover_image_hidden" name="project_cover_image_hidden" value="<?php echo $project[0]['project_cover_image']; ?>"/>
+                    <input type="hidden" id="project_cover_image_hidden" name="project_cover_image_hidden" value="<?php echo $project['project_cover_image']; ?>"/>
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate image-upload-text" type="text" placeholder="Upload cover image" value="<?php echo $project[0]['project_cover_image']; ?>">
+                    <input class="file-path validate image-upload-text" type="text" placeholder="Upload cover image" value="<?php echo $project['project_cover_image']; ?>">
                     <span id="project_cover_image_error" class="image-upload-error"></span>
                 </div>
             </div>
@@ -141,10 +141,10 @@
                 <div class="btn normal-bt">
                     <span>File</span>
                     <input type="file" name="project_brochure"  id="project_brochure">
-                    <input type="hidden" id="project_brochure_hidden" name="project_brochure_hidden" value="<?php echo $project[0]['project_brochure']; ?>"/>
+                    <input type="hidden" id="project_brochure_hidden" name="project_brochure_hidden" value="<?php echo $project['project_brochure']; ?>"/>
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload brochure" value="<?php echo $project[0]['project_brochure']; ?>">
+                    <input class="file-path validate" type="text" placeholder="Upload brochure" value="<?php echo $project['project_brochure']; ?>">
                     <span id="project_brochure_error"></span>
                 </div>
             </div>
@@ -152,10 +152,10 @@
                 <div class="btn normal-bt">
                     <span>File</span>
                     <input type="file" name="project_floor_plan" id="project_floor_plan">
-                    <input type="hidden" id="project_floor_plan_hidden" name="project_floor_plan_hidden" value="<?php echo $project[0]['project_floor_plan']; ?>"/>
+                    <input type="hidden" id="project_floor_plan_hidden" name="project_floor_plan_hidden" value="<?php echo $project['project_floor_plan']; ?>"/>
                 </div>
                 <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload floor plan" value="<?php echo $project[0]['project_floor_plan']; ?>">
+                    <input class="file-path validate" type="text" placeholder="Upload floor plan" value="<?php echo $project['project_floor_plan']; ?>">
                     <span id="project_floor_plan_error"></span>
                 </div>
             </div>
@@ -197,7 +197,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $project_payment_plans = json_decode($project[0]['project_payment_plans'], TRUE);
+                                    $project_payment_plans = json_decode($project['project_payment_plans'], TRUE);
 
                                     if ($project_payment_plans == NULL) {
                                         
@@ -218,7 +218,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <input type="hidden" id="project_payment_plan_hidden" name="project_payment_plan_hidden" value="<?php echo html_escape($project[0]['project_payment_plans']); ?>"/>
+                        <input type="hidden" id="project_payment_plan_hidden" name="project_payment_plan_hidden" value="<?php echo html_escape($project['project_payment_plans']); ?>"/>
                     </div>
                 </li>
             </ul>
