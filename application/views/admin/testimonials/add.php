@@ -71,7 +71,7 @@
                 </select>
             </div>
             <div class=" col s6" style="margin-top: 1rem;    position: relative;">
-                <input type="checkbox" id="testimonial_approved" class="filled-in" name="testimonial_approved"  value="<?php echo set_value('testimonial_approved'); ?>"/>
+                <input type="checkbox" id="testimonial_approved" class="filled-in" name="testimonial_approved" value="1" <?php echo set_checkbox('testimonial_approved', "1" );?> />
                 <label for="testimonial_approved">Approved</label>
             </div>
         </div>
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class=" col s6" style="margin-top: 1rem;    position: relative;">
-                            <input type="checkbox" id="testimonial_property_status" class="filled-in" name="testimonial_property_status"  value="<?php echo set_checkbox('testimonial_property_status'); ?>"/>
+                            <input type="checkbox" id="testimonial_property_status" class="filled-in" name="testimonial_property_status" value="1" <?php echo set_checkbox('testimonial_property_status', "1" );  ?>/>
                             <label for="testimonial_property_status">Sold</label>
                         </div>
 

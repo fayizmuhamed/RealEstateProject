@@ -1,5 +1,22 @@
 
+<style>
 
+    .agent-box img{
+
+        width: inherit;
+        height: inherit;
+    }
+    .listing .flex-viewport {
+        height: 100%;
+    }
+
+    .list-card{
+
+        height:100%;
+        float:left;
+    }
+
+</style>
 <!-- Make Enquiry Modal Structure -->
 <div id="modal1" class="modal">
     <div class="modal-content">
@@ -20,7 +37,7 @@
 </div>
 
 <!-- Quick Contact -->
-<div id="modal2" class="modal">
+<div id="quick_contact_model" class="modal">
     <div class="modal-content">
         <h4>Quick Contact</h4>
         <div class="b-m">
@@ -40,7 +57,7 @@
 
 <!-- Quick Contact -->
 <div class="quick-contact">
-    <a class="modal-trigger" data-target="modal2" ><img src="<?php echo base_url(); ?>assets/images/contact.svg"></a>
+    <a class="modal-trigger" data-target="quick_contact_model" ><img src="<?php echo base_url(); ?>assets/images/contact.svg"></a>
 </div>
 
 <!-- Banner -->
@@ -49,7 +66,7 @@
         <!-- Navigation -->
         <header id="header">
             <div class="container">
-                 <?php  $this->load->view('includes/public/header_menu'); ?>
+                <?php $this->load->view('includes/public/header_menu'); ?>
             </div>
         </header>
         <div class="banner-text">
@@ -67,26 +84,16 @@
             <div class="slider-testimonials">
                 <div class="flexslider">
                     <ul class="slides">
-                        <li>
-                            <p class="content-testi">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <h2>Thomas Miller</h2>
-                            <span>Doun Town Village Dubai</span>
-                        </li>
-                        <li>
-                            <p class="content-testi">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <h2>Thomas Miller</h2>
-                            <span>Doun Town Village Dubai</span>
-                        </li>
-                        <li>
-                            <p class="content-testi">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <h2>Thomas Miller</h2>
-                            <span>Doun Town Village Dubai</span>
-                        </li>
-                        <li>
-                            <p class="content-testi">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                            <h2>Thomas Miller</h2>
-                            <span>Doun Town Village Dubai</span>
-                        </li>
+                        <?php
+                        foreach ($testimonials as $testimonial) {
+
+                            echo '<li>';
+                            echo '<p class="content-testi">'.$testimonial['testimonial_message'].'</p>';
+                            echo '<h2>'.$testimonial['testimonial_author_name'].'</h2>';
+                            echo '<span>'.$testimonial['testimonial_property_location'].'</span>';
+                            echo '</li>';
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -152,241 +159,51 @@
         </div>
         <div class="flexslider">
             <ul class="slides">
-                <li>
-                    <div class="row">
+                <?php
+                $sale_properties_set = array_chunk($featured_sales, 4);
+                foreach ($sale_properties_set as $properties) {
+                    echo '<li>';
+                    echo '<div class="row">';
 
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
+                    foreach ($properties as $property) {
+                        echo '<div class="col s12 l3 m6">';
+                        echo '<div class="list-card">';
+                        echo '<div class="over-card">';
+                        echo '<ul>';
+                        echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
+                        echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
+                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        echo '</ul>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="#">View Detail</a></button>';
+                        echo '</div>';
+                        echo '<div class="property-thumb">';
+                        $images = json_decode($property['property_images'], TRUE);
+                        if ($images != null && count($images) > 0) {
 
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>s&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
+                            echo '<img src="' . $images['image'][0] . '">';
+                        } else {
 
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l1.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>s&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1">Make Enquiry</button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l2.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>s&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l3.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l4.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l5.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l6.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l7.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l8.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
+                            echo '<img src="#">';
+                        }
+                        echo '</div>';
+                        echo '<div class="property-list-details">';
+                        echo '<h3>' . $property['property_title'] . '</h3>';
+                        echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                        echo '<div class="button-block">';
+                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    echo '</div>';
+                    echo '</li>';
+                }
+                ?>
             </ul>
         </div>
         <div class="col s12 more-button-block">
@@ -403,243 +220,56 @@
             <h2>FEATURED PROPERTIES FOR RENT</h2>
             <span><i></i></span>
         </div>
-        <div class="flexslider">
+        <div class="flexslider" >
             <ul class="slides">
-                <li>
-                    <div class="row">
+                <?php
+                $rent_properties_set = array_chunk($featured_rents, 4);
+                foreach ($rent_properties_set as $properties) {
+                    echo '<li>';
+                    echo '<div class="row">';
 
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
+                    foreach ($properties as $property) {
+                        echo '<div class="col s12 l3 m6">';
+                        echo '<div class="list-card" >';
+                        echo '<div class="over-card">';
+                        echo '<ul>';
+                        echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
+                        echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
+                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        echo '</ul>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="#">View Detail</a></button>';
+                        echo '</div>';
+                        echo '<div class="property-thumb">';
 
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
+                        $images = json_decode($property['property_images'], TRUE);
+                        if ($images != null && count($images) > 0) {
 
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l1.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
+                            echo '<img src="' . $images['image'][0] . '">';
+                        } else {
 
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
+                            echo '<img src="#">';
+                        }
 
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l2.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
 
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l3.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l4.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="row">
-
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l5.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l6.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l7.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s12 l3 m6">
-                            <div class="list-card">
-
-                                <div class="over-card">
-                                    <ul>
-                                        <li><i class="icon-bed"></i>&nbsp;Villas</li>
-                                        <li><i class="icon-1"></i>&nbsp;4800 sq ft</li>
-                                        <li><i class="icon-bed"></i>&nbsp;4 Bed</li>
-                                        <li><i class="icon-bath"></i>&nbsp;3 Baths</li>
-                                        <li><i class="zmdi zmdi-group"></i>&nbsp;2 Maid</li>
-                                        <li><i class="zmdi zmdi-file-text"></i>&nbsp;3 Study</li>
-                                    </ul>
-                                    <button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>
-                                    <button class="view-b"><a href="#">View Detail</a></button>
-                                </div>
-
-                                <div class="property-thumb">
-                                    <img src="<?php echo base_url(); ?>assets/images/l8.png">
-                                </div>
-                                <div class="property-list-details">
-                                    <h3>4552 LYNN AVENUE</h3>
-                                    <span><i class="zmdi zmdi-pin"></i>&nbsp;United Arab Emirates</span>
-                                    <div class="button-block">
-                                        <button class="price">$1,500</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
+                        echo '</div>';
+                        echo '<div class="property-list-details">';
+                        echo '<h3>' . $property['property_title'] . '</h3>';
+                        echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                        echo '<div class="button-block">';
+                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    echo '</div>';
+                    echo '</li>';
+                }
+                ?>
             </ul>
         </div>
         <div class="col s12 more-button-block">
@@ -697,9 +327,10 @@
         <div class="row">
             <div class="col s12">
                 <p class="para">
-                    <?php 
-                echo isset($about_us_who_we_are)?$about_us_who_we_are:'';
-// array_key_exists("about_us_who_we_are", var_dump($configurations)) ? var_dump($configurations)['about_us_who_we_are'] : ""; ?></p>
+                    <?php
+                    echo isset($about_us_who_we_are) ? $about_us_who_we_are : '';
+// array_key_exists("about_us_who_we_are", var_dump($configurations)) ? var_dump($configurations)['about_us_who_we_are'] : ""; 
+                    ?></p>
                 <ul class="tabs">
                     <li class="tab col s4"><a class="active" href="#vision">VISION</a></li>
                     <li class="tab col s4"><a href="#mission">MISSION</a></li>
@@ -708,25 +339,28 @@
             </div>
             <div id="vision" class="col s12">
                 <h1>Vision</h1>
-                <p><?php 
-echo isset($about_us_vision)?$about_us_vision:'';
-//echo  array_key_exists("about_us_vision", $this->$configurations) ? $this->$configurations['about_us_vision'] : ""; ?></p>
+                <p><?php
+                    echo isset($about_us_vision) ? $about_us_vision : '';
+//echo  array_key_exists("about_us_vision", $this->$configurations) ? $this->$configurations['about_us_vision'] : ""; 
+                    ?></p>
             </div>
 
             <!-- Mission -->
             <div id="mission" class="col s12">
                 <h1>Mission</h1>
-                <p><?php 
-                echo isset($about_us_mission)?$about_us_mission:'';
-//echo $about_us_mission;array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; ?></p>
+                <p><?php
+                    echo isset($about_us_mission) ? $about_us_mission : '';
+//echo $about_us_mission;array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; 
+                    ?></p>
             </div>
 
             <!-- Value -->
             <div id="value" class="col s12">
                 <h1>Value</h1>
-                <p><?php 
-                echo isset($about_us_value)?$about_us_value:'';
-//echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; ?></p>
+                <p><?php
+                    echo isset($about_us_value) ? $about_us_value : '';
+//echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; 
+                    ?></p>
             </div>
 
         </div>
@@ -843,40 +477,28 @@ echo isset($about_us_vision)?$about_us_vision:'';
             <span><i></i></span>
         </div>
         <div class="row">
-            <div class="col s12 l6 m6">
+            <?php
+            foreach ($employees as $employee) {
 
-                <div class="agent-box">
-                    <div class="over-agent">
-                        <button><a href="#">View Profile</a></button>
-                    </div>
-                    <img src="<?php echo base_url(); ?>assets/images/7.jpg">
-                </div>
-
-                <div class="agent-detail-home">
-                    <h3>Thomas Miller</h3>
-                    <span>Marketing Manger</span>
-                    <p>Area Specialized in : N/A</p>
-                </div>
-            </div>
-            <div class="col s12 l6 m6">
-                <a href="#">
-                    <div class="agent-box">
-                        <div class="over-agent">
-                            <button><a href="#">View Profile</a></button>
-                        </div>
-                        <img src="<?php echo base_url(); ?>assets/images/9.jpg">
-                    </div>
-                </a>
-                <div class="agent-detail-home">
-                    <h3>Thomas Miller</h3>
-                    <span>Marketing Manger</span>
-                    <p>Area Specialized in : N/A</p>
-                </div>
-            </div>
+                echo '<div class="col s12 l6 m6">';
+                echo '<div class="agent-box">';
+                echo '<div class="over-agent">';
+                echo '<button><a href="' . base_url() . 'viewprofile/' . $employee['emp_id'] . '">View Profile</a></button>';
+                echo '</div>';
+                echo '<img src="' . base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image'] . '" >';
+                echo '</div>';
+                echo '<div class="agent-detail-home">';
+                echo '<h3>' . $employee['emp_name'] . '</h3>';
+                echo '<span>' . $employee['des_name'] . '</span>';
+                echo '<p>Area Specialized in : ' . $employee['emp_area_specialized'] . '</p>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
 
             <!-- More -->
             <div class="col s12 more-button-block">
-                <button class="bt-normal waves-effect waves-light"><a href="#">MEET THE TEAM</a></button>
+                <button class="bt-normal waves-effect waves-light"><a href="<?php base_url(); ?>teams">MEET THE TEAM</a></button>
             </div>
 
         </div>

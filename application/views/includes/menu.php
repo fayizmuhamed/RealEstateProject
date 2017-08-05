@@ -6,6 +6,9 @@
             <a href="<?php echo base_url(); ?>admin/propertytypes" class="<?php if($this->uri->segment(2) == 'propertytypes'){echo 'active';}?> waves-effect waves-teal">Property Type</a>
         </li>
         <li class="bold ">
+            <a href="<?php echo base_url(); ?>admin/properties" class="<?php if($this->uri->segment(2) == 'properties'){echo 'active';}?> waves-effect waves-teal">Properties</a>
+        </li>
+        <li class="bold ">
             <a href="<?php echo base_url(); ?>admin/projects" class="<?php if($this->uri->segment(2) == 'projects'){echo 'active';}?> waves-effect waves-teal">Project</a>
         </li>
         <li class="bold">

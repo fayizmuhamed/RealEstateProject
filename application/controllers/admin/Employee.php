@@ -91,7 +91,8 @@ class Employee extends AdminController {
                     'emp_area_specialized' => $this->input->post('emp_area_specialized'),
                     'emp_languages' => $this->input->post('emp_languages'),
                     'emp_description' => $this->input->post('emp_description'),
-                    'emp_profile_image' => (empty($this->upload_data) || !isset($this->upload_data['emp_profile_image'])) ? "" : $this->upload_data['emp_profile_image']['file_name']
+                    'emp_profile_image' => (empty($this->upload_data) || !isset($this->upload_data['emp_profile_image'])) ? "" : $this->upload_data['emp_profile_image']['file_name'],
+                    'emp_featured_agent' => ($this->input->post('emp_featured_agent') === null) ? 0 : 1
                 );
 
                 //if the insert has returned true then we show the flash message
@@ -141,7 +142,8 @@ class Employee extends AdminController {
                     'emp_area_specialized' => $this->input->post('emp_area_specialized'),
                     'emp_languages' => $this->input->post('emp_languages'),
                     'emp_description' => $this->input->post('emp_description'),
-                    'emp_profile_image' => (empty($this->upload_data) || !isset($this->upload_data['emp_profile_image'])) ? $this->input->post('emp_profile_image_hidden')  : $this->upload_data['emp_profile_image']['file_name']
+                    'emp_profile_image' => (empty($this->upload_data) || !isset($this->upload_data['emp_profile_image'])) ? $this->input->post('emp_profile_image_hidden')  : $this->upload_data['emp_profile_image']['file_name'],
+                    'emp_featured_agent' => ($this->input->post('emp_featured_agent') === null) ? 0 : 1
                 );
 
                 //if the insert has returned true then we show the flash message

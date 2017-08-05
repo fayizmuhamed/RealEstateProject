@@ -11,9 +11,8 @@
  *
  * @author DELL
  */
-class Community extends PublicController{
-   
-    
+class Community extends PublicController {
+
     //put your code here
 
     public function __construct() {
@@ -21,6 +20,7 @@ class Community extends PublicController{
 
         $this->load->library('image_lib');
         $this->load->model('Community_model');
+        $this->load->model('Property_model');
     }
 
     /**
@@ -66,19 +66,22 @@ class Community extends PublicController{
 //            $data['content'] = 'public/community';
 //            $this->load->view('includes/public/template', $data);
         } else {
-            
+
             //load the view
             $community = $this->Community_model->find_by_id($id);
 
             $data['community'] = $community;
             $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
+            $data['properties_sale'] = $this->Property_model->search_properties(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,'sale',null,null,null,null,null,null,null,null,null,$community[0]['community_name'],null,null);
+            $data['properties_rent'] = $this->Property_model->search_properties(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,'rent',null,null,null,null,null,null,null,null,null,$community[0]['community_name'],null,null);
+
             //load the view
             $data['content'] = 'public/community_detail';
             $this->load->view('includes/public/template', $data);
         }
     }
 
-   public function getCommunities() {
+    public function getCommunities() {
 
         $page = $this->input->get('page', TRUE);
 
@@ -89,7 +92,7 @@ class Community extends PublicController{
             $offset = 0;
         }
 
-        $communities = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, $offset, NULL, NULL,NULL);
+        $communities = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, $offset, NULL, NULL, NULL);
 
         foreach ($communities as $community) {
 
@@ -107,5 +110,5 @@ class Community extends PublicController{
 
         exit;
     }
-    
+
 }

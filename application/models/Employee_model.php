@@ -45,6 +45,35 @@ class Employee_model extends CI_Model {
 
         return $query->result_array();
     }
+    
+    function find_by_email_id($email_id) {
+
+        $this->db->select('*');
+        $this->db->from('employees');
+        $this->db->join('departments', 'emp_department = dep_id', 'left');
+        $this->db->join('designations', 'emp_designation = des_id', 'left');
+        $this->db->where('emp_email_id', $email_id);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
+    function find_by_contact_no($contact_no) {
+
+        $this->db->select('*');
+        $this->db->from('employees');
+        $this->db->join('departments', 'emp_department = dep_id', 'left');
+        $this->db->join('designations', 'emp_designation = des_id', 'left');
+        $this->db->where('emp_contact_no', $contact_no);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
 
     /**
      * get employees
@@ -61,6 +90,12 @@ class Employee_model extends CI_Model {
                 $this->db->like('emp_name', $search_string);
             } else if ($filter === 'emp_department') {
                     $this->db->where('emp_department', $search_string);
+            }else if ($filter === 'emp_featured_agent') {
+                    $this->db->where('emp_featured_agent', $search_string);
+            }else if ($filter === 'emp_contact_no') {
+                    $this->db->where('emp_contact_no', $search_string);
+            }else if ($filter === 'emp_email_id') {
+                    $this->db->where('emp_email_id', $search_string);
             }
         }
 

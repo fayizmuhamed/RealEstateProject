@@ -59,6 +59,8 @@ $route['admin/login'] = 'admin/user';
 $route['admin']="admin/user";
 
 $route['admin/home']='admin/home';
+$route['admin/properties']='admin/property';
+$route['admin/properties/sync']='admin/property/property_sync';
 
 $route['admin/propertytypes']='admin/property_type';
 $route['admin/propertytypes/add']='admin/property_type/add';
@@ -139,11 +141,12 @@ $route['ownersguide']='public/property_owner/ownersGuide';
 $route['propertyowner']='public/property_owner';
 
 $route['tenantsguide']='public/rent/tenantsGuide';
-$route['rentdetail']='public/rent/rentDetails';
+$route['rentdetail/(:num)']='public/rent/rentDetails/$1';
 $route['rent']='public/rent';
 
+$route['properties/search']='public/property/findPropertiesWithSearch';
 $route['buyersguide']='public/buy/buyersGuide';
-$route['buydetail']='public/buy/buyDetails';
+$route['buydetail/(:num)']='public/buy/buyDetails/$1';
 $route['buy']='public/buy';
 
 $route['viewprofile/(:num)']='public/team/viewProfile/$1';

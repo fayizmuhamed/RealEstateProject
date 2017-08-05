@@ -23,6 +23,7 @@ class Team extends PublicController {
         $this->load->model('Employee_model');
         $this->load->model('Department_model');
         $this->load->model('Designation_model');
+        $this->load->model('Property_model');
     }
 
     /**
@@ -71,7 +72,14 @@ class Team extends PublicController {
         $employees = $this->Employee_model->find_by_id($id);
 
         $data['employee'] = $employees == null ? [] : $employees[0];
-
+        
+        if($employees[0]['emp_email_id']){
+            
+            $data['properties'] = $this->Property_model->find_by_agent_email_id(PROPERTIES_COUNT_PER_PAGE, 0, $employees[0]['emp_email_id'], null, null);
+ 
+        }
+        
+       
         $data['content'] = 'public/team_detail';
         $this->load->view('includes/public/template', $data);
     }

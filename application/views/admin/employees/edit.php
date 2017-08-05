@@ -118,6 +118,12 @@
                 <label for="emp_description">Description</label>
             </div>
         </div>
+         <div class="row">
+            <div class="col s6" style="margin-top: 1rem;    position: relative;">
+                <input type="checkbox" id="emp_featured_agent" class="filled-in" name="emp_featured_agent"  value="1" <?php echo set_checkbox('emp_featured_agent', $employee['emp_featured_agent'],( !empty($employee['emp_featured_agent']) && $employee['emp_featured_agent'] == "1" ? TRUE : FALSE)); ?> />
+                <label for="emp_featured_agent">Featured Agent</label>
+            </div>
+        </div>
         <div class="col s12">
             <br>
             <br>

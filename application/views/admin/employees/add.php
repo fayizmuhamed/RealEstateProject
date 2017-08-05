@@ -54,7 +54,7 @@
                     <?php
                     foreach ($departments as $department) {
 
-                        echo '<option value="' . $department['dep_id'] . '"' . set_select('emp_department',$department['dep_id']) . '>' . $department['dep_name'] . '</option>';
+                        echo '<option value="' . $department['dep_id'] . '"' . set_select('emp_department', $department['dep_id']) . '>' . $department['dep_name'] . '</option>';
                     }
                     ?>
                 </select>
@@ -65,7 +65,7 @@
                     <?php
                     foreach ($designations as $designation) {
 
-                        echo '<option value="' . $designation['des_id'] . '"' . set_select('emp_designation',$designation['des_id']) . '>' . $designation['des_name'] . '</option>';
+                        echo '<option value="' . $designation['des_id'] . '"' . set_select('emp_designation', $designation['des_id']) . '>' . $designation['des_name'] . '</option>';
                     }
                     ?>
                 </select>
@@ -101,10 +101,17 @@
                 <label  for="emp_languages">Speaks</label>
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s12">
                 <textarea id="emp_description" class="materialize-textarea" name="emp_description" ><?php echo set_value('emp_description'); ?></textarea>
                 <label for="emp_description">Description</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6" style="margin-top: 1rem;    position: relative;">
+                <input type="checkbox" id="emp_featured_agent" class="filled-in" name="emp_featured_agent"  value="1" <?php echo set_checkbox('emp_featured_agent', "1"); ?> />
+                <label for="emp_featured_agent">Featured Agent</label>
             </div>
         </div>
         <div class="col s12">
