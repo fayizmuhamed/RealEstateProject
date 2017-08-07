@@ -18,6 +18,25 @@ class Community_model extends CI_Model {
         $this->load->model('Community_thumbnail_model');
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('communities');
+
+        if (isset($query_array['community_name']) && strlen($query_array['community_name'])) {
+
+            $this->db->like('community_name', $query_array['community_name']);
+        }
+        if (isset($query_array['community_id']) && strlen($query_array['community_id'])) {
+
+            $this->db->where('community_id', $query_array['community_id']);
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get community list 
      */
@@ -32,7 +51,7 @@ class Community_model extends CI_Model {
 
         return $query->result_array();
     }
-    
+
     /**
      * get community list 
      */
@@ -67,31 +86,33 @@ class Community_model extends CI_Model {
     /**
      * get community list with search by name
      */
-    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'community_id', $sort_order = 'asc') {
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('community_id', 'community_name');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'community_id';
 
         $this->db->select('*');
         $this->db->from('communities');
-
-        if ($search_string) {
-
-            $this->db->like('community_name', $search_string);
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('community_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+      
+
+        if (isset($query_array['community_name']) && strlen($query_array['community_name'])) {
+
+           $this->db->like('community_name', $query_array['community_name']);
+        }
+        if (isset($query_array['community_id']) && strlen($query_array['community_id'])) {
+
+            $this->db->where('community_id', $query_array['community_id']);
+        }
 
         $query = $this->db->get();
 
         return $query->result_array();
     }
-
 
     /**
      * Store the new community into the database
@@ -103,7 +124,7 @@ class Community_model extends CI_Model {
         $this->db->trans_start(); # Starting Transaction
 
         $this->db->trans_strict(FALSE);
-        
+
         $this->db->insert('communities', $data);
 
         $community_id = $this->db->insert_id();
@@ -111,8 +132,6 @@ class Community_model extends CI_Model {
         $this->Community_thumbnail_model->insert($community_id, $thumbnails);
 
         return $this->db->trans_complete();
-
-       
     }
 
     /**
@@ -128,15 +147,11 @@ class Community_model extends CI_Model {
 
         $this->db->where('community_id', $id);
         $this->db->update('communities', $data);
-      
+
         $this->Community_thumbnail_model->insert($id, $thumbnails);
 
         return $this->db->trans_complete();
-
-    
     }
-
-   
 
     /**
      * Delete community
@@ -144,20 +159,19 @@ class Community_model extends CI_Model {
      * @return boolean
      */
     function delete($id) {
-      
+
 
         $this->db->trans_start(); # Starting Transaction
 
         $this->db->trans_strict(FALSE);
-        
+
         $this->db->where('community_id', $id);
-        
+
         $this->db->delete('communities');
-        
+
         $this->Community_thumbnail_model->delete_by_community_id($id);
 
         return $this->db->trans_complete();
-
     }
 
 }

@@ -29,9 +29,9 @@
                     <li >
                         <a href="<?php echo base_url(); ?>admin/designations" class="<?php if($this->uri->segment(2) == 'designations'){echo 'active';}?> waves-effect waves-teal">Designation</a>
                     </li>
-                  <li>
+<!--                  <li>
                        <a href="<?php echo base_url(); ?>admin/departments" class="<?php if($this->uri->segment(2) == 'departments'){echo 'active';}?> waves-effect waves-teal">Department</a>
-                  </li>
+                  </li>-->
                    <li>
                        <a href="<?php echo base_url(); ?>admin/employees" class="<?php if($this->uri->segment(2) == 'employees'){echo 'active';}?> waves-effect waves-teal">Employee</a>
                   </li>

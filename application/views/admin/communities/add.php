@@ -19,19 +19,13 @@
         <!-- Community Name Property Type -->
         <div class="row">
             <div class="input-field col s6">
-                <input id="project_name" type="text" name="community_name" class="validate" value="<?php echo set_value('community_name'); ?>">
+                <input id="community_name" type="text" name="community_name" class="validate" value="<?php echo set_value('community_name'); ?>">
                 <label class="active" for="community_name">Community Name</label>
             </div>
             <div class="input-field col s6">
-                <select id="community_property_type" name="community_property_type" >
-                    <option value="" disabled selected>Property Type</option>
-                    <?php
-                    foreach ($property_types as $property_type) {
+                <input id="community_property_type" type="text" name="community_property_type" class="validate" value="<?php echo set_value('community_property_type'); ?>">
+                <label class="active" for="community_property_type">Property type</label>
 
-                        echo '<option value="' . $property_type['pt_id'] . '"' . set_select('community_property_type',$property_type['pt_id']) . '>' . $property_type['pt_name'] . '</option>';
-                    }
-                    ?>
-                </select>
             </div>
         </div>
         <div class="row">
@@ -46,26 +40,38 @@
 
             <div class="input-field col s12">
                 <input id="community_location_url" type="text" name="community_location_url"  class="validate" value="<?php echo set_value('community_location_url'); ?>">
-                <label class="active" for="community_location_url">Community Location Map URL</label>
+                <label class="active" for="community_location_url">Enter embed map url</label>
             </div>
         </div>
 
-        <div class="row">
+        
+        <section class="listing ">
+            <ul  class="collapsible" data-collapsible="accordion" >
+                <li >
+                    <div class="collapsible-header active waves-effect waves-teal">
+                        <a >Navigation details</a>
+                    </div>
 
-            <div class="input-field col s6">
-                <input id="community_dis_from_metro" type="number" name="community_dis_from_metro"  class="validate" value="<?php echo set_value('community_dis_from_metro'); ?>" step="any">
-                <label class="active" for="community_dis_from_metro">Distance from metro</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="community_dis_from_public_transport" type="number" name="community_dis_from_public_transport"  class="validate" value="<?php echo set_value('community_dis_from_public_transport'); ?>" step="any">
-                <label class="active" for="community_dis_from_public_transport">Distance from public transport</label>
-            </div>
-        </div>
+                    <div class="collapsible-body pads">
+                        <div class="row">
+                            <?php
+                            $navigations= navigation_list();
+                            
+                            foreach($navigations as $key=>$value){
+                                
+                                echo '<div class="col s6 l4 m6" >';
+                                echo '<input type="checkbox" class="naviagation" value="1" name="navigations['.$key.']" id="'.$value.'" />';
+                                echo '<label for="'.$value.'">'.navigation_icon($value).'&nbsp; </label>';
+                                echo '<input type="text" name="navigation_values['.$key.']" class="browser-default" disabled>';
+                                echo '</div>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
 
-
-
-
-
+        </section>
         <div class="row">
             <div class="file-field input-field col s6">
                 <div class="btn normal-bt">

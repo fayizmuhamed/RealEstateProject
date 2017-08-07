@@ -29,38 +29,34 @@ class Testimonial extends AdminController {
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index() {
+    public function index($sort_by = 'testimonial_id', $sort_order = 'desc', $offset = 0) {
+
+         $limit = ADMIN_ITEM_PER_LIST_PAGE;
 
         //all the posts sent by the view
         $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
+
+        $query_array = array(
+            $filter => $search_string
+        );
+
+        $testimonials = $this->Testimonial_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
+
+        $data['testimonials'] = $testimonials;
+        $data['sort_order'] = $sort_order;
+        $data['sort_by'] = $sort_by;
 
         //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/testimonials';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
-
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $offset = ($page * $config['per_page']) - $config['per_page'];
-        if ($offset < 0) {
-            $offset = 0;
-        }
-
-        $testimonials = $this->Testimonial_model->find_with_search($config['per_page'], $offset,$filter, $search_string, $order, $order_type);
-
-
-        $config['total_rows'] = $testimonials == null ? 0 : count($testimonials);
+        $config = array();
+        $config['base_url'] = site_url("admin/testimonials/$sort_by/$sort_order");
+        $config["total_rows"] = $this->Testimonial_model->record_count($query_array);
+        $config["per_page"] = $limit;
+        $config["uri_segment"] = 5;
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
-
-        $data['testimonials'] = $testimonials;
+        
 
         //load the view
         $data['content'] = 'admin/testimonials/list';

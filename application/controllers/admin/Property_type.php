@@ -28,38 +28,34 @@ class Property_type extends AdminController {
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index() {
+    public function index($sort_by = 'pt_id', $sort_order = 'asc', $offset = 0) {
 
+        $limit = ADMIN_ITEM_PER_LIST_PAGE;
         //all the posts sent by the view
-        $property_model_id = $this->uri->segment(3);
+        $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
+
+        $query_array = array(
+            $filter => $search_string
+        );
+
+        $property_types = $this->Property_type_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
+
+        $data['property_types'] = $property_types;
+        $data['sort_order'] = $sort_order;
+        $data['sort_by'] = $sort_by;
 
         //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/propertytypes';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
-
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $offset = ($page * $config['per_page']) - $config['per_page'];
-        if ($offset < 0) {
-            $offset = 0;
-        }
-
-        $property_types = $this->Property_type_model->find_with_search($config['per_page'], $offset,$property_model_id, $search_string, $order, $order_type );
-
-
-        $config['total_rows'] = $property_types == null ? 0 : count($property_types);
+        $config = array();
+        $config['base_url'] = site_url("admin/propertytypes/$sort_by/$sort_order");
+        $config["total_rows"] =$this->Property_type_model->record_count($query_array);
+        $config["per_page"] = $limit;
+        $config["uri_segment"] = 5;
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
 
-        $data['property_types'] = $property_types;
+
 
         //load the view
         $data['content'] = 'admin/property_types/list';
@@ -81,7 +77,7 @@ class Property_type extends AdminController {
                     'pt_name' => $this->input->post('property_type_name'),
                     'pt_model_id' => $this->input->post('property_type_model')
                 );
-                
+
                 //if the insert has returned true then we show the flash message
                 if ($this->Property_type_model->insert($data_to_store)) {
                     $data['flash_message'] = TRUE;
@@ -104,13 +100,13 @@ class Property_type extends AdminController {
      * @return void
      */
     public function update() {
-        
+
         //property_type_id 
         $id = $this->uri->segment(4);
 
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
-            
+
             //form validation
             $this->form_validation->set_rules('property_type_name', 'Property type name', 'trim|required|xss_clean');
             $this->form_validation->set_rules('property_type_model', 'Parent', 'trim|required|xss_clean');
@@ -122,26 +118,25 @@ class Property_type extends AdminController {
                     'pt_name' => $this->input->post('property_type_name'),
                     'pt_model_id' => $this->input->post('property_type_model')
                 );
-                
+
                 //if the insert has returned true then we show the flash message
                 if ($this->Property_type_model->update($id, $data_to_store) == TRUE) {
-                    
+
                     $this->session->set_flashdata('flash_message', 'updated');
-                    
                 } else {
-                    
+
                     $this->session->set_flashdata('flash_message', 'not_updated');
                 }
-                
+
                 redirect('admin/propertytypes');
             }//validation run
         }
-        
+
         //if we are updating, and the data did not pass trough the validation
         //the code below wel reload the current data
         //product data 
         $data['property_type'] = $this->Property_type_model->find_by_id($id);
-        
+
         $data['property_models'] = $this->Property_model_model->find_all();
 
         //load the view
@@ -149,14 +144,14 @@ class Property_type extends AdminController {
         $data['content'] = 'admin/property_types/edit';
         $this->load->view('includes/admin_template', $data);
     }
-    
+
     //update
     /**
      * Delete product by his id
      * @return void
      */
     public function delete() {
-        
+
         //product id 
         $id = $this->uri->segment(4);
         $this->Property_type_model->delete($id);

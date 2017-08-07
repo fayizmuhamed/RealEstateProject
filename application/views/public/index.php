@@ -123,7 +123,7 @@
                 echo '<h1>' . $row['project_name'] . '</h1>';
                 echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;Location: ' . $row['project_location'] . '</span>';
                 echo '<span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: ' . $row['project_developer'] . '</span>';
-                echo '<span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: ' . $row['pt_name'] . '</span>';
+                echo '<span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: ' . $row['project_property_type'] . '</span>';
                 echo '<span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: ' . $row['project_no_of_bedrooms'] . '</span>';
                 echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . '</span>';
                 echo '<span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: ' . date('d M Y', strtotime($row['project_end_date'])) . '</span>';
@@ -293,12 +293,12 @@
                 foreach ($communities as $community) {
 
                     echo '<div class="col s12 l3 m6">';
-                    echo '<a href="' . base_url() . 'communities/' . $community['community_id'] . '">';
+                    echo '<a href="' . base_url() . 'communities/' . (isset($community['community_id'])?$community['community_id']:'') . '">';
                     echo '<div class="community-card">';
                     echo '<div class="overlay-bx">';
-                    echo '<h3>' . $community['community_name'] . '</h3>';
+                    echo '<h3>' . (isset($community['community_name'])?$community['community_name']:''). '</h3>';
                     echo '</div>';
-                    echo '<img src="' . base_url() . 'uploads/community/cover/' . $community['community_cover_image'] . '">';
+                    echo '<img src="' . base_url() . 'uploads/community/cover/' . (isset($community['community_cover_image'])?$community['community_cover_image']:'') . '">';
                     echo '</div>';
                     echo '</a>';
                     echo '</div>';

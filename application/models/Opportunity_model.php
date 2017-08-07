@@ -17,6 +17,25 @@ class Opportunity_model extends CI_Model {
         
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('opportunities');
+
+        if (isset($query_array['opportunity_title']) && strlen($query_array['opportunity_title'])) {
+
+            $this->db->like('opportunity_title', $query_array['opportunity_title']);
+        }
+        if (isset($query_array['opportunity_location']) && strlen($query_array['opportunity_location'])) {
+
+            $this->db->like('opportunity_location', $query_array['opportunity_location']);
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get opportunities list
      */
@@ -25,7 +44,7 @@ class Opportunity_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('opportunities');
         $this->db->order_by('opportunity_id', 'Asc');
-        
+
 
         $query = $this->db->get();
 
@@ -50,25 +69,28 @@ class Opportunity_model extends CI_Model {
     /**
      * get opportunities list with search conditions
      */
-    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'opportunity_id', $sort_order = 'asc') {
+
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('opportunity_id', 'opportunity_title', 'opportunity_location', 'opportunity_sub_location', 'opportunity_created_at');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'opportunity_id';
 
         $this->db->select('*');
         $this->db->from('opportunities');
-
-        if ($search_string) {
-
-            $this->db->like('opportunity_title', $search_string);
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('opportunity_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+
+        if (isset($query_array['opportunity_title']) && strlen($query_array['opportunity_title'])) {
+
+            $this->db->like('opportunity_title', $query_array['opportunity_title']);
+        }
+        if (isset($query_array['opportunity_location']) && strlen($query_array['opportunity_location'])) {
+
+            $this->db->like('opportunity_location', $query_array['opportunity_location']);
+        }
 
         $query = $this->db->get();
 

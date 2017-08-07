@@ -90,7 +90,7 @@
                     <li class="tab"><a href="#" value="featured" class="buy-tab">FEATURED</a></li>
                     <li class="tab"><a href="#" value="plots" class="buy-tab">PLOTS</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>buyersguide" target="_self">BUYERS GUIDE</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>teams" target="_self">MEET SALES TEAM</a></li>
+                    <li class="tab"><a href="<?php echo base_url(); ?>teams/sales" target="_self">MEET SALES TEAM</a></li>
                 </ul>
             </div>
             <!-- OFFICE LOCATION -->

@@ -15,11 +15,12 @@
         <div class="row inner-tab">
             <div class="col s12">
                 <ul class="tabs tabs-fixed-width">
-                    <li class="tab"><a  class="active department-filter" value="" href="#">ALL</a></li>
+                    
+                    <li class="tab"><a  class="department-filter <?php echo ((strcasecmp($selected_department, 'all') == 0)?'active':''); ?>" value="" href="#" >ALL</a></li>
                     <?php
                     foreach ($departments as $department) {
 
-                        echo '<li class="tab" ><a value="' . $department['dep_id'] . '" href="#" class="department-filter">' . $department['dep_name'] . '</a></li>';
+                        echo '<li class="tab" ><a value="' . $department['dep_id'] . '" href="#" class=" department-filter '. ((strcasecmp($selected_department, $department['dep_name']) == 0)?'active':'').'">' . $department['dep_name'] . '</a></li>';
                     }
                     ?>
                 </ul>

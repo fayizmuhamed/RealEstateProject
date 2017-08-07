@@ -28,37 +28,35 @@ class Project extends AdminController {
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index() {
+    public function index($sort_by = 'project_id', $sort_order = 'asc', $offset = 0) {
+
+        $limit = ADMIN_ITEM_PER_LIST_PAGE;
 
         //all the posts sent by the view
+        $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
+
+        $query_array = array(
+            $filter => $search_string
+        );
+
+        $projects = $this->Project_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
+
+        $data['projects'] = $projects;
+        $data['sort_order'] = $sort_order;
+        $data['sort_by'] = $sort_by;
 
         //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/projects';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
-
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $offset = ($page * $config['per_page']) - $config['per_page'];
-        if ($offset < 0) {
-            $offset = 0;
-        }
-
-        $projects = $this->Project_model->find_with_search($config['per_page'], $offset, $search_string, $order, $order_type);
-
-
-        $config['total_rows'] = $projects == null ? 0 : count($projects);
+        $config = array();
+        $config['base_url'] = site_url("admin/projects/$sort_by/$sort_order");
+        $config["total_rows"] = $this->Project_model->record_count($query_array);
+        $config["per_page"] = $limit;
+        $config["uri_segment"] = 5;
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
 
-        $data['projects'] = $projects;
+
 
         //load the view
         $data['content'] = 'admin/projects/list';
@@ -83,7 +81,7 @@ class Project extends AdminController {
      */
     public function edit($id) {
 
-        
+
         //project data 
         $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
         $data['property_types'] = $this->Property_type_model->find_all();
@@ -128,7 +126,9 @@ class Project extends AdminController {
                     'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? "" : $this->upload_data['project_cover_image']['file_name'],
                     'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? "" : $this->upload_data['project_brochure']['file_name'],
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? "" : $this->upload_data['project_floor_plan']['file_name'],
-                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden')
+                    'project_location_url' => $this->input->post('project_location_url'),
+                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
+                    'project_navigations' => $this->getProjectNavigations()
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
@@ -197,7 +197,9 @@ class Project extends AdminController {
                     'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? $this->input->post('project_cover_image_hidden') : $this->upload_data['project_cover_image']['file_name'],
                     'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? $this->input->post('project_brochure_hidden') : $this->upload_data['project_brochure']['file_name'],
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? $this->input->post('project_floor_plan_hidden') : $this->upload_data['project_floor_plan']['file_name'],
-                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden')
+                    'project_location_url' => $this->input->post('project_location_url'),
+                    'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
+                    'project_navigations' => $this->getProjectNavigations()
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
@@ -499,6 +501,31 @@ class Project extends AdminController {
 
             return true;
         }
+    }
+
+    public function getProjectNavigations() {
+
+        $navigation_list = navigation_list();
+
+        $navigations = $this->input->post('navigations');
+
+        $navigation_values = $this->input->post('navigation_values');
+
+        $project_navigations = array();
+
+        foreach ($navigations as $key => $value) {
+
+            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
+
+            if ($navigation_key) {
+
+                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+
+                $project_navigations[$navigation_key] = $navigation_value;
+            }
+        }
+
+        return json_encode($project_navigations);
     }
 
 }

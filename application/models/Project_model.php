@@ -18,30 +18,55 @@ class Project_model extends CI_Model {
         $this->load->model('Project_thumbnail_model');
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('projects');
+
+        if (isset($query_array['project_name']) && strlen($query_array['project_name'])) {
+
+            $this->db->like('project_name', $query_array['project_name']);
+        }
+        if (isset($query_array['project_reference']) && strlen($query_array['project_reference'])) {
+
+            $this->db->like('project_reference', $query_array['project_reference']);
+        }
+
+        if (isset($query_array['project_location']) && strlen($query_array['project_location'])) {
+
+            $this->db->like('project_location', $query_array['project_location']);
+        }
+        if (isset($query_array['project_developer']) && strlen($query_array['project_developer'])) {
+
+            $this->db->like('project_developer', $query_array['project_developer']);
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get projects list 
      */
     function find_all() {
 
-        $this->db->select('*,pt_name');
+        $this->db->select('*');
         $this->db->from('projects');
-        $this->db->join('property_types', 'project_property_type = pt_id', 'inner');
-
         $this->db->order_by('project_id', 'Asc');
 
         $query = $this->db->get();
 
         return $query->result_array();
     }
-    
+
     /**
      * get projects list 
      */
     function find_latest_with_limit($count) {
 
-        $this->db->select('*,pt_name');
+        $this->db->select('*');
         $this->db->from('projects');
-        $this->db->join('property_types', 'project_property_type = pt_id', 'inner');
         $this->db->order_by('project_updated_at', 'DESC');
         $this->db->limit($count);
 
@@ -55,9 +80,8 @@ class Project_model extends CI_Model {
      */
     function find_by_id($project_id) {
 
-        $this->db->select('*,pt_name');
+        $this->db->select('*');
         $this->db->from('projects');
-        $this->db->join('property_types', 'project_property_type = pt_id', 'inner');
         $this->db->where('project_id', $project_id);
         $this->db->order_by('project_id', 'Asc');
         $this->db->limit(1);
@@ -70,26 +94,38 @@ class Project_model extends CI_Model {
     /**
      * get projects list by search conditions
      */
-    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'project_id', $sort_order = 'asc') {
 
-        $this->db->select('*,pt_name');
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('project_id', 'project_name', 'project_reference', 'project_location', 'project_developer');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'project_id';
+
+        $this->db->select('*');
         $this->db->from('projects');
-        $this->db->join('property_types', 'project_property_type = pt_id', 'inner');
-
-        if ($search_string) {
-
-            $this->db->like('project_name', $search_string);
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('project_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+
+
+        if (isset($query_array['project_name']) && strlen($query_array['project_name'])) {
+
+            $this->db->like('project_name', $query_array['project_name']);
+        }
+        if (isset($query_array['project_reference']) && strlen($query_array['project_reference'])) {
+
+            $this->db->like('project_reference', $query_array['project_reference']);
+        }
+
+        if (isset($query_array['project_location']) && strlen($query_array['project_location'])) {
+
+            $this->db->like('project_location', $query_array['project_location']);
+        }
+        if (isset($query_array['project_developer']) && strlen($query_array['project_developer'])) {
+
+            $this->db->like('project_developer', $query_array['project_developer']);
+        }
+
 
         $query = $this->db->get();
 
@@ -141,17 +177,17 @@ class Project_model extends CI_Model {
      * @return boolean
      */
     function delete($id) {
-        
+
         $this->db->trans_start(); # Starting Transaction
 
         $this->db->trans_strict(FALSE);
-        
+
         $this->Project_thumbnail_model->delete_by_project_id($id);
 
         $this->db->where('project_id', $id);
-        
+
         $this->db->delete('projects');
-        
+
         $this->db->trans_complete();
 
         if ($this->db->trans_status() === FALSE) {
@@ -159,8 +195,6 @@ class Project_model extends CI_Model {
         } else {
             return true;
         }
-        
-        
     }
 
 }

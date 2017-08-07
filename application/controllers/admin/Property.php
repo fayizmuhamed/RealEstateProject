@@ -23,68 +23,77 @@ class Property extends AdminController {
         $this->load->model('Configuration_model');
         $this->load->model('Property_type_model');
         $this->load->model('Property_model');
+        $this->load->library("pagination");
     }
 
     /**
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index() {
+    public function index($sort_by = 'property_id', $sort_order = 'asc', $offset = 0) {
+
+        $limit = ADMIN_ITEM_PER_LIST_PAGE;
+
         //all the posts sent by the view
+        $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
 
-        //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/properties';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
+        $query_array = array(
+            $filter => $search_string
+        );
+        
+        $properties = $this->Property_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
 
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $offset = ($page * $config['per_page']) - $config['per_page'];
-        if ($offset < 0) {
-            $offset = 0;
-        }
-
-        $properties = $this->Property_model->find_with_search($config['per_page'], $offset, $search_string, $order, $order_type);
-
-
-        $config['total_rows'] = $properties == null ? 0 : count($properties);
+        $data['properties'] = $properties;
+        $data['sort_order'] = $sort_order;
+        $data['sort_by'] = $sort_by;
+        
+         //pagination settings
+        $config = array();
+        $config['base_url'] = site_url("admin/properties/$sort_by/$sort_order");
+        $config["total_rows"] = $this->Property_model->record_count($query_array);
+        $config["per_page"] = $limit;
+        $config["uri_segment"] = 5;
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
 
-        $data['properties'] = $properties;
-
         //load the view
         $data['content'] = 'admin/properties/list';
+
 
         $this->load->view('includes/admin_template', $data);
     }
 
-    public function add() {
-        
-    }
+    public function property_navigations($property_ref_no) {
 
-    /**
-     * Update item by his id
-     * @return void
-     */
-    public function update($id) {
-        
-    }
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
-    //update
-    /**
-     * Delete product by his id
-     * @return void
-     */
-    public function delete($id) {
-        
+            $data_to_store = array(
+                'property_ref_no' => $property_ref_no,
+                'property_navigations' => $this->getPropertyNavigations()
+            );
+
+            //if the insert has returned true then we show the flash message
+            if ($this->Property_navigation_model->insert_property_navigations($property_ref_no, $data_to_store)) {
+
+                $this->session->set_flashdata('flash_message', TRUE);
+                redirect('admin/properties');
+            } else {
+                $this->session->set_flashdata('flash_message', FALSE);
+            }
+        }
+
+
+        $property = $this->Property_model->find_by_ref_no($property_ref_no);
+        $data['property'] = $property;
+        $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property_ref_no);
+
+        $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
+        //load the view
+        $data['content'] = 'admin/properties/property_navigations';
+        $this->load->view('includes/admin_template', $data);
     }
 
     function getUrl() {
@@ -123,7 +132,7 @@ class Property extends AdminController {
         $this->load->helper('xml');
 
         $context = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
-        
+
         $url = $this->getUrl();
 
         if ($url) {
@@ -227,19 +236,18 @@ class Property extends AdminController {
                             //if the insert has returned true then we show the flash message
                             if (!$this->Property_model->insert($data_to_store)) {
 
-                                log_message('error', 'Property insertion  failed for'+var_export($data_to_store, TRUE));
-                                
+                                log_message('error', 'Property insertion  failed for' + var_export($data_to_store, TRUE));
                             }
                         } else {
 
                             //if the insert has returned true then we show the flash message
                             if (!$this->Property_model->update($property->property_id, $data_to_store)) {
 
-                                log_message('error', 'Property updation  failed for '+var_export($data_to_store, TRUE));
+                                log_message('error', 'Property updation  failed for ' + var_export($data_to_store, TRUE));
                             }
                         }
                     }
-                    
+
                     $this->session->set_flashdata('flash_message', 'success');
                 }
             } else {
@@ -250,8 +258,33 @@ class Property extends AdminController {
             log_message('error', 'XML integration url not configured');
             $this->session->set_flashdata('flash_message', 'XML integration url not configured');
         }
-        
+
         redirect('admin/properties');
+    }
+
+    public function getPropertyNavigations() {
+
+        $navigation_list = navigation_list();
+
+        $navigations = $this->input->post('navigations');
+
+        $navigation_values = $this->input->post('navigation_values');
+
+        $property_navigations = array();
+
+        foreach ($navigations as $key => $value) {
+
+            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
+
+            if ($navigation_key) {
+
+                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+
+                $property_navigations[$navigation_key] = $navigation_value;
+            }
+        }
+
+        return json_encode($property_navigations);
     }
 
     //        $doc = new DOMDocument();

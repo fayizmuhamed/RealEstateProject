@@ -32,39 +32,6 @@ class Community extends PublicController {
 
         if ($id == null) {
 
-//            //all the posts sent by the view
-//            $search_string = $this->input->post('search_string');
-//            $order = $this->input->post('order');
-//            $order_type = $this->input->post('order_type');
-//
-//            //pagination settings
-//            $config['per_page'] = 20;
-//            $config['base_url'] = base_url() . 'admin/projects';
-//            $config['use_page_numbers'] = TRUE;
-//            $config['num_links'] = 20;
-//
-//            //limit end
-//            $page = $this->uri->segment(3);
-//
-//            //math to get the initial record to be select in the database
-//            $limit_end = ($page * $config['per_page']) - $config['per_page'];
-//            if ($limit_end < 0) {
-//                $limit_end = 0;
-//            }
-//
-//            //load the view
-//            $communities = $this->Community_model->get_communities_with_search($search_string, $order, $order_type, $config['per_page'], $limit_end);
-//
-//
-//            $config['total_rows'] = $communities == null ? 0 : count($communities);
-//
-//            //initializate the panination helper 
-//            $this->pagination->initialize($config);
-//
-//            $data['communities'] = $communities;
-//
-//            $data['content'] = 'public/community';
-//            $this->load->view('includes/public/template', $data);
         } else {
 
             //load the view
@@ -72,8 +39,8 @@ class Community extends PublicController {
 
             $data['community'] = $community;
             $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
-            $data['properties_sale'] = $this->Property_model->search_properties(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,'sale',null,null,null,null,null,null,null,null,null,$community[0]['community_name'],null,null);
-            $data['properties_rent'] = $this->Property_model->search_properties(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,'rent',null,null,null,null,null,null,null,null,null,$community[0]['community_name'],null,null);
+            $data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'sale',null,null);
+            $data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'rent',null,null);
 
             //load the view
             $data['content'] = 'public/community_detail';

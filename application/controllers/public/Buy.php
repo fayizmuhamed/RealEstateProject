@@ -60,6 +60,14 @@ class Buy extends PublicController {
             }
         }
 
+        if (isset($property->property_ref_no) && $property->property_ref_no != "") {
+
+            $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property->property_ref_no);
+
+            $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
+        }
+
+
 
         //load the view
         $data['content'] = 'public/buy_detail';

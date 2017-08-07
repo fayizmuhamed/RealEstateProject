@@ -11,6 +11,31 @@
                 </a>
             </button>
         </div>
+        <div class="admin-search-box">
+            <?php echo form_open('admin/opportunities') ?>
+            <div class="filter-select">
+                <?php echo form_dropdown('filter', array('opportunity_title' => 'Title','opportunity_location' => 'Location'), set_value('filter'), 'id="filter",class="browser-default"')
+                ?>
+
+            </div>
+            <div class="filter-text">
+                <?php echo form_input('search_string', set_value('search_string'), array('id' => 'search_string', 'placeholder' => 'Search text')) ?>
+            </div>
+            <div class="filter-button">
+
+                <?php
+                echo form_button(
+                        array('name' => 'search_opportunity',
+                            'id' => 'search_opportunity',
+                            'value' => 'true',
+                            'type' => 'submit',
+                            'class' => 'btn waves-effect waves-light btn-search',
+                            'content' => '<i class="zmdi zmdi-search"></i>'));
+                ?>
+
+            </div>
+            <?php echo form_close() ?>
+        </div>
     </div>
 
     <div class="table">
@@ -18,10 +43,10 @@
             <thead>
                 <tr>
                     <th>Sl No</th>
-                    <th>Title</th>
-                    <th>Location</th>
-                    <th>Sub location</th>
-                    <th>Added On</th>
+                    <th><?php echo anchor('admin/opportunities/opportunity_title/' . (($sort_order == 'asc' && $sort_by == 'opportunity_title') ? 'desc' : 'asc'), 'Title'); ?></th>
+                    <th><?php echo anchor('admin/opportunities/opportunity_location/' . (($sort_order == 'asc' && $sort_by == 'opportunity_location') ? 'desc' : 'asc'), 'Location'); ?></th>
+                    <th><?php echo anchor('admin/opportunities/opportunity_sub_location/' . (($sort_order == 'asc' && $sort_by == 'opportunity_sub_location') ? 'desc' : 'asc'), 'Sub location'); ?></th>
+                    <th><?php echo anchor('admin/opportunities/opportunity_created_at/' . (($sort_order == 'asc' && $sort_by == 'opportunity_created_at') ? 'desc' : 'asc'), 'Added On'); ?></th>
                     <th class="width-150">Action</th>
                 </tr>
             </thead>
@@ -45,7 +70,12 @@
                 ?> 
             </tbody>
         </table>
-        <?php echo $this->pagination->create_links(); ?>
+        <br />
+        <div class="clear pagination">
+            <ul>
+                <p><?php echo $this->pagination->create_links(); ?></p>
+            </ul>    
+        </div>
     </div>
 
 </div>

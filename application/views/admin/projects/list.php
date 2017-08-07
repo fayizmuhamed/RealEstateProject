@@ -11,17 +11,44 @@
                 </a>
             </button>
         </div>
+        <div class="admin-search-box">
+            <?php echo form_open('admin/projects') ?>
+            <div class="filter-select">
+                <?php echo form_dropdown('filter', array('project_name' => 'Name','project_reference' => 'Ref no','project_location' => 'Location','project_developer' => 'Developer'), set_value('filter'), 'id="filter",class="browser-default"')
+                ?>
+
+            </div>
+            <div class="filter-text">
+                <?php echo form_input('search_string', set_value('search_string'), array('id' => 'search_string', 'placeholder' => 'Search text')) ?>
+            </div>
+            <div class="filter-button">
+
+                <?php
+                echo form_button(
+                        array('name' => 'search_project',
+                            'id' => 'search_project',
+                            'value' => 'true',
+                            'type' => 'submit',
+                            'class' => 'btn waves-effect waves-light btn-search',
+                            'content' => '<i class="zmdi zmdi-search"></i>'));
+                ?>
+
+            </div>
+            <?php echo form_close() ?>
+        </div>
     </div>
 
     <div class="table">
         <table class="striped responsive-table">
             <thead>
-                <tr>
+                <tr> 
+                    
                     <th>Sl No</th>
-                    <th>Name</th>
-                    <th>Reference</th>
-                    <th>Location</th>
-                    <th>Developer</th>
+                    <th><?php echo anchor('admin/projects/project_name/' . (($sort_order == 'asc' && $sort_by == 'project_name') ? 'desc' : 'asc'), 'Name'); ?></th>
+                    <th><?php echo anchor('admin/projects/project_reference/' . (($sort_order == 'asc' && $sort_by == 'project_reference') ? 'desc' : 'asc'), 'Reference'); ?></th>
+                    <th><?php echo anchor('admin/projects/project_location/' . (($sort_order == 'asc' && $sort_by == 'project_location') ? 'desc' : 'asc'), 'Location'); ?></th>
+                    <th><?php echo anchor('admin/projects/project_developer/' . (($sort_order == 'asc' && $sort_by == 'project_developer') ? 'desc' : 'asc'), 'Developer'); ?></th>
+                    
                     <th class="width-150">Action</th>
                 </tr>
             </thead>
@@ -46,7 +73,12 @@
                 
             </tbody>
         </table>
-        <?php echo $this->pagination->create_links(); ?>
+        <br />
+        <div class="clear pagination">
+            <ul>
+                <p><?php echo $this->pagination->create_links(); ?></p>
+            </ul>    
+        </div>
     </div>
 
 </div>

@@ -59,46 +59,58 @@ $route['admin/login'] = 'admin/user';
 $route['admin']="admin/user";
 
 $route['admin/home']='admin/home';
+
 $route['admin/properties']='admin/property';
+$route['admin/properties/navigations/(:any)']='admin/property/property_navigations/$1';
 $route['admin/properties/sync']='admin/property/property_sync';
+$route['admin/properties/(:any)/(:any)'] = 'admin/property/index/$1/$2';
+$route['admin/properties/(:any)/(:any)/(:num)'] = 'admin/property/index/$1/$2/$3';
+
 
 $route['admin/propertytypes']='admin/property_type';
 $route['admin/propertytypes/add']='admin/property_type/add';
 $route['admin/propertytypes/update']='admin/property_type/update';
 $route['admin/propertytypes/update/(:any)'] = 'admin/property_type/update/$1';
 $route['admin/propertytypes/delete/(:any)'] = 'admin/property_type/delete/$1';
-$route['admin/propertytypes/(:any)'] = 'admin/property_type/index/$1';
+$route['admin/propertytypes/(:any)/(:any)'] = 'admin/property_type/index/$1/$2';
+$route['admin/propertytypes/(:any)/(:any)/(:num)'] = 'admin/property_type/index/$1/$2/$3';
 
 $route['admin/testimonials']='admin/testimonial';
 $route['admin/testimonials/add']='admin/testimonial/add';
 $route['admin/testimonials/update/(:any)'] = 'admin/testimonial/update/$1';
 $route['admin/testimonials/delete/(:any)'] = 'admin/testimonial/delete/$1';
-$route['admin/testimonials/(:any)'] = 'admin/testimonial/index/$1';
+$route['admin/testimonials/(:any)/(:any)'] = 'admin/testimonial/index/$1/$2';
+$route['admin/testimonials/(:any)/(:any)/(:num)'] = 'admin/testimonial/index/$1/$2/$3';
 
 $route['admin/opportunities']='admin/opportunity';
 $route['admin/opportunities/add']='admin/opportunity/add';
 $route['admin/opportunities/update/(:any)'] = 'admin/opportunity/update/$1';
 $route['admin/opportunities/delete/(:any)'] = 'admin/opportunity/delete/$1';
-$route['admin/opportunities/(:any)'] = 'admin/opportunity/index/$1';
+$route['admin/opportunities/(:any)/(:any)'] = 'admin/opportunity/index/$1/$2';
+$route['admin/opportunities/(:any)/(:any)/(:num)'] = 'admin/opportunity/index/$1/$2/$3';
 
 
 $route['admin/employees']='admin/employee';
 $route['admin/employees/add']='admin/employee/add';
 $route['admin/employees/update/(:any)'] = 'admin/employee/update/$1';
 $route['admin/employees/delete/(:any)'] = 'admin/employee/delete/$1';
-$route['admin/employees/(:any)'] = 'admin/employee/index/$1';
+$route['admin/employees/search'] = 'admin/employee/search_ajax';
+$route['admin/employees/(:any)/(:any)'] = 'admin/employee/index/$1/$2';
+$route['admin/employees/(:any)/(:any)/(:num)'] = 'admin/employee/index/$1/$2/$3';
 
 $route['admin/departments']='admin/department';
 $route['admin/departments/add']='admin/department/add';
 $route['admin/departments/update/(:any)'] = 'admin/department/update/$1';
 $route['admin/departments/delete/(:any)'] = 'admin/department/delete/$1';
-$route['admin/departments/(:any)'] = 'admin/department/index/$1';
+$route['admin/departments/(:any)/(:any)'] = 'admin/department/index/$1/$2';
+$route['admin/departments/(:any)/(:any)/(:num)'] = 'admin/department/index/$1/$2/$3';
 
 $route['admin/designations']='admin/designation';
 $route['admin/designations/add']='admin/designation/add';
 $route['admin/designations/update/(:any)'] = 'admin/designation/update/$1';
 $route['admin/designations/delete/(:any)'] = 'admin/designation/delete/$1';
-$route['admin/designations/(:any)'] = 'admin/designation/index/$1';
+$route['admin/designations/(:any)/(:any)'] = 'admin/designation/index/$1/$2';
+$route['admin/designations/(:any)/(:any)/(:num)'] = 'admin/designation/index/$1/$2/$3';
 
 $route['admin/projects']='admin/project';
 $route['admin/projects/add']='admin/project/add';
@@ -107,7 +119,8 @@ $route['admin/projects/edit/(:any)']='admin/project/edit/$1';
 $route['admin/projects/update'] = 'admin/project/update';
 $route['admin/projects/delete/(:any)'] = 'admin/project/delete/$1';
 $route['admin/projects/delete_thumbnail/(:any)'] = 'admin/project/deleteProjectThumbnail/$1';
-$route['admin/projects/(:any)'] = 'admin/projects/index/$1';
+$route['admin/projects/(:any)/(:any)'] = 'admin/project/index/$1/$2';
+$route['admin/projects/(:any)/(:any)/(:num)'] = 'admin/project/index/$1/$2/$3';
 
 
 
@@ -118,7 +131,8 @@ $route['admin/communities/edit/(:any)']='admin/community/edit/$1';
 $route['admin/communities/update']='admin/community/update';
 $route['admin/communities/delete/(:any)'] = 'admin/community/delete/$1';
 $route['admin/communities/delete_thumbnail/(:any)'] = 'admin/community/deleteCommunityThumbnail/$1';
-$route['admin/communities/(:any)'] = 'admin/community/index/$1';
+$route['admin/communities/(:any)/(:any)'] = 'admin/community/index/$1/$2';
+$route['admin/communities/(:any)/(:any)/(:num)'] = 'admin/community/index/$1/$2/$3';
 
 $route['admin/config/careerguide']='admin/configuration/careerGuide';
 $route['admin/config/infoguide']='admin/configuration/infoGuide';
@@ -152,6 +166,7 @@ $route['buy']='public/buy';
 $route['viewprofile/(:num)']='public/team/viewProfile/$1';
 $route['teams/findEmployeesWithSearch']='public/team/findEmployeesWithSearch';
 $route['teams']='public/team';
+$route['teams/(:any)']='public/team/index/$1';
 
 $route['communities/getCommunities']='public/community/getCommunities';
 $route['communities/(:num)']='public/community/index/$1';

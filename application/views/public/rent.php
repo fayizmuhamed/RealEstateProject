@@ -82,13 +82,12 @@
             <div class="col s12">
                 <ul class="tabs tabs-fixed-width">
                     <li class="tab"><a class="active rent-tab" href="#" value="">ALL</a></li>
-                    <li class="tab"><a href="#" class="rent-tab" value="residential">READY RESIDNETIAL</a></li>
-                    <li class="tab"><a href="#" class="rent-tab" value="commercial">READY COMMERCIAL</a></li>
-                    <li class="tab"><a href="#" class="rent-tab" value="off_plan">OFFPLAN</a></li>
+                    <li class="tab"><a href="#" class="rent-tab" value="residential">RESIDNETIAL</a></li>
+                    <li class="tab"><a href="#" class="rent-tab" value="commercial">COMMERCIAL</a></li>
                     <li class="tab"><a href="#" class="rent-tab" value="featured">FEATURED</a></li>
                     <li class="tab"><a href="#" class="rent-tab" value="plots">PLOTS</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">TENANT'S GUIDE</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>teams" target="_self">MEET RENT TEAM</a></li>
+                    <li class="tab"><a href="<?php echo base_url(); ?>teams/rental" target="_self">MEET RENT TEAM</a></li>
                 </ul>
             </div>
 

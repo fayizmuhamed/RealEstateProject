@@ -29,38 +29,34 @@ class Community extends AdminController {
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index() {
+    public function index($sort_by = 'community_id', $sort_order = 'asc', $offset = 0) {
+
+        $limit = ADMIN_ITEM_PER_LIST_PAGE;
 
         //all the posts sent by the view
+        $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
-        $order = $this->input->post('order');
-        $order_type = $this->input->post('order_type');
+
+        $query_array = array(
+            $filter => $search_string
+        );
+
+        $communities = $this->Community_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
+
+        $data['communities'] = $communities;
+        $data['sort_order'] = $sort_order;
+        $data['sort_by'] = $sort_by;
 
         //pagination settings
-        $config['per_page'] = 20;
-        $config['base_url'] = base_url() . 'admin/communities';
-        $config['use_page_numbers'] = TRUE;
-        $config['num_links'] = 20;
-
-        //limit end
-        $page = $this->uri->segment(3);
-
-        //math to get the initial record to be select in the database
-        $offset = ($page * $config['per_page']) - $config['per_page'];
-        if ($offset < 0) {
-            $offset = 0;
-        }
-
-        $communities = $this->Community_model->find_with_search($config['per_page'], $offset, $search_string, $order, $order_type);
-
-
-        $config['total_rows'] = $communities == null ? 0 : count($communities);
+        $config = array();
+        $config['base_url'] = site_url("admin/communities/$sort_by/$sort_order");
+        $config["total_rows"] = $this->Community_model->record_count($query_array);
+        $config["per_page"] = $limit;
+        $config["uri_segment"] = 5;
 
         //initializate the panination helper 
         $this->pagination->initialize($config);
 
-
-        $data['communities'] = $communities;
 
         //load the view
         $data['content'] = 'admin/communities/list';
@@ -73,7 +69,6 @@ class Community extends AdminController {
      */
     public function add() {
 
-        //load the view
 
         $data['property_types'] = $this->Property_type_model->find_all();
         //load the view
@@ -105,14 +100,16 @@ class Community extends AdminController {
 
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
+
+
+
                 $data_to_store = array(
                     'community_name' => $this->input->post('community_name'),
                     'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => $this->input->post('community_location_url'),
-                    'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
-                    'community_dis_from_public_transport' => $this->input->post('community_dis_from_public_transport'),
-                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? "" : $this->upload_data['community_cover_image']['file_name']
+                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? "" : $this->upload_data['community_cover_image']['file_name'],
+                    'community_navigations'=>$this->getCommunityNavigations()
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
@@ -162,9 +159,8 @@ class Community extends AdminController {
                     'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => $this->input->post('community_location_url'),
-                    'community_dis_from_metro' => $this->input->post('community_dis_from_metro'),
-                    'community_dis_from_public_transport' => $this->input->post('community_dis_from_public_transport'),
-                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? $this->input->post('community_cover_image_hidden') : $this->upload_data['community_cover_image']['file_name']
+                    'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? $this->input->post('community_cover_image_hidden') : $this->upload_data['community_cover_image']['file_name'],
+                    'community_navigations'=>$this->getCommunityNavigations()
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
@@ -187,6 +183,31 @@ class Community extends AdminController {
                 exit($this->send_response($status, $message));
             }
         }
+    }
+
+    public function getCommunityNavigations() {
+
+        $navigation_list = navigation_list();
+
+        $navigations = $this->input->post('navigations');
+
+        $navigation_values = $this->input->post('navigation_values');
+
+        $community_navigations = array();
+
+        foreach ($navigations as $key => $value) {
+
+            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
+
+            if ($navigation_key) {
+
+                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+
+                $community_navigations[$navigation_key] = $navigation_value;
+            }
+        }
+
+        return json_encode($community_navigations);
     }
 
 //update

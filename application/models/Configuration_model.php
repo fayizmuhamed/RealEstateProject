@@ -18,6 +18,10 @@ class Configuration_model extends CI_Model {
     function __construct() {
         
     }
+    
+    public function record_count() {
+        return $this->db->count_all("configurations");
+    }
 
     /**
      * get configuration list

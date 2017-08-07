@@ -17,6 +17,47 @@ class Testimonial_model extends CI_Model {
         
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('testimonials');
+        $this->db->join('employees', 'testimonial_agent = emp_id', 'left');
+
+        if (isset($query_array['testimonial_author_name']) && strlen($query_array['testimonial_author_name'])) {
+
+            $this->db->like('testimonial_author_name', $query_array['testimonial_author_name']);
+        }
+        if (isset($query_array['testimonial_author_email']) && strlen($query_array['testimonial_author_email'])) {
+
+            $this->db->like('testimonial_author_email', $query_array['testimonial_author_email']);
+        }
+
+        if (isset($query_array['testimonial_author_contact']) && strlen($query_array['testimonial_author_contact'])) {
+
+            $this->db->like('testimonial_author_contact', $query_array['testimonial_author_contact']);
+        }
+
+        if (isset($query_array['emp_name']) && strlen($query_array['emp_name'])) {
+
+            $this->db->like('emp_name', $query_array['emp_name']);
+        }
+
+        if (isset($query_array['testimonial_approved']) && strlen($query_array['testimonial_approved'])) {
+
+            if ($query_array['testimonial_approved'] == 'yes') {
+
+                $this->db->where('testimonial_approved', 1);
+            } else if ($query_array['testimonial_approved'] == 'no') {
+
+                $this->db->where('testimonial_approved', 0);
+            }
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get testimonials list
      */
@@ -58,7 +99,14 @@ class Testimonial_model extends CI_Model {
     /**
      * get testimonial list with search conditions
      */
-    function find_with_search($limit, $offset, $filter = null, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'testimonial_id', $sort_order = 'desc') {
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('testimonial_id', 'testimonial_author_name', 'testimonial_author_email', 'testimonial_author_contact', 'emp_name','testimonial_created_at');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'testimonial_id';
+
 
         $this->db->select('*');
         $this->db->from('testimonials');
@@ -66,34 +114,49 @@ class Testimonial_model extends CI_Model {
         $this->db->join('departments', 'emp_department = dep_id', 'left');
         $this->db->join('designations', 'emp_designation = des_id', 'left');
         $this->db->join('property_types', 'testimonial_property_type = pt_id', 'left');
+        $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+        
+        
+        if (isset($query_array['testimonial_author_name']) && strlen($query_array['testimonial_author_name'])) {
 
-        if ($filter && ($search_string!==null && $search_string !== "")) {
+            $this->db->like('testimonial_author_name', $query_array['testimonial_author_name']);
+        }
+        if (isset($query_array['testimonial_author_email']) && strlen($query_array['testimonial_author_email'])) {
 
-            if ($filter === 'testimonial_agent') {
-                $this->db->like('testimonial_agent', $search_string);
+            $this->db->like('testimonial_author_email', $query_array['testimonial_author_email']);
+        }
+
+        if (isset($query_array['testimonial_author_contact']) && strlen($query_array['testimonial_author_contact'])) {
+
+            $this->db->like('testimonial_author_contact', $query_array['testimonial_author_contact']);
+        }
+
+        if (isset($query_array['emp_name']) && strlen($query_array['emp_name'])) {
+
+            $this->db->like('emp_name', $query_array['emp_name']);
+        }
+
+        if (isset($query_array['testimonial_approved']) && strlen($query_array['testimonial_approved'])) {
+
+            if ($query_array['testimonial_approved'] == 'yes') {
+
+                $this->db->where('testimonial_approved', 1);
+            } else if ($query_array['testimonial_approved'] == 'no') {
+
+                $this->db->where('testimonial_approved', 0);
             }
         }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('testimonial_id', $order_type);
-        }
-
-        $this->db->limit($limit, $offset);
 
         $query = $this->db->get();
 
         return $query->result_array();
     }
 
-    
     /**
      * get testimonial list with search conditions
      */
-    function find_approved_testimonial_with_search($limit, $offset, $filter = null, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_approved_testimonial_by_agent($limit, $offset, $agent = null, $order = 'testimonial_updated_at', $order_type = 'desc') {
 
         $this->db->select('*');
         $this->db->from('testimonials');
@@ -103,11 +166,10 @@ class Testimonial_model extends CI_Model {
         $this->db->join('property_types', 'testimonial_property_type = pt_id', 'left');
         $this->db->like('testimonial_approved', 1);
 
-        if ($filter && ($search_string!==null && $search_string !== "")) {
+        if ($agent) {
 
-            if ($filter === 'testimonial_agent') {
-                $this->db->like('testimonial_agent', $search_string);
-            }
+            $this->db->where('testimonial_agent', $agent);
+           
         }
 
         if ($order) {
@@ -124,7 +186,7 @@ class Testimonial_model extends CI_Model {
 
         return $query->result_array();
     }
-    
+
     /**
      * Store the testimonial into the database
      * @param array $data - associative array with data to store

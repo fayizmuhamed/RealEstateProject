@@ -33,7 +33,7 @@ class Testimonial extends PublicController {
         if ($id == null) {
 
 
-            $testimonials = $this->Testimonial_model->find_approved_testimonial_with_search(TESTIMONIAL_COUNT_PER_PAGE, 0, null, null, 'testimonial_updated_at', 'DESC');
+            $testimonials = $this->Testimonial_model->find_approved_testimonial_by_agent(TESTIMONIAL_COUNT_PER_PAGE, 0, null, 'testimonial_updated_at', 'DESC');
 
             $data['testimonials'] = $testimonials;
             //load the view
@@ -41,7 +41,7 @@ class Testimonial extends PublicController {
             $this->load->view('includes/public/template', $data);
         } else {
 
-            $testimonials = $this->Testimonial_model->find_approved_testimonial_with_search(TESTIMONIAL_COUNT_PER_PAGE, 0, 'testimonial_agent', $id, 'testimonial_updated_at', 'DESC');
+            $testimonials = $this->Testimonial_model->find_approved_testimonial_by_agent(TESTIMONIAL_COUNT_PER_PAGE, 0, $id, 'testimonial_updated_at', 'DESC');
             $data['testimonials'] = $testimonials;
 
             $employees = $this->Testimonial_model->find_by_id($id);
@@ -55,8 +55,7 @@ class Testimonial extends PublicController {
 
      public function findTestimonialWithSearch() {
 
-        $filter= $this->input->get('filter');
-        $search_string = $this->input->get('search_string');
+        $agent= $this->input->get('testimonial_agent');
         $order = $this->input->get('order');
         $order_type = $this->input->get('order_type');
         
@@ -69,7 +68,7 @@ class Testimonial extends PublicController {
             $offset = 0;
         }
 
-        $testimonials = $this->Testimonial_model->find_approved_testimonial_with_search(TESTIMONIAL_COUNT_PER_PAGE, $offset, $filter, $search_string,$order,$order_type);
+        $testimonials = $this->Testimonial_model->find_approved_testimonial_by_agent(TESTIMONIAL_COUNT_PER_PAGE, $offset, $agent,$order,$order_type);
 
         exit ($this->send_response('success', $testimonials));
     }

@@ -16,9 +16,31 @@ class Property_type_model extends CI_Model {
     function __construct() {
         
     }
-    
-    function find_by_id($id) {
+
+    public function record_count($query_array) {
         
+        //count query
+        $query= $this->db->select('COUNT(*) as count',FALSE)
+                ->from('property_types')
+                ->join('property_models', 'pt_model_id = pm_id', 'left');
+        
+          
+        if(isset($query_array['pt_name'])&&strlen($query_array['pt_name'])){
+            
+             $query->like('pt_name', $query_array['pt_name']);
+        }
+        if(isset($query_array['pm_name'])&&strlen($query_array['pm_name'])){
+            
+             $query->like('pm_name', $query_array['pm_name']);
+        }
+        
+        $temp=$query->get()->result();
+        
+        return $temp[0]->count;
+    }
+
+    function find_by_id($id) {
+
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
@@ -32,9 +54,9 @@ class Property_type_model extends CI_Model {
 
         return $query->result_array();
     }
-    
+
     function find_by_name($name) {
-        
+
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
@@ -63,7 +85,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
         $this->db->from('property_types');
-      
+
         $this->db->join('property_models', 'pt_model_id = pm_id', 'left');
 
         $this->db->group_by('pt_id');
@@ -74,12 +96,18 @@ class Property_type_model extends CI_Model {
         return $query->result_array();
     }
 
-
     /**
      * get property type list by parent id
      */
-    function find_with_search($limit, $offset, $property_model_id = null, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by, $sort_order) {
 
+        
+        $sort_order=($sort_order=='desc')?'desc':'asc';
+        
+        $sort_column=array('pt_name','pm_name','pt_id');
+        
+        $sort_by=(in_array($sort_by, $sort_column))?$sort_by:'pt_id';
+        
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
@@ -87,29 +115,20 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
         $this->db->from('property_types');
-        if ($property_model_id != null) {
-            $this->db->where('pt_model_id', $property_model_id);
-        }
-
-        if ($search_string) {
-
-            $this->db->like('pt_name', $search_string);
-        }
-
         $this->db->join('property_models', 'pt_model_id = pm_id', 'left');
-
-        $this->db->group_by('pt_id');
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('pt_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
-
+        $this->db->order_by($sort_by, $sort_order);
+        
+        
+        if(isset($query_array['pt_name'])&&strlen($query_array['pt_name'])){
+            
+             $this->db->like('pt_name', $query_array['pt_name']);
+        }
+        if(isset($query_array['pm_name'])&&strlen($query_array['pm_name'])){
+            
+             $this->db->like('pm_name', $query_array['pm_name']);
+        }
+        
         $query = $this->db->get();
 
         return $query->result_array();

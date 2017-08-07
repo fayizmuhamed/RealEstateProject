@@ -11,6 +11,31 @@
                 </a>
             </button>
         </div>
+        <div class="admin-search-box">
+            <?php echo form_open('admin/departments') ?>
+            <div class="filter-select">
+                <?php echo form_dropdown('filter', array('dep_name' => 'Name'), set_value('filter'), 'id="filter",class="browser-default"')
+                ?>
+
+            </div>
+            <div class="filter-text">
+                <?php echo form_input('search_string', set_value('search_string'), array('id' => 'search_string', 'placeholder' => 'Search text')) ?>
+            </div>
+            <div class="filter-button">
+
+                <?php
+                echo form_button(
+                        array('name' => 'search_department',
+                            'id' => 'search_department',
+                            'value' => 'true',
+                            'type' => 'submit',
+                            'class' => 'btn waves-effect waves-light btn-search',
+                            'content' => '<i class="zmdi zmdi-search"></i>'));
+                ?>
+
+            </div>
+            <?php echo form_close() ?>
+        </div>
     </div>
 
     <div class="table">
@@ -18,8 +43,9 @@
             <thead>
                 <tr>
                     <th>Sl No</th>
-                    <th>Name</th>
-                    <th>Added On</th>
+                    <th><?php echo anchor('admin/departments/dep_name/' . (($sort_order == 'asc' && $sort_by == 'dep_name') ? 'desc' : 'asc'), 'Name'); ?></th>
+                    <th><?php echo anchor('admin/departments/dep_created_at/' . (($sort_order == 'asc' && $sort_by == 'dep_created_at') ? 'desc' : 'asc'), 'Added On'); ?></th>
+
                     <th class="width-150">Action</th>
                 </tr>
             </thead>
@@ -41,7 +67,12 @@
                 ?> 
             </tbody>
         </table>
-        <?php echo $this->pagination->create_links(); ?>
+        <br />
+        <div class="clear pagination">
+            <ul>
+                <p><?php echo $this->pagination->create_links(); ?></p>
+            </ul>    
+        </div>
     </div>
 
 </div>

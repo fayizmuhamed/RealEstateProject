@@ -59,7 +59,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-widgets"></i>
-                                    <strong>Property Type</strong>: <?php echo $row['pt_name']; ?>
+                                    <strong>Property Type</strong>: <?php echo $row['project_property_type']; ?>
                                 </span>
 
                                 <span>
@@ -105,7 +105,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-widgets"></i>
-                                    <strong>Property Type</strong>: <?php echo $row['pt_name']; ?>
+                                    <strong>Property Type</strong>: <?php echo $row['project_property_type']; ?>
                                 </span>
 
                                 <span>

@@ -14,7 +14,8 @@
 class Property_model extends CI_Model {
 
     function __construct() {
-        
+
+        $this->load->model('Property_navigation_model');
     }
 
     function find_by_id($id) {
@@ -40,12 +41,33 @@ class Property_model extends CI_Model {
 
         return $query->row();
     }
-    
-     function find_by_agent_email_id($limit, $offset,$email_id,$order = null, $order_type = 'Asc') {
+
+    function find_by_agent_email_id($limit, $offset, $email_id, $order = null, $order_type = 'Asc') {
 
         $this->db->select('*');
         $this->db->from('properties');
         $this->db->where('property_listing_agent_email', $email_id);
+        if ($order) {
+
+            $this->db->order_by($order, $order_type);
+        } else {
+
+            $this->db->order_by('property_id', $order_type);
+        }
+
+        $this->db->limit($limit, $offset);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
+    function find_by_community_and_ad_type($limit, $offset, $community,$ad_type, $order = 'property_id', $order_type = 'Asc') {
+
+        $this->db->select('*');
+        $this->db->from('properties');
+        $this->db->where('property_community', $community);
+        $this->db->where('property_ad_type', $ad_type);
         if ($order) {
 
             $this->db->order_by($order, $order_type);
@@ -75,34 +97,110 @@ class Property_model extends CI_Model {
         return $query->result_array();
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('properties');
+
+        if (isset($query_array['property_ref_no']) && strlen($query_array['property_ref_no'])) {
+
+            $this->db->like('property_ref_no', $query_array['property_ref_no']);
+        }
+        if (isset($query_array['property_title']) && strlen($query_array['property_title'])) {
+
+            $this->db->like('property_title', $query_array['property_title']);
+        }
+
+        if (isset($query_array['property_ad_type']) && strlen($query_array['property_ad_type'])) {
+
+            $this->db->like('property_ad_type', $query_array['property_ad_type']);
+        }
+
+        if (isset($query_array['property_unit_model']) && strlen($query_array['property_unit_model'])) {
+
+            $this->db->like('property_unit_model', $query_array['property_unit_model']);
+        }
+
+        if (isset($query_array['property_community']) && strlen($query_array['property_community'])) {
+
+            $this->db->like('property_community', $query_array['property_community']);
+        }
+
+        if (isset($query_array['property_unit_type']) && strlen($query_array['property_unit_type'])) {
+
+            $this->db->like('property_unit_type', $query_array['property_unit_type']);
+        }
+
+        if (isset($query_array['property_listing_agent_phone']) && strlen($query_array['property_listing_agent_phone'])) {
+
+            $this->db->like('property_listing_agent_phone', $query_array['property_listing_agent_phone']);
+        }
+
+        if (isset($query_array['property_listing_agent_email']) && strlen($query_array['property_listing_agent_email'])) {
+
+            $this->db->like('property_listing_agent_email', $query_array['property_listing_agent_email']);
+        }
+
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get property list by parent id
      */
-    function find_with_search($limit, $offset, $filter, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'property_id', $sort_order = 'asc') {
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('property_ref_no', 'property_title', 'property_ad_type', 'property_unit_model', 'property_community', 'property_unit_type', 'property_listing_agent_phone', 'property_listing_agent_email');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'property_id';
 
         $this->db->select('*');
         $this->db->from('properties');
-
-        if ($filter && ($search_string !== null && $search_string !== "")) {
-
-            if ($filter === 'property_listing_agent_phone') {
-                $this->db->like('property_listing_agent_phone', $search_string);
-            } else if ($filter === 'property_community') {
-                $this->db->where('property_community', $search_string);
-            }else if ($filter === 'property_listing_agent_email') {
-                $this->db->where('property_listing_agent_email', $search_string);
-            }
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('property_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+
+        if (isset($query_array['property_ref_no']) && strlen($query_array['property_ref_no'])) {
+
+            $this->db->like('property_ref_no', $query_array['property_ref_no']);
+        }
+        if (isset($query_array['property_title']) && strlen($query_array['property_title'])) {
+
+            $this->db->like('property_title', $query_array['property_title']);
+        }
+
+        if (isset($query_array['property_ad_type']) && strlen($query_array['property_ad_type'])) {
+
+            $this->db->like('property_ad_type', $query_array['property_ad_type']);
+        }
+
+        if (isset($query_array['property_unit_model']) && strlen($query_array['property_unit_model'])) {
+
+            $this->db->like('property_unit_model', $query_array['property_unit_model']);
+        }
+
+        if (isset($query_array['property_community']) && strlen($query_array['property_community'])) {
+
+            $this->db->like('property_community', $query_array['property_community']);
+        }
+
+        if (isset($query_array['property_unit_type']) && strlen($query_array['property_unit_type'])) {
+
+            $this->db->like('property_unit_type', $query_array['property_unit_type']);
+        }
+
+        if (isset($query_array['property_listing_agent_phone']) && strlen($query_array['property_listing_agent_phone'])) {
+
+            $this->db->like('property_listing_agent_phone', $query_array['property_listing_agent_phone']);
+        }
+
+        if (isset($query_array['property_listing_agent_email']) && strlen($query_array['property_listing_agent_email'])) {
+
+            $this->db->like('property_listing_agent_email', $query_array['property_listing_agent_email']);
+        }
 
         $query = $this->db->get();
 
@@ -156,29 +254,19 @@ class Property_model extends CI_Model {
         $this->db->delete('properties');
     }
 
-    function fetch_featured_property_for_sale() {
+    function fetch_featured_property_by_ad_type($ad_type) {
 
         $this->db->select('*');
         $this->db->from('properties');
         $this->db->where('property_featured', 1);
-        $this->db->where('property_ad_type', 'sale');
+        $this->db->where('property_ad_type', $ad_type);
 
         $query = $this->db->get();
 
         return $query->result_array();
     }
 
-    function fetch_featured_property_for_rent() {
-
-        $this->db->select('*');
-        $this->db->from('properties');
-        $this->db->where('property_featured', 1);
-        $this->db->where('property_ad_type', 'rent');
-
-        $query = $this->db->get();
-
-        return $query->result_array();
-    }
+    
 
     /**
      * get property list by parent id

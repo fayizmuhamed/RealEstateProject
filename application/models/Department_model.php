@@ -17,6 +17,21 @@ class Department_model extends CI_Model {
         
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('departments');
+
+        if (isset($query_array['dep_name']) && strlen($query_array['dep_name'])) {
+
+            $this->db->like('dep_name', $query_array['dep_name']);
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get department list
      */
@@ -25,7 +40,7 @@ class Department_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('departments');
         $this->db->order_by('dep_id', 'Asc');
-        
+
 
         $query = $this->db->get();
 
@@ -50,25 +65,24 @@ class Department_model extends CI_Model {
     /**
      * get department list with search conditions
      */
-    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'dep_id', $sort_order = 'asc') {
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('dep_id', 'dep_name', 'dep_created_at');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'dep_id';
 
         $this->db->select('*');
         $this->db->from('departments');
-
-        if ($search_string) {
-
-            $this->db->like('dep_name', $search_string);
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('dep_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+
+        if (isset($query_array['dep_name']) && strlen($query_array['dep_name'])) {
+
+            $this->db->like('dep_name', $query_array['dep_name']);
+        }
+
 
         $query = $this->db->get();
 

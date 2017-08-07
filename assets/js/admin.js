@@ -390,6 +390,13 @@ $(document).ready(function () {
     $("#frm_edit_community").on('submit', updateCommunity);
 
 
+    $(".naviagation").change(function(e) {
+        e.preventDefault();
+         $(this).parent().find('input[type="text"]').prop("disabled", !this.checked);
+        //var btnProjectThumbnailDelete = $(this);
+    
+    });
+
 });
 
 

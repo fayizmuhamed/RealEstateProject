@@ -17,6 +17,21 @@ class Designation_model extends CI_Model {
         
     }
 
+    public function record_count($query_array) {
+        //count query
+        $this->db->select('COUNT(*) as count', FALSE);
+        $this->db->from('designations');
+
+        if (isset($query_array['des_name']) && strlen($query_array['des_name'])) {
+
+            $this->db->like('des_name', $query_array['des_name']);
+        }
+
+        $temp = $this->db->get()->result();
+
+        return $temp[0]->count;
+    }
+
     /**
      * get designation list
      */
@@ -25,7 +40,7 @@ class Designation_model extends CI_Model {
         $this->db->select('*');
         $this->db->from('designations');
         $this->db->order_by('des_id', 'Asc');
-        
+
 
         $query = $this->db->get();
 
@@ -50,25 +65,23 @@ class Designation_model extends CI_Model {
     /**
      * get designation list with search conditions
      */
-    function find_with_search($limit, $offset, $search_string = null, $order = null, $order_type = 'Asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'des_id', $sort_order = 'asc') {
+
+        $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
+
+        $sort_column = array('des_id', 'des_name', 'des_created_at');
+
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'des_id';
 
         $this->db->select('*');
         $this->db->from('designations');
-
-        if ($search_string) {
-
-            $this->db->like('des_name', $search_string);
-        }
-
-        if ($order) {
-
-            $this->db->order_by($order, $order_type);
-        } else {
-
-            $this->db->order_by('des_id', $order_type);
-        }
-
         $this->db->limit($limit, $offset);
+        $this->db->order_by($sort_by, $sort_order);
+        
+        if (isset($query_array['des_name']) && strlen($query_array['des_name'])) {
+
+            $this->db->like('des_name', $query_array['des_name']);
+        }
 
         $query = $this->db->get();
 

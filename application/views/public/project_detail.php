@@ -27,7 +27,7 @@
                     <h1><?php echo $project[0]['project_name']; ?></h1>
                     <span><i class="zmdi zmdi-pin"></i>&nbsp;Location: <?php echo $project[0]['project_location']; ?></span>
                     <span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: <?php echo $project[0]['project_developer']; ?></span>
-                    <span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: <?php echo $project[0]['pt_name']; ?></span>
+                    <span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: <?php echo $project[0]['project_property_type']; ?></span>
                     <span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: <?php echo $project[0]['project_no_of_bedrooms']; ?></span>
                     <span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: <?php echo number_format($project[0]['project_start_price']); ?></span>
                     <span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: <?php echo date('d M Y', strtotime($project[0]['project_end_date'])); ?></span>
@@ -81,7 +81,7 @@
                         <?php
                         $project_payment_plans = json_decode($project[0]['project_payment_plans'], TRUE);
 
-                        if ($project_payment_plans==NULL) {
+                        if ($project_payment_plans == NULL) {
                             
                         } else {
                             $i = 0;
@@ -89,10 +89,10 @@
                                 $i++;
                                 echo '<div class="instalment-card">';
                                 echo '<div class="top">';
-                                echo '<h1>' .$i.date('S', mktime(1, 1, 1, 1, ( (($i >= 10) + ($i >= 20) + ($i == 0)) * 10 + $i % 10))) . '</h1>';
+                                echo '<h1>' . $i . date('S', mktime(1, 1, 1, 1, ( (($i >= 10) + ($i >= 20) + ($i == 0)) * 10 + $i % 10))) . '</h1>';
                                 echo '<span>Installment</span>';
                                 echo ' </div>';
-                                echo '<div class="percentage">' .$row_payment_plan['amount'] . '</div>';
+                                echo '<div class="percentage">' . $row_payment_plan['amount'] . '</div>';
                                 echo '<i>' . date('d M Y', strtotime($row_payment_plan['date'])) . '</i>';
                                 echo '</div>';
                             }
@@ -106,14 +106,32 @@
                 </div>
             </div>
 
+            <div class="col s12 l12 m12">
+                <div class="box-white distance">
+                    <h2>Distance From</h2>
+                    <br>
+                    <div class="row">
+                        <?php
+                        $project_navigations = json_decode($project[0]['project_navigations'], TRUE);
+                        if (isset($project_navigations) && !empty($project_navigations)) {
 
-            <div class="col s12 l6 m6">
-                <button class="half-button"><a href="<?php 
-                echo empty($project[0]['project_brochure'])?"#": base_url() . 'uploads/project/brochure/' . $project[0]['project_brochure']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Full Project Brochure</a></button>
+                            $navigations = navigation_list();
+
+                            foreach ($project_navigations as $key => $value) {
+                                echo '<div class="col s4 l3 m4">';
+                                echo '<span>' . navigation_icon($key) . '&nbsp;' . $value . ' Km to ' . navigation_display_name($key) . '</span>';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
             </div>
             <div class="col s12 l6 m6">
-                <button class="half-button-navy"><a href="<?php 
-                echo empty($project[0]['project_floor_plan'])?"#": base_url() . 'uploads/project/floor_plan/' . $project[0]['project_floor_plan']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Floor Plan</a></button>
+                <button class="half-button"><a href="<?php echo empty($project[0]['project_brochure']) ? "#" : base_url() . 'uploads/project/brochure/' . $project[0]['project_brochure']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Full Project Brochure</a></button>
+            </div>
+            <div class="col s12 l6 m6">
+                <button class="half-button-navy"><a href="<?php echo empty($project[0]['project_floor_plan']) ? "#" : base_url() . 'uploads/project/floor_plan/' . $project[0]['project_floor_plan']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Floor Plan</a></button>
             </div>
 
 
@@ -141,7 +159,16 @@
                 <button class="full-button modal-trigger waves-effect waves-light" data-target="modal1">Make Enquiry</button>
             </div>
 
-
+            <div class="col s12 l12 m12">
+                <div class="row line-h2">
+                    <div class="col s12 l12 m12">
+                        <h2>Location Map</h2>
+                        <div class="map">
+                            <?php echo (isset($project[0]['project_location_url'])?$project[0]['project_location_url']:''); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col s12 l12 m12">
                 <div class="row agent-det">
                     <h2>Agent</h2>
@@ -217,7 +244,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <!-- more -->
                             <div class="col s12 more-center">

@@ -1,7 +1,7 @@
 <style>
 
     .list-card{
-        
+
         height:100%;
         float:left;
     }
@@ -54,16 +54,31 @@
 
             <div class="col s12 l12 m12">
                 <div class="box-white property-type">
-                    <span>Property Type&nbsp;&nbsp;: <strong>Apartment</strong></span>
+                    <span>Property Type&nbsp;&nbsp;: <strong><?php echo $community[0]['community_property_type']; ?></strong></span>
                 </div>
             </div>
+
 
             <div class="col s12 l12 m12">
                 <div class="box-white distance">
                     <h2>Distance From</h2>
                     <br>
-                    <span><i class="zmdi zmdi-bus"></i><?php echo $community[0]['community_dis_from_metro']; ?>Km to Metro</span>
-                    <span><i class="zmdi zmdi-car"></i><?php echo $community[0]['community_dis_from_public_transport']; ?>Km to Public Transort</span>
+                    <div class="row">
+                        <?php
+                        $community_navigations = json_decode($community[0]['community_navigations'], TRUE);
+
+                        if (isset($community_navigations) && !empty($community_navigations)) {
+
+                            $navigations = navigation_list();
+
+                            foreach ($community_navigations as $key => $value) {
+                                echo '<div class="col s4 l3 m4">';
+                                echo '<span>' . navigation_icon($key) . '&nbsp;' . $value . ' Km to ' . navigation_display_name($key) . '</span>';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
 
@@ -72,7 +87,7 @@
                     <div class="col s12 l12 m12">
                         <h2>Location Map</h2>
                         <div class="map">
-                            <iframe src="<?php echo $community[0]['community_location_url']; ?>" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            <?php echo (isset($community[0]['community_location_url'])?$community[0]['community_location_url']:'') ; ?>
                         </div>
                     </div>
                 </div>
@@ -177,7 +192,7 @@
                             echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                             echo '</ul>';
                             echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
-                            echo '<button class="view-b"><a href="'.base_url().'buydetail/'.$property['property_id'].'">View Detail</a></button>';
+                            echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
                             echo '</div>';
                             echo '<div class="property-thumb">';
 
@@ -231,7 +246,7 @@
                             echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                             echo '</ul>';
                             echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
-                            echo '<button class="view-b"><a href="'.base_url().'rentdetail/'.$property['property_id'].'">View Detail</a></button>';
+                            echo '<button class="view-b"><a href="' . base_url() . 'rentdetail/' . $property['property_id'] . '">View Detail</a></button>';
                             echo '</div>';
                             echo '<div class="property-thumb">';
 

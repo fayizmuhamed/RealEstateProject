@@ -57,6 +57,14 @@ class Rent extends PublicController {
                 $data['employee'] = $employees == null ? [] : $employees[0];
             }
         }
+        
+        if (isset($property->property_ref_no) && $property->property_ref_no != "") {
+
+            $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property->property_ref_no);
+
+            $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
+        }
+        
         //load the view
         $data['content'] = 'public/rent_detail';
         $this->load->view('includes/public/template', $data);

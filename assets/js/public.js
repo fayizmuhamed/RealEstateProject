@@ -98,7 +98,7 @@ var findTeamTestimonial = function (agent, page) {
         type: "GET",
         url: document.BaseUrl + "testimonial/findTestimonialWithSearch",
         cache: false,
-        data: {filter: 'testimonial_agent', search_string: agent, page: page, order: 'testimonial_updated_at', order_type: 'DESC'},
+        data: {testimonial_agent: agent, page: page, order: 'testimonial_updated_at', order_type: 'DESC'},
         dataType: "json"
     }).done(function (response) {
      
@@ -331,8 +331,8 @@ var searchBuyProperties = function (params) {
                 property += '</div>';
                 property += '<div class="property-thumb">';
                 var images = $.parseJSON(value.property_images);
-                if (images && images.length > 0) {
-                    property += '<img src="' + images[0] + '">';
+                if (images && images.image && images.image.length > 0) {
+                    property += '<img src="' + images.image[0] + '">';
                 } else {
                     property += '<img src="#">';
                 }

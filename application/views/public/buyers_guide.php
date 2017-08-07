@@ -20,6 +20,7 @@
 		        <li class="tab"><a class="active" href="#selling_proceure">SELLING PROCEDURE</a></li>
 		        <li class="tab"><a href="#property_laws">UAE PROPERTY LAWS</a></li>
 		        <li class="tab"><a href="#why_bridges">WHY BRIDGES & ALLIES</a></li>
+                        <li class="tab"><a href="<?php echo base_url(); ?>teams/sales" target="_self">MEET SALES TEAM</a></li>
 		        <li class="tab"><a href="#faq">FAQ</a></li>
 		      </ul>
 		</div>

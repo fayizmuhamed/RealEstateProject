@@ -1,5 +1,5 @@
 <style>
-    
+
     .image-buy-detail img {
         height:430px !important
     }
@@ -76,8 +76,7 @@
                         </div>
                     </div>
                     <div class="col l3 m6 s12">
-                        <?php 
-                        
+                        <?php
                         if (isset($employee)) {
                             ?>
                             <div class="buy-agent-card">
@@ -164,21 +163,35 @@
             <div class="box-white section-d">
                 <h2>RAS AL KHAIMAH</h2>
                 <br>
-                 <p id="property_desc_container" class="property-desc"><?php
-                $remarks=isset($property->property_web_remarks) ? $property->property_web_remarks : '';
-                $res = explode("PROPERTY FEATURES",$remarks); 
-                echo $res[0];
-                ?> </p>
-                 <button id="btn_property_desc_more" data-more="0"><a href="#">READ MORE</a></button>
+                <p id="property_desc_container" class="property-desc"><?php
+                    $remarks = isset($property->property_web_remarks) ? $property->property_web_remarks : '';
+                    $res = explode("PROPERTY FEATURES", $remarks);
+                    echo $res[0];
+                    ?> </p>
+                <button id="btn_property_desc_more" data-more="0"><a href="#">READ MORE</a></button>
             </div>
         </div>
+       
 
         <div class="col s12 l12 m12">
             <div class="box-white distance">
                 <h2>Distance From</h2>
                 <br>
-                <span><i class="zmdi zmdi-bus"></i>Km to Metro</span>
-                <span><i class="zmdi zmdi-car"></i>Km to Public Transort</span>
+                <div class="row">
+                    <?php
+                    $property_navigation_list = json_decode($property_navigations, TRUE);
+                    if (isset($property_navigation_list) && !empty($property_navigation_list)) {
+
+                        $navigations = navigation_list();
+
+                        foreach ($property_navigation_list as $key => $value) {
+                            echo '<div class="col s4 l3 m4">';
+                            echo '<span>' . navigation_icon($key) . '&nbsp;' . $value . ' Km to ' . navigation_display_name($key) . '</span>';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
 

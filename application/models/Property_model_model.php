@@ -16,6 +16,10 @@ class Property_model_model extends CI_Model {
     function __construct() {
         
     }
+    
+    public function record_count() {
+        return $this->db->count_all("property_models");
+    }
 
     /**
      * get property type list by parent id
