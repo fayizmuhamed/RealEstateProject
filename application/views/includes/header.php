@@ -18,9 +18,14 @@
     </head>
     <body >
         <!-- Header -->
-        <header>
+        <header class="admin_menu">
+            <ul id="dropdown1" class="dropdown-content">
+                <li><a href="<?php echo base_url(); ?>admin/changepassword"><i class="zmdi zmdi-lock-open"></i>CHANGE PASSWORD</a></li>
+                <li><a href="<?php echo base_url(); ?>admin/config/settings"><i class="zmdi zmdi-settings"></i>SETTINGS</a></li>
+                <li><a href="<?php echo base_url(); ?>admin/logout"><i class="zmdi zmdi-power-off"></i>LOGOUT</a></li>
+            </ul>
             <div class="logo"><a href="<?php echo base_url(); ?>admin/home"><i><img src="<?php echo base_url(); ?>assets/images/logo.svg"></i></a></div>
-            <div class="logout"><a href="<?php echo base_url(); ?>admin/logout"><i class="zmdi zmdi-power"></i></a></div>
+            <div class="logout"><a href="#!" class="dropdown-button" data-activates="dropdown1" data-hover="true"><i class="zmdi zmdi-account"></i></a></div>
         </header>
         <!-- Main Area-->
         <div class="main-sec">

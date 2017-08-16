@@ -6,7 +6,6 @@
         float:left;
         min-height: 355px;
     }
-
 </style>
 <!-- filter -->
 <div class="filter">
@@ -17,6 +16,9 @@
     <div class="modal-content">
         <h4>Flter</h4>
         <div class="filters">
+            <div class="input-field col s12">
+                <input id="filter_location" type="text" name="filter_location" placeholder="Location"  >
+            </div>
             <div class="input-field col s12">
                 <select multiple>
                     <option value="" selected>Property Type</option>
@@ -64,7 +66,6 @@
     </div>
 
 </div>
-<!-- FEATURED PROPERTIES FOR SALE -->
 <section class="section-gap-inner">
     <div class="container">
         <div class="row bredcrums">
@@ -72,29 +73,29 @@
                 <ul>
                     <li><a href="<?php echo base_url(); ?>">HOME</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="#" class="active-bred">RENT</a></li>
+                    <li><a href="#" class="active-bred">BUY</a></li>
                 </ul>
             </div>
             <div class="col s2 m2 l2">
-                <a href="<?php echo base_url(); ?>" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
+                <a href="<?php echo base_url(); ?>buy" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
             </div>
         </div>
         <div class="row inner-tab">
             <div class="col s12">
+                <input type="hidden"  name="buy_unit_model" id="buy_unit_model" value="<?php echo $unit_model;?>">
                 <ul class="tabs tabs-fixed-width">
-                    <li class="tab"><a class="active rent-tab" href="#" value="">ALL</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/residential" class="rent-tabs" value="residential" target="_self">RESIDNETIAL</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/commercial" class="rent-tabs" value="commercial" target="_self">COMMERCIAL</a></li>
-                    <li class="tab"><a href="#" class="rent-tab" value="featured">FEATURED</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/plots" class="rent-tabs" value="plots" target="_self">PLOTS</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">TENANT'S GUIDE</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>teams/rental" target="_self">MEET RENT TEAM</a></li>
+                    <li class="tab"><a  class="buy-sub-tab " value="" href="#" >ALL</a></li>
+                    <?php
+                    foreach ($property_types as $property_type) {
+
+                        echo '<li class="tab" ><a value="' . $property_type['pt_name'] . '" href="#" class=" buy-sub-tab ">' . $property_type['pt_name'] . '</a></li>';
+                    }
+                    ?>
                 </ul>
             </div>
-
             <!-- OFFICE LOCATION -->
             <div id="test1" class="col s12">
-                <div class="row mg-bt-none" id="rent-property-container">
+                <div class="row mg-bt-none" id="buy-sub-property-container">
                     <?php
                     foreach ($properties as $property) {
                         echo '<div class="col s12 l3 m6">';
@@ -109,7 +110,7 @@
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
-                        echo '<button class="view-b"><a href="'.base_url().'rentdetail/'.$property['property_id'].'">View Detail</a></button>';
+                        echo '<button class="view-b"><a href="'.base_url().'buydetail/'.$property['property_id'].'">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';
 
@@ -117,11 +118,11 @@
                         if ($images != null && count($images) > 0) {
 
                             echo '<img src="' . $images['image'][0] . '">';
-                        } else {
-
+                        }else{
+                            
                             echo '<img src="#">';
                         }
-
+                        
                         echo '</div>';
                         echo '<div class="property-list-details">';
                         echo '<h3>' . $property['property_title'] . '</h3>';
@@ -137,7 +138,7 @@
                 </div>
 
                 <div class="col s12 more-button-block">
-                    <button id="button_rent_load_more" class="bt-normal waves-effect waves-light" data-page="1" >VIEW MORE</button>
+                    <button id="button_buy_sub_load_more" class="bt-normal waves-effect waves-light" data-page="1">VIEW MORE</button>
                 </div>
 
             </div>
@@ -145,3 +146,13 @@
         </div>
     </div>
 </section>
+
+<script type="text/javascript">
+
+ 
+    $(document).ready(function () {
+
+      //  searchProperties('sale', null, null, null, null, null, null, null, null, 0);
+    });
+
+</script>

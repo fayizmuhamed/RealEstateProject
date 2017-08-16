@@ -191,7 +191,7 @@
                             echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                             echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                             echo '</ul>';
-                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                             echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
                             echo '</div>';
                             echo '<div class="property-thumb">';
@@ -245,7 +245,7 @@
                             echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                             echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                             echo '</ul>';
-                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                             echo '<button class="view-b"><a href="' . base_url() . 'rentdetail/' . $property['property_id'] . '">View Detail</a></button>';
                             echo '</div>';
                             echo '<div class="property-thumb">';

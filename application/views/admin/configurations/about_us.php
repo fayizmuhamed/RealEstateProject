@@ -2,10 +2,10 @@
     <!-- Header -->
     <?php echo form_open('admin/config/about'); ?>
     <div class="header-all-section">
-        <div class="title">
+        <div class="title-normal">
             <h2>About us</h2>
         </div>
-        <div class="action-area">
+        <div class="action-area" >
             <button class="bt-add bt-form-normal" type="submit">
                     <i class="zmdi zmdi-save"></i>&nbsp;Save
             </button>

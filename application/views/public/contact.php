@@ -27,24 +27,22 @@
             <!-- OFFICE LOCATION -->
             <div id="test1" class="col s12">
                 <div class="row">
-                    <div class="col s12 l8 m6"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3616.426932548396!2d55.087992314475144!3d24.985604983995028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f127ef301942b%3A0xecd986054b6e3b1e!2sJebel+Ali+Free+Zone+Authority!5e0!3m2!1sen!2sin!4v1498853484907" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe></div>
+                    <div class="col s12 l8 m6 contact-map" ><?php echo html_entity_decode(isset($contact_us_location) ? $contact_us_location : ''); ?></div>
                     <div class="col s12 l4 m6">
                         <div class="contact-detail-bx">
                             <h2>Contact Details</h2>
                             <br>
-                            <p>P.O. Box 261036, Plot No. S 20119,<br>
-                                Jebel Ali Free Zone (South),<br>
-                                Dubai. United Arab Emirates.</p>
-                            <span><i class="zmdi zmdi-email"></i>alex@gmail.com</span>
-                            <span><i class="zmdi zmdi-phone"></i>+971 553446176</span>
+                            <p><?php echo (isset($contact_us_address) ? $contact_us_address : ''); ?></p>
+                            <span><i class="zmdi zmdi-email"></i><?php echo (isset($contact_us_email) ? $contact_us_email : ''); ?></span>
+                            <span><i class="zmdi zmdi-phone"></i><?php echo (isset($contact_us_contact_no) ? $contact_us_contact_no : ''); ?></span>
                             <br>
                             <span class="navy"><i class="zmdi zmdi-time"></i>Opening Hours</span>
-                            <span class="navy big">9:00 AM to 6:00 PM</span>
+                            <span class="navy big"><?php echo (isset($contact_us_opening_hours) ? $contact_us_opening_hours : ''); ?></span>
                             <ul class="social">
-                                <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
-                                <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+                                <li><a href="<?php echo ((isset($contact_us_facebook) && strlen($contact_us_facebook)) ? $contact_us_facebook : '#'); ?>"><i class="zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="<?php echo ((isset($contact_us_twitter) && strlen($contact_us_twitter)) ? $contact_us_twitter : '#'); ?>"><i class="zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="<?php echo ((isset($contact_us_linked_in) && strlen($contact_us_linked_in)) ? $contact_us_linked_in : '#'); ?>"><i class="zmdi zmdi-linkedin"></i></a></li>
+                                <li><a href="<?php echo ((isset($contact_us_instagram) && strlen($contact_us_instagram)) ? $contact_us_instagram : '#'); ?>"><i class="zmdi zmdi-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -58,198 +56,254 @@
                         <div class="form-bx">
                             <h3>Buy</h3>
                             <br>
+                            <?php echo form_open('', array('id' => 'frm_contact_make_enquiry_buy')); ?>
+                            <input type="hidden"  name="enquiry_type" id="type" value="buy">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="bloc-f">
+                                    <div class="col s12 m6 l6">
+                                        <input type="text" placeholder="Location" name="location">
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="bedrooms">
+                                            <option value="NA" disabled selected>Bed Rooms</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
+                                        </select>
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
-                                    </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="budget">
+                                            <option value="NA" disabled selected>Budget</option>
+                                            <option value="Less than 1,000,000">Less than 1,000,000</option>
+                                            <option value="1,000,000 – 1,500,000">1,000,000 – 1,500,000</option>
+                                            <option value="1,500,000 – 2,000,000">1,500,000 – 2,000,000</option>
+                                            <option value="2,000,000 – 2,500,000">2,000,000 – 2,500,000</option>
+                                            <option value="2,500,000 – 3,000,000">2,500,000 – 3,000,000</option>
+                                            <option value="3,000,000 – 3,500,000">3,000,000 – 3,500,000</option>
+                                            <option value="3,500,000 – 4,000,000">3,500,000 – 4,000,000</option>
+                                            <option value="4,000,000 – 4,500,000">4,000,000 – 4,500,000</option>
+                                            <option value="4,500,000 – 5,000,000">4,500,000 – 5,000,000</option>
+                                            <option value="5,000,000 – 6,000,000">5,000,000 – 6,000,000</option>
+                                            <option value="6,000,000 – 7,000,000">6,000,000 – 7,000,000</option>
+                                            <option value="7,000,000 – 8,000,000">7,000,000 – 8,000,000</option>
+                                            <option value="8,000,000 – 9,000,000">8,000,000 – 9,000,000</option>
+                                            <option value="9,000,000 – 10,000,000">9,000,000 – 10,000,000</option>
+                                            <option value="10,000,000 – 15,000,000">10,000,000 – 15,000,000</option>
+                                            <option value="15,000,000 – 20,000,000">15,000,000 – 20,000,000</option>
+                                            <option value="More than 20,000,000">More than 20,000,000</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
 
-                                <div class="bloc-f">
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Budget</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
+
                                 </div>
                                 <div class="bloc-f">
-                                    <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                    <div class="col s12 m12 l12" >
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
-                                    <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                    <div class="col s12 m12 l12" >
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                     <div class="col s12 l6 m6">
                         <div class="form-bx">
                             <h3>Rent</h3>
                             <br>
+                            <?php echo form_open('', array('id' => 'frm_contact_make_enquiry_rent')); ?>
+                            <input type="hidden"  name="enquiry_type" id="type" value="rent">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="bloc-f">
+                                    <div class="col s12 m6 l6">
+                                        <input type="text" placeholder="Location" name="location">
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="bedrooms">
+                                            <option value="NA" disabled selected>Bed Rooms</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
+                                        </select>
+                                    </div>
+                                    <div class="col s12 m6 l6">
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
-                                    </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="budget">
+                                            <option value="NA" disabled selected>Budget</option>
+                                            <option value="Less than 50,000">Less than 50,000</option>
+                                            <option value="50,000 – 75,000">50,000 – 75,000</option>
+                                            <option value="75,000 – 100,000">75,000 – 100,000</option>
+                                            <option value="100,000 – 125,000">100,000 – 125,000</option>
+                                            <option value="125,000 – 150,000">125,000 – 150,000</option>
+                                            <option value="150,000 – 175,000">150,000 – 175,000</option>
+                                            <option value="175,000 – 200,000">175,000 – 200,000</option>
+                                            <option value="200,000 – 250,000">200,000 – 250,000</option>
+                                            <option value="250,000 – 300,000">250,000 – 300,000</option>
+                                            <option value="300,000 – 350,000">300,000 – 350,000</option>
+                                            <option value="350,000 – 400,000">350,000 – 400,000</option>
+                                            <option value="400,000 – 450,000">400,000 – 450,000</option>
+                                            <option value="450,000 – 500,000">450,000 – 500,000</option>
+                                            <option value="500,000 – 600,000">500,000 – 600,000</option>
+                                            <option value="600,000 – 700,000">600,000 – 700,000</option>
+                                            <option value="700,000 – 800,000">700,000 – 800,000</option>
+                                            <option value="800,000 – 900,000">800,000 – 900,000</option>
+                                            <option value="900,000 – 1,000,000">900,000 – 1,000,000</option>
+                                            <option value="More than 1,000,000">More than 1,000,000</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
 
-                                <div class="bloc-f">
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Budget</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
-                                    <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
-                                        </select>
-                                    </div>
+
                                 </div>
                                 <div class="bloc-f">
-                                    <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                    <div class="col s12 m12 l12" >
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
-                                    <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                    <div class="col s12 m12 l12" >
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
@@ -261,82 +315,92 @@
                         <div class="form-bx">
                             <h3>Buy</h3>
                             <br>
+                            <?php echo form_open('', array('id' => 'frm_list_your_property_buy')); ?>
+                            <input type="hidden"  name="type" id="type" value="buy">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
+                                        <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Unit Number " name="">
+                                        <input type="text" placeholder="Unit Number " name="unit_number">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Street Number" name="">
+                                        <input type="text" placeholder="Street Number" name="street_number">
                                     </div>
 
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Expected Sales Price" name="">
+                                        <input type="text" placeholder="Expected Sales Price" name="expected_price">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
+
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
@@ -344,105 +408,117 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                     <div class="col s12 l6 m6">
                         <div class="form-bx">
                             <h3>Rent</h3>
                             <br>
+                             <?php echo form_open('', array('id' => 'frm_list_your_property_rent')); ?>
+                            <input type="hidden"  name="type" id="type" value="rent">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
+                                        <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Unit Number " name="">
+                                        <input type="text" placeholder="Unit Number " name="unit_number">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Street Number" name="">
+                                        <input type="text" placeholder="Street Number" name="street_number">
                                     </div>
 
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Expected Rent Price" name="">
+                                        <input type="text" placeholder="Expected Rent Price" name="expected_price">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
+
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
@@ -450,23 +526,25 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
@@ -478,214 +556,236 @@
                         <div class="form-bx">
                             <h3>Buy</h3>
                             <br>
+                           <?php echo form_open('', array('id' => 'frm_request_pre_valuation_buy')); ?>
+                            <input type="hidden"  name="type" id="type" value="buy">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
+                                        <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Unit Number " name="">
+                                        <input type="text" placeholder="Unit Number " name="unit_number">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Street Number " name="">
+                                        <input type="text" placeholder="Street Number" name="street_number">
                                     </div>
+
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="View" name="">
+                                        <input type="text" placeholder="Primary View" name="primary_view">
                                     </div>
-
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
+
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
                                 </div>
 
                                 <div class="bloc-f">
-
                                     <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                     <div class="col s12 l6 m6">
                         <div class="form-bx">
                             <h3>Rent</h3>
                             <br>
+                            <?php echo form_open('', array('id' => 'frm_request_pre_valuation_rent')); ?>
+                            <input type="hidden"  name="type" id="type" value="rent">
                             <div class="row">
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Name" name="">
+                                        <input type="text" placeholder="Name" name="author_name">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="E-mail" name="">
+                                        <input type="text" placeholder="E-mail" name="author_email">
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Mobile Number" name="">
+                                        <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="property_type">
                                             <option value="" disabled selected>Property Type</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            foreach ($property_types as $property_type) {
+
+                                                echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Location" name="">
+                                        <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
+                                        <select class="browser-default" name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                            <?php
+                                            for ($i = 1; $i <= 10; $i++) {
+
+                                                echo '<option value="' . $i . '">' . $i . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Study Rooms</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="study_or_maid">
+                                            <option value="NA"  selected>None</option>
+                                            <option value="Study Room">Study Room</option>
+                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Furnished</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="furnish">
+                                            <option value="Furnished"  selected>Furnished</option>
+                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Unit Number " name="">
+                                        <input type="text" placeholder="Unit Number " name="unit_number">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="Street Number " name="">
+                                        <input type="text" placeholder="Street Number" name="street_number">
                                     </div>
+
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <input type="text" placeholder="View" name="">
+                                        <input type="text" placeholder="Primary View" name="primary_view">
                                     </div>
-
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Choose Agent</option>
-                                            <option value="1">Option 1</option>
-                                            <option value="2">Option 2</option>
-                                            <option value="3">Option 3</option>
+                                        <select class="browser-default" name="agent">
+                                            <option value="" disabled selected>Choose Agent </option>
+                                            <?php
+                                            foreach ($employees as $employee) {
+
+                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                            }
+                                            ?>
                                         </select>
                                     </div>
 
                                 </div>
 
                                 <div class="bloc-f">
-
                                     <div class="col s12 m12 l12">
-                                        <input type="text" placeholder="Preferred Call Back Time" name="">
+                                        <input type="text" placeholder="Preferred Call Back Time" name="preferred_call_back_time">
                                     </div>
                                 </div>
                                 <br>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <textarea placeholder="Mesage"></textarea>
+                                        <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 
                             </div>
+
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
@@ -761,7 +861,7 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
-                                        <button class="waves-effect waves-light" id="btnSendFeedback">SUBMIT</button>
+                                        <button class="waves-effect waves-light" type="submit">SUBMIT</button>
                                     </div>
                                 </div>
 

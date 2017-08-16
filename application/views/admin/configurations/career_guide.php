@@ -2,7 +2,7 @@
     <!-- Header -->
     <?php echo form_open('admin/config/careerguide'); ?>
     <div class="header-all-section">
-        <div class="title">
+        <div class="title-normal">
             <h2>Career Guide</h2>
         </div>
         <div class="action-area">

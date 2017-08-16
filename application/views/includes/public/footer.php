@@ -5,14 +5,14 @@
                 <img src="<?php echo base_url(); ?>assets/images/logo.svg">
                 <br>
                 <h2>ADDRESS</h2>
-                <p>P.O. Box 261036, Plot No. S 20119,<br> Jebel Ali Free Zone (South),<br> Dubai. United Arab Emirates.</p>
-                <p>Opening Hours&nbsp;<strong>9:00 AM to 6:00 PM</strong></p>
+                <p><?php echo (isset($contact_us_address) ? $contact_us_address : ''); ?></p>
+                <p>Opening Hours&nbsp;<strong><?php echo (isset($contact_us_opening_hours) ? $contact_us_opening_hours : ''); ?></strong></p>
 
                 <ul class="social">
-                    <li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
-                    <li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
-                    <li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
-                    <li><a href="#"><i class="zmdi zmdi-instagram"></i></a></li>
+                    <li><a href="<?php echo ((isset($contact_us_facebook) && strlen($contact_us_facebook)) ? $contact_us_facebook : '#'); ?>"><i class="zmdi zmdi-facebook"></i></a></li>
+                    <li><a href="<?php echo ((isset($contact_us_twitter) && strlen($contact_us_twitter)) ? $contact_us_twitter : '#'); ?>"><i class="zmdi zmdi-twitter"></i></a></li>
+                    <li><a href="<?php echo ((isset($contact_us_linked_in) && strlen($contact_us_linked_in)) ? $contact_us_linked_in : '#'); ?>"><i class="zmdi zmdi-linkedin"></i></a></li>
+                    <li><a href="<?php echo ((isset($contact_us_instagram) && strlen($contact_us_instagram)) ? $contact_us_instagram : '#'); ?>"><i class="zmdi zmdi-instagram"></i></a></li>
                 </ul>
 
             </div>
@@ -20,36 +20,37 @@
                 <ul>
                     <h2>LINKS</h2>
                     <br>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Featured Properties for Sale</a></li>
-                    <li><a href="#">Features Properties for Rent</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">List your Property</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="<?php echo base_url(); ?>#who">About us</a></li>
+                    <li><a href="<?php echo base_url(); ?>#featured-sale">Featured Properties for Sale</a></li>
+                    <li><a href="<?php echo base_url(); ?>#featured-rent">Features Properties for Rent</a></li>
+                    <li><a href="<?php echo base_url(); ?>projects">Projects</a></li>
+                    <li><a href="<?php echo base_url(); ?>propertyowner">List your Property</a></li>
+                    <li><a href="<?php echo base_url(); ?>career">Careers</a></li>
+                    <li><a href="<?php echo base_url(); ?>contact">Contact us</a></li>
                 </ul>
 
             </div>
             <div class="col s12 l4 m12">
                 <h2>Quick Enquiry</h2>
-                <form>
-                    <div>
-                        <input type="text" placeholder="Name" name="">
-                    </div>
-                    <div>
-                        <input type="text" placeholder="Phone Number" name="">
-                    </div>
-                    <div>
-                        <input type="text" placeholder="E-mail" name="">
-                    </div>
-                    <div>
-                        <textarea placeholder="Mesage"></textarea>
-                    </div>
-                    <br>
-                    <div>
-                        <button class="waves-effect waves-light"><a href="#">SUBMIT</a></button>
-                    </div>
-                </form>
+                <?php $attributes = array('id' => 'frm_quick_enquiry'); ?>
+                <?php echo form_open('', $attributes); ?>
+                <div>
+                    <input type="text" placeholder="Name" name="author_name">
+                </div>
+                <div>
+                    <input type="text" placeholder="Phone Number" name="author_contact">
+                </div>
+                <div>
+                    <input type="text" placeholder="E-mail" name="author_email">
+                </div>
+                <div>
+                    <textarea placeholder="Mesage" name="author_message"></textarea>
+                </div>
+                <br>
+                <div>
+                    <button class="waves-effect waves-light" type="submit">SUBMIT</button>
+                </div>
+                <?php echo form_close(); ?>
             </div>
         </div>
     </div>
@@ -57,14 +58,14 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 l6 m6"><p>2017 All Right Reserved</p></div>
-                <div class="col s12 l6 m6">
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">HELP</a></li>
-                        <li><a href="#">PRIVACY</a></li>
-                        <li><a href="#">TERM</a></li>    
-                    </ul>
-                </div>
+                <!--                <div class="col s12 l6 m6">
+                                    <ul>
+                                        <li><a href="#">FAQ</a></li>
+                                        <li><a href="#">HELP</a></li>
+                                        <li><a href="#">PRIVACY</a></li>
+                                        <li><a href="#">TERM</a></li>    
+                                    </ul>
+                                </div>-->
             </div>
         </div>
     </div>
@@ -161,8 +162,15 @@
 //    $("#basics").easyAutocomplete(options);
 </script>
 
-
-
+<script type="text/javascript">
+    $(document)
+            .ajaxStart(function () {
+                $("#loader").show();
+            })
+            .ajaxStop(function () {
+                $("#loader").hide();
+            });
+</script>
 
 <!-- FlexSlider -->
 <script defer src="<?php echo base_url(); ?>assets/js/jquery.flexslider.js"></script>

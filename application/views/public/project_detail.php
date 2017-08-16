@@ -18,7 +18,7 @@
     </div>
 </section>
 
-<section class="inner-full-banner">
+<section class="inner-full-banner ">
 
     <div class="over-innr-pg">
         <div class="project-inner">
@@ -38,16 +38,19 @@
             </div>
         </div>
 
-        <div class="postion-form">
+        <div class="postion-form project-enquiry">
             <h2>Quick Enquiry</h2>
-            <form>
-
-                <div class="bloc-f"><input type="text" placeholder="Name" name=""></div>
-                <div class="bloc-f"><input type="text" placeholder="Mobile Number" name=""></div>
-                <div class="bloc-f"><input type="text" placeholder="Email" name=""></div>
-                <div class="bloc-f"><textarea placeholder="Message"></textarea></div>
-                <div class="bloc-f"><button><a href="#">SUBMIT</a></button></div>
-            </form>
+            <?php $attributes = array('id' => 'frm_project_detail_send_enquiry'); ?>
+            <?php echo form_open('', $attributes); ?>
+            <input type="hidden"  name="type" id="type" value="project">
+            <input type="hidden"  name="ref_number" id="ref_number" value="<?php echo $project[0]['project_reference']; ?>">
+            <input type="hidden"  name="ref_name" id="ref_name" value="<?php echo $project[0]['project_name']; ?>">
+            <div class="bloc-f"><input type="text" placeholder="Name"  name="author_name"></div>
+            <div class="bloc-f"><input type="text" placeholder="Mobile Number"  name="author_contact"></div>
+            <div class="bloc-f"><input type="text" placeholder="Email"  name="author_email"></div>
+            <div class="bloc-f"><textarea placeholder="Message"  name="author_message"></textarea></div>
+            <div class="bloc-f"><button type="submit">SUBMIT</button></div>
+            <?php echo form_close(); ?>
         </div>
     </div>
     <img src="<?php echo base_url() . 'uploads/project/cover/' . $project[0]['project_cover_image']; ?>">
@@ -134,29 +137,10 @@
                 <button class="half-button-navy"><a href="<?php echo empty($project[0]['project_floor_plan']) ? "#" : base_url() . 'uploads/project/floor_plan/' . $project[0]['project_floor_plan']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Floor Plan</a></button>
             </div>
 
-
-            <!-- Make Enquiry Modal Structure -->
-            <div id="modal1" class="modal">
-                <div class="modal-content">
-                    <h4>Make Enquiry</h4>
-                    <div class="b-m">
-                        <form>
-                            <div class="col l12 m12 s12"><input type="text" placeholder="Name" name=""></div>
-                            <div class="col l12 m12 s12"><input type="text" placeholder="Mobile Number" name=""></div>
-                            <div class="col l12 m12 s12"><input type="text" placeholder="E-mail" name=""></div>
-                            <div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
-                            <div class="col l12 m12 s12">
-                                <button class="waves-effect waves-light"><a href="#">Send</a></button>
-                                <button class="cancel modal-close waves-effect waves-light"><a href="#">Cancel</a></button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-
+            
             <div class="col s12 l12 m12">
-                <button class="full-button modal-trigger waves-effect waves-light" data-target="modal1">Make Enquiry</button>
+             
+                <button class="full-button modal-trigger waves-effect waves-light" data-target="make_enquiry_model" ><a href="#" onclick="makeEnquiry('project', '<?php echo $project[0]['project_name']; ?>','<?php echo $project[0]['project_reference']; ?>');return false;">Make Enquiry</a></button>
             </div>
 
             <div class="col s12 l12 m12">
@@ -164,7 +148,7 @@
                     <div class="col s12 l12 m12">
                         <h2>Location Map</h2>
                         <div class="map">
-                            <?php echo (isset($project[0]['project_location_url'])?$project[0]['project_location_url']:''); ?>
+                            <?php echo (isset($project[0]['project_location_url']) ? $project[0]['project_location_url'] : ''); ?>
                         </div>
                     </div>
                 </div>
@@ -274,7 +258,7 @@
     $('.tap-target').tapTarget('close');
 </script>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(function () {
         var slider = document.getElementById('test5');
         noUiSlider.create(slider, {
@@ -290,4 +274,4 @@
             })
         });
     })
-</script>
+</script>-->

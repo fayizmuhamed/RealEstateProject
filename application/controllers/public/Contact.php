@@ -23,6 +23,7 @@ class Contact extends PublicController {
         $this->load->model('Testimonial_model');
         $this->load->model('Employee_model');
         $this->load->model('Property_type_model');
+       
     }
 
     /**
@@ -46,7 +47,7 @@ class Contact extends PublicController {
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             //form validation
             $this->form_validation->set_rules('testimonial_author_name', 'Author Name', 'trim|required|xss_clean');
-            $this->form_validation->set_rules('testimonial_author_email', 'Author Email', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('testimonial_author_email', 'Author Email', 'trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('testimonial_author_contact', 'Author Contact', 'trim|required|xss_clean');
             $this->form_validation->set_rules('testimonial_author_relation', 'Bridges & Allies Experience', 'trim|required|xss_clean');
             $this->form_validation->set_rules('testimonial_message', 'Message', 'trim|required|xss_clean');
@@ -54,19 +55,25 @@ class Contact extends PublicController {
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
                 $data_to_store = array(
-                    'testimonial_author_name' => $this->input->post('testimonial_author_name'),
-                    'testimonial_author_email' => $this->input->post('testimonial_author_email'),
-                    'testimonial_author_contact' => $this->input->post('testimonial_author_contact'),
-                    'testimonial_author_relation' => $this->input->post('testimonial_author_relation'),
+                    'testimonial_author_name' => $this->input->post('testimonial_author_name', true),
+                    'testimonial_author_email' => $this->input->post('testimonial_author_email', true),
+                    'testimonial_author_contact' => $this->input->post('testimonial_author_contact', true),
+                    'testimonial_author_relation' => $this->input->post('testimonial_author_relation', true),
                     'testimonial_agent' => ($this->input->post('testimonial_agent') === null) ? 0 : $this->input->post('testimonial_agent'),
                     'testimonial_approved' => 0,
-                    'testimonial_message' => $this->input->post('testimonial_message'),
+                    'testimonial_message' => $this->input->post('testimonial_message', true),
                     'testimonial_property_type' => ($this->input->post('testimonial_property_type') === null) ? 0 : $this->input->post('testimonial_property_type')
                 );
 
 
                 //if the insert has returned true then we show the flash message
                 if ($this->Testimonial_model->insert($data_to_store)) {
+                    
+                    //sent feedback request to admin
+                    $this->send_feed_back_request($data_to_store);
+                    
+                    //sent feedback confirmation to author
+                    $this->send_feed_back_confirmation($data_to_store);
                     $status = 'success';
                     $message = 'Feedback sent successfully';
                 } else {
@@ -83,6 +90,55 @@ class Contact extends PublicController {
                 exit($this->send_response($status, $message));
             }
         }
+    }
+
+    function send_feed_back_request($params) {
+
+        $send_feed_back_request = isset($this->configurations['send_feed_back_request']) ? $this->configurations['send_feed_back_request'] : 'no';
+
+        if ($send_feed_back_request == 'no') {
+
+            return;
+        }
+
+        $to = $this->configurations['admin_email'];
+        $subject = "SHARE B&A EXPERIENCE";
+        $agents = $this->Employee_model->find_by_id($params['testimonial_agent']);
+        $agent = $agents == null ? [] : $agents[0];
+        $data_to_send = array(
+            'author' => $params['testimonial_author_name'],
+            'email' => $params['testimonial_author_email'],
+            'contact' => $params['testimonial_author_contact'],
+            'agent' => isset($agent['emp_name']) ? $agent['emp_name'] : '',
+            'message' => $params['testimonial_message'],
+        );
+        $message = $this->load->view('includes/email/feedback_request', $data_to_send, TRUE);
+
+        
+        send_email('html',$to,$subject,$message);
+    }
+
+    function send_feed_back_confirmation($params) {
+       
+        $send_feed_back_confirmation = isset($this->configurations['send_feed_back_confirmation']) ? $this->configurations['send_feed_back_confirmation'] : 'no';
+
+        if ($send_feed_back_confirmation == 'no') {
+
+            return;
+        }
+        
+        
+
+        $to = $params['testimonial_author_email'];
+        $subject = "Re:Thank you for your feedback";
+        $data_to_send = array(
+            'name' => $params['testimonial_author_name']
+        );
+        $message = $this->load->view('includes/email/feedback_confirmation', $data_to_send, TRUE);
+
+        send_email('html',$to,$subject,$message);
+        
+       
     }
 
 }

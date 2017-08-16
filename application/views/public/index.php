@@ -17,43 +17,9 @@
     }
 
 </style>
-<!-- Make Enquiry Modal Structure -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>Make Enquiry</h4>
-        <div class="b-m">
-            <form>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Name" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Mobile Number" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="E-mail" name=""></div>
-                <div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
-                <div class="col l12 m12 s12">
-                    <button class="waves-effect waves-light"><a href="#">Send</a></button>
-                    <button class="cancel modal-close waves-effect waves-light"><a href="#">Cancel</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<!-- Quick Contact -->
-<div id="quick_contact_model" class="modal">
-    <div class="modal-content">
-        <h4>Quick Contact</h4>
-        <div class="b-m">
-            <form>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Name" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Mobile Number" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="E-mail" name=""></div>
-                <div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
-                <div class="col l12 m12 s12">
-                    <button class="waves-effect waves-light"><a href="#">Send</a></button>
-                    <button class="cancel modal-close waves-effect waves-light"><a href="#">Cancel</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
+
 
 <!-- Quick Contact -->
 <div class="quick-contact">
@@ -88,9 +54,9 @@
                         foreach ($testimonials as $testimonial) {
 
                             echo '<li>';
-                            echo '<p class="content-testi">'.$testimonial['testimonial_message'].'</p>';
-                            echo '<h2>'.$testimonial['testimonial_author_name'].'</h2>';
-                            echo '<span>'.$testimonial['testimonial_property_location'].'</span>';
+                            echo '<p class="content-testi">' . $testimonial['testimonial_message'] . '</p>';
+                            echo '<h2>' . $testimonial['testimonial_author_name'] . '</h2>';
+                            echo '<span>' . $testimonial['testimonial_property_location'] . '</span>';
                             echo '</li>';
                         }
                         ?>
@@ -129,7 +95,7 @@
                 echo '<span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: ' . date('d M Y', strtotime($row['project_end_date'])) . '</span>';
                 echo '<br>';
                 echo '<button class="waves-effect waves-light"><a href="' . base_url() . 'projects/' . $row['project_id'] . '">VIEW DETAILS</a></button>';
-                echo '<button class="waves-effect waves-light modal-trigger" data-target="modal1"><a href="#">MAKE ENQUIRY</a></button>';
+                echo '<button class="waves-effect waves-light modal-trigger" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;project&#39;,&#39;' . $row['project_name'] . '&#39;,&#39;' . $row['project_reference'] . '&#39;);return false;">MAKE ENQUIRY</a></button>';
                 echo '</div>';
                 echo '</div>';
                 echo '<img src="' . base_url() . 'uploads/project/cover/' . $row['project_cover_image'] . '">';
@@ -151,7 +117,7 @@
 
 
 <!-- FEATURED PROPERTIES FOR SALE -->
-<section class="listing section-gap featured">
+<section class="listing section-gap featured" id="featured-sale">
     <div class="container">
         <div class="heading_block-white">
             <h2>FEATURED PROPERTIES FOR SALE</h2>
@@ -177,8 +143,8 @@
                         echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';
-                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
-                        echo '<button class="view-b"><a href="#">View Detail</a></button>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';
                         $images = json_decode($property['property_images'], TRUE);
@@ -214,7 +180,7 @@
 </section>
 
 <!-- FEATURED PROPERTIES FOR RENT -->
-<section class="listing section-gap rent-list">
+<section class="listing section-gap rent-list" id="featured-rent">
     <div class="container">
         <div class="heading_block">
             <h2>FEATURED PROPERTIES FOR RENT</h2>
@@ -240,8 +206,8 @@
                         echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';
-                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
-                        echo '<button class="view-b"><a href="#">View Detail</a></button>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'rentdetail/' . $property['property_id'] . '">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';
 
@@ -293,12 +259,12 @@
                 foreach ($communities as $community) {
 
                     echo '<div class="col s12 l3 m6">';
-                    echo '<a href="' . base_url() . 'communities/' . (isset($community['community_id'])?$community['community_id']:'') . '">';
+                    echo '<a href="' . base_url() . 'communities/' . (isset($community['community_id']) ? $community['community_id'] : '') . '">';
                     echo '<div class="community-card">';
                     echo '<div class="overlay-bx">';
-                    echo '<h3>' . (isset($community['community_name'])?$community['community_name']:''). '</h3>';
+                    echo '<h3>' . (isset($community['community_name']) ? $community['community_name'] : '') . '</h3>';
                     echo '</div>';
-                    echo '<img src="' . base_url() . 'uploads/community/cover/' . (isset($community['community_cover_image'])?$community['community_cover_image']:'') . '">';
+                    echo '<img src="' . base_url() . 'uploads/community/cover/' . (isset($community['community_cover_image']) ? $community['community_cover_image'] : '') . '">';
                     echo '</div>';
                     echo '</a>';
                     echo '</div>';
@@ -536,7 +502,7 @@
             </div>
             <!-- More -->
             <div class="col s12 more-button-block">
-                <button class="bt-normal auto waves-effect waves-light"><a href="#">MORE OPERTUNITIES</a></button>
+                <button class="bt-normal auto waves-effect waves-light"><a href="<?php echo base_url(); ?>career">MORE OPERTUNITIES</a></button>
             </div>
         </div>
     </div>

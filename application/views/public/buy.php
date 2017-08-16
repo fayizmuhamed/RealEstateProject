@@ -1,11 +1,11 @@
 <style>
 
     .list-card{
-        
+
         height:100%;
         float:left;
+        min-height: 355px;
     }
-
 </style>
 <!-- filter -->
 <div class="filter">
@@ -84,11 +84,14 @@
             <div class="col s12">
                 <ul class="tabs tabs-fixed-width">
                     <li class="tab"><a class="active buy-tab" href="#" value="" >ALL</a></li>
-                    <li class="tab"><a href="#" value="residential" class="buy-tab">READY RESIDENTIAL</a></li>
-                    <li class="tab"><a href="#" value="commercial" class="buy-tab">READY COMMERCIAL</a></li>
+<!--                    <li class="tab"><a href="#" value="residential" class="buy-tab" >READY RESIDENTIAL</a></li>
+                    <li class="tab"><a href="#" value="commercial" class="buy-tab" >READY COMMERCIAL</a></li>-->
+                    
+                    <li class="tab"><a href="<?php echo base_url(); ?>buy/sub/residential" value="residential" class="buy-tabs" target="_self">READY RESIDENTIAL</a></li>
+                    <li class="tab"><a href="<?php echo base_url(); ?>buy/sub/commercial" value="commercial" class="buy-tabs" target="_self">READY COMMERCIAL</a></li>
                     <li class="tab"><a href="#" value="off_plan" class="buy-tab">OFFPLAN</a></li>
                     <li class="tab"><a href="#" value="featured" class="buy-tab">FEATURED</a></li>
-                    <li class="tab"><a href="#" value="plots" class="buy-tab">PLOTS</a></li>
+                    <li class="tab"><a href="<?php echo base_url(); ?>buy/sub/plots" value="plots" class="buy-tabs" target="_self">PLOTS</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>buyersguide" target="_self">BUYERS GUIDE</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>teams/sales" target="_self">MEET SALES TEAM</a></li>
                 </ul>
@@ -109,7 +112,7 @@
                         echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';
-                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                         echo '<button class="view-b"><a href="'.base_url().'buydetail/'.$property['property_id'].'">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';

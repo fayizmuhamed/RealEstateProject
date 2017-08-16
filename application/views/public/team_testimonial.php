@@ -78,7 +78,7 @@
                                 <ul>
                                     <li class="modal-trigger waves-effect waves-light" data-target="team_send_message" ><a href="#">Send Message</a></li>
                                     <li class="modal-trigger waves-effect waves-light" data-target="team_request_call_back"><a href="#"  >Request call back</a></li>
-                                    <li><a href="#testimonial_list">View listing,</a></li>
+                                    <li><a href="<?php echo base_url() . 'viewprofile/' . $employee['emp_id']; ?>#property_list">View listing,</a></li>
                                 </ul>
                             </div>
 

@@ -88,8 +88,8 @@
                                         <span><strong>From</strong>:&nbsp;<?php echo $employee['emp_location']; ?></span>
                                         <span><strong>Area Specializes in</strong>:&nbsp;<?php echo isset($employee['emp_area_specialized']) ? $employee['emp_area_specialized'] : '(Not Mandatory)'; ?></span>
                                     </div> 
-                                    <button class="bt-half mg-right-5"><a href="#">SEND MESSAGE</a></button>
-                                    <button class="bt-half"><a href="#">REQUEST FOR CALL BACK</a></button>
+                                    <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage('<?php echo $employee['emp_id']; ?>','<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>','<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">SEND MESSAGE</a></button>
+                                    <button class="bt-full"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack('<?php echo $employee['emp_id']; ?>','<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>','<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">REQUEST FOR CALL BACK</a></button>
     <!--                                    <button class="bt-number"><a href="#"><i class="zmdi zmdi-phone"></i>&nbsp;9995540446</a></button>-->
                                 </div>
                             </div>
@@ -106,8 +106,8 @@
                                         <span><strong>From</strong>:&nbsp;N/A</span>
                                         <span><strong>Area Specializes in</strong>:&nbsp;N/A</span>
                                     </div> 
-                                    <button class="bt-half mg-right-5"><a href="#">SEND MESSAGE</a></button>
-                                    <button class="bt-half"><a href="#">REQUEST FOR CALL BACK</a></button>
+                                    <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage(null,'<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>','<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">SEND MESSAGE</a></button>
+                                    <button class="bt-full"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack(null,'<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>','<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">REQUEST FOR CALL BACK</a></button>
                                 </div>
                             </div>
                         <?php }
@@ -128,9 +128,34 @@
                         <ul>
                             <li><i class="zmdi zmdi-view-dashboard"></i><strong>Price</strong>:&nbsp;<?php echo isset($property->property_price) ? $property->property_price : '' ?> AED <?php echo isset($property->property_frequency) ? $property->property_frequency : '' ?></li>
                             <li><i class="icon-1"></i><strong>Type</strong>:&nbsp;&nbsp;<?php echo isset($property->property_unit_type) ? $property->property_unit_type : '' ?></li>
-                            <li><i class="icon-bed"></i><strong>Bed</strong>:&nbsp;&nbsp;Yes</li>
-                            <li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>
-                            <li class="border-none"><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;Yes</li>
+                            <li><i class="icon-bed"></i><strong>Bed</strong>:&nbsp;&nbsp;<?php echo isset($property->property_rooms) ? $property->property_rooms : '' ?></li>
+                            <?php
+                            if (isset($property->property_facilities)) {
+
+                                $facilities = json_decode($property->property_facilities, TRUE);
+
+                                if (isset($facilities['facility'])) {
+
+                                    if (in_array("Maid's room", $facilities['facility'])) {
+                                        echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;Yes</li>';
+                                    } else {
+                                        echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
+                                    }
+
+                                    if (in_array("Study", $facilities['facility'])) {
+                                        echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;Yes</li>';
+                                    } else {
+                                        echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
+                                    }
+                                } else {
+                                    echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
+                                    echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
+                                }
+                            } else {
+                                echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
+                                echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -160,7 +185,7 @@
 
         <div class="col s12 l12 m12">
             <div class="box-white section-d">
-                <h2>RAS AL KHAIMAH</h2>
+                <h2><?php echo isset($property->property_name) ? $property->property_name : '' ?></h2>
                 <br>
                  <p id="property_desc_container" class="property-desc"><?php
                 $remarks=isset($property->property_web_remarks) ? $property->property_web_remarks : '';
@@ -192,7 +217,6 @@
                     <script type="text/javascript">
 
                         function initialize() {
-                            debugger;
                             var latitude = parseFloat("<?php echo isset($property->property_latitude) ? $property->property_latitude : '25.199514' ?>"); // Latitude get from above variable
                             var longitude = parseFloat("<?php echo isset($property->property_longitude) ? $property->property_longitude : '55.277397' ?>"); // Longitude from same
                             var title = "<?php echo isset($property->property_title) ? $property->property_title : 'Location' ?>";

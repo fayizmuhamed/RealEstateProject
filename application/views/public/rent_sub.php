@@ -76,25 +76,28 @@
                 </ul>
             </div>
             <div class="col s2 m2 l2">
-                <a href="<?php echo base_url(); ?>" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
+                <a href="<?php echo base_url(); ?>rent" class="back-link"><i class="zmdi zmdi-chevron-left"></i>&nbsp;Back</a>
             </div>
         </div>
         <div class="row inner-tab">
             <div class="col s12">
                 <ul class="tabs tabs-fixed-width">
-                    <li class="tab"><a class="active rent-tab" href="#" value="">ALL</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/residential" class="rent-tabs" value="residential" target="_self">RESIDNETIAL</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/commercial" class="rent-tabs" value="commercial" target="_self">COMMERCIAL</a></li>
-                    <li class="tab"><a href="#" class="rent-tab" value="featured">FEATURED</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>rent/sub/plots" class="rent-tabs" value="plots" target="_self">PLOTS</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">TENANT'S GUIDE</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>teams/rental" target="_self">MEET RENT TEAM</a></li>
+                    <input type="hidden"  name="rent_unit_model" id="rent_unit_model" value="<?php echo $unit_model;?>">
+                <ul class="tabs tabs-fixed-width">
+                    <li class="tab"><a  class="rent-sub-tab " value="" href="#" >ALL</a></li>
+                    <?php
+                    foreach ($property_types as $property_type) {
+
+                        echo '<li class="tab" ><a value="' . $property_type['pt_name'] . '" href="#" class=" rent-sub-tab ">' . $property_type['pt_name'] . '</a></li>';
+                    }
+                    ?>
+                </ul>
                 </ul>
             </div>
 
             <!-- OFFICE LOCATION -->
             <div id="test1" class="col s12">
-                <div class="row mg-bt-none" id="rent-property-container">
+                <div class="row mg-bt-none" id="rent-sub-property-container">
                     <?php
                     foreach ($properties as $property) {
                         echo '<div class="col s12 l3 m6">';
@@ -137,7 +140,7 @@
                 </div>
 
                 <div class="col s12 more-button-block">
-                    <button id="button_rent_load_more" class="bt-normal waves-effect waves-light" data-page="1" >VIEW MORE</button>
+                    <button id="button_rent_sub_load_more" class="bt-normal waves-effect waves-light" data-page="1" >VIEW MORE</button>
                 </div>
 
             </div>

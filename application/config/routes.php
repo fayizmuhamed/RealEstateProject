@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 /*Admin related route configurations*/
+$route['admin/changepassword']='admin/user/changePassword';
 $route['admin/logout'] = 'admin/user/logout';
 $route['admin/login/validate_credentials'] = 'admin/user/validate_credentials';
 $route['admin/login'] = 'admin/user';
@@ -134,6 +135,9 @@ $route['admin/communities/delete_thumbnail/(:any)'] = 'admin/community/deleteCom
 $route['admin/communities/(:any)/(:any)'] = 'admin/community/index/$1/$2';
 $route['admin/communities/(:any)/(:any)/(:num)'] = 'admin/community/index/$1/$2/$3';
 
+
+$route['admin/config/settings']='admin/configuration/settings';
+$route['admin/config/contactus']='admin/configuration/contactUs';
 $route['admin/config/careerguide']='admin/configuration/careerGuide';
 $route['admin/config/infoguide']='admin/configuration/infoGuide';
 $route['admin/config/ownersguide']='admin/configuration/ownersGuide';
@@ -146,8 +150,14 @@ $route['testimonial/findTestimonialWithSearch']='public/testimonial/findTestimon
 $route['testimonial/(:num)']='public/testimonial/index/$1';
 $route['testimonial']='public/testimonial';
 
+
+$route['email/requestprevaluation']='public/email/request_pre_valuation';
+$route['email/listyourproperty']='public/email/list_your_property';
+$route['email/enquiry']='public/email/enquiry';
+$route['email/quickenquiry']='public/email/quick_enquiry';
 $route['contact/sendfeedback']='public/contact/send_feedback';
 $route['contact']='public/contact';
+$route['career/dropmycv']='public/career/drop_my_cv';
 $route['career']='public/career';
 $route['infoguide']='public/index/infoGuide';
 
@@ -156,13 +166,17 @@ $route['propertyowner']='public/property_owner';
 
 $route['tenantsguide']='public/rent/tenantsGuide';
 $route['rentdetail/(:num)']='public/rent/rentDetails/$1';
+$route['rent/sub/(:any)']='public/rent/rentCategory/$1';
 $route['rent']='public/rent';
 
 $route['properties/search']='public/property/findPropertiesWithSearch';
 $route['buyersguide']='public/buy/buyersGuide';
 $route['buydetail/(:num)']='public/buy/buyDetails/$1';
+$route['buy/sub/(:any)']='public/buy/buyCategory/$1';
 $route['buy']='public/buy';
 
+$route['team/requestcallback']='public/team/request_call_back';
+$route['team/sendmessage']='public/team/send_message';
 $route['viewprofile/(:num)']='public/team/viewProfile/$1';
 $route['teams/findEmployeesWithSearch']='public/team/findEmployeesWithSearch';
 $route['teams']='public/team';

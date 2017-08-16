@@ -20,6 +20,7 @@ class Buy extends PublicController {
         parent::__construct();
 
         $this->load->library('image_lib');
+        $this->load->model('Property_type_model');
         $this->load->model('Property_model');
         $this->load->model('Employee_model');
     }
@@ -31,12 +32,61 @@ class Buy extends PublicController {
      */
     function index() {
 
-        $properties = $this->Property_model->search_properties(TEAM_PAGE_EMPLOYEE_COUNT_PER_PAGE, 0, 'sale', null, null, null, null, null, null, null, null, null, null, null, null);
+        $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, 'sale', null, null, null, null, null, null, null, null, null, null, null, null);
 
         $data['properties'] = $properties;
         //load the view
         $data['content'] = 'public/buy';
         $this->load->view('includes/public/template', $data);
+    }
+
+    function buyCategory($category) {
+
+        $unit_category = 'sale';
+        $unit_model = null;
+        $property_type = null;
+        $bedrooms = null;
+        $budgets = null;
+        $size = null;
+        $off_plan = null;
+        $featured = null;
+        $agent = null;
+        $community = null;
+        $search_string = null;
+        $order = null;
+        $order_type = null;
+
+
+        if ($category) {
+
+            switch ($category) {
+
+                case 'residential':
+                    $unit_model = 'residential';
+                    $off_plan = '0';
+                    break;
+                case 'commercial':
+                    $unit_model = 'commercial';
+                    $off_plan = '0';
+                    break;
+                case 'plots':
+                    $unit_model = 'plots';
+                    $off_plan = '0';
+                    break;
+            }
+
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
+
+            $data['properties'] = $properties;
+            $data['property_types'] = $this->Property_type_model->find_by_model_name($unit_model);
+            $data['unit_model'] = $unit_model;
+            //load the view
+            $data['content'] = 'public/buy_sub';
+            $this->load->view('includes/public/template', $data);
+        } else {
+
+            redirect('/buy');
+        }
     }
 
     /**

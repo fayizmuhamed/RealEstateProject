@@ -9,7 +9,7 @@
                 <li><a href="<?php echo base_url(); ?>contact">CONTACT</a></li>
             </ul>
             <ul class="main-menu">
-                <li><a href="#!" class="dropdown-button" data-activates="dropdown1">ABOUT</a></li>
+                <li><a href="#!" class="dropdown-button" data-activates="dropdown1" data-hover="true">ABOUT</a></li>
                 <li><a href="<?php echo base_url(); ?>buy">BUY</a></li>
                 <li><a href="<?php echo base_url(); ?>rent">RENT</a></li>
                 <li><a href="<?php echo base_url(); ?>projects">PROJECT</a></li>

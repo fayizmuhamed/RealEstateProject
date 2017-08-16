@@ -8,24 +8,6 @@
 
 </style>
 
-<!-- Send Message -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>Send Message</h4>
-        <div class="b-m">
-            <form>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Name" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="Mobile Number" name=""></div>
-                <div class="col l12 m12 s12"><input type="text" placeholder="E-mail" name=""></div>
-                <div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
-                <div class="col l12 m12 s12">
-                    <button class="waves-effect waves-light"><a href="#">Send</a></button>
-                    <button class="cancel modal-close waves-effect waves-light"><a href="#">Cancel</a></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- FEATURED PROPERTIES FOR SALE -->
 <section class="section-gap-inner">
@@ -61,8 +43,8 @@
 
                             <div class="action-bt">
                                 <ul>
-                                    <li class="modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Send Message</a></li>
-                                    <li><a href="#">Request call back</a></li>
+                                    <li><a class="modal-trigger" data-target="send_message"  onclick="sendMessage('<?php echo $employee['emp_id']; ?>',null,null);return false;">Send Message</a></li>
+                                    <li><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack('<?php echo $employee['emp_id']; ?>',null,null);return false;">Request call back</a></li>
                                     <li><a href="#property_list">View listing</a></li>
                                     <li><a href="<?php echo base_url() . 'testimonial/' . $employee['emp_id']; ?>">Read My testimonial</a></li>
                                 </ul>
@@ -99,7 +81,7 @@
                         echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';
-                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                         echo '<button class="view-b"><a href="'.base_url().($property['property_ad_type']=='sale'?'buydetail/':'rentdetail/').$property['property_id'].'">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';

@@ -60,9 +60,12 @@
                     <li>
                         <a href="<?php echo base_url(); ?>admin/config/careerguide" class="<?php if($this->uri->segment(3) == 'careerguide'){echo 'active';}?> waves-effect waves-teal">Career Guide</a>
                     </li>
-                  <li>
-                      <a href="grid.html">Contact us</a>
-                  </li>
+                     <li>
+                        <a href="<?php echo base_url(); ?>admin/config/contactus" class="<?php if($this->uri->segment(3) == 'contactus'){echo 'active';}?> waves-effect waves-teal">Contact us</a>
+                    </li>
+                     <li>
+                        <a href="<?php echo base_url(); ?>admin/config/settings" class="<?php if($this->uri->segment(3) == 'settings'){echo 'active';}?> waves-effect waves-teal">Settings</a>
+                    </li>
                 </ul>
             </div>
         </li>

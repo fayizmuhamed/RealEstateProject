@@ -61,8 +61,8 @@ class Property_model extends CI_Model {
 
         return $query->result_array();
     }
-    
-    function find_by_community_and_ad_type($limit, $offset, $community,$ad_type, $order = 'property_id', $order_type = 'Asc') {
+
+    function find_by_community_and_ad_type($limit, $offset, $community, $ad_type, $order = 'property_id', $order_type = 'Asc') {
 
         $this->db->select('*');
         $this->db->from('properties');
@@ -251,6 +251,7 @@ class Property_model extends CI_Model {
      */
     function delete_except_listed_property_ref($values) {
         $this->db->where_not_in('property_ref_no', $values);
+        
         $this->db->delete('properties');
     }
 
@@ -265,8 +266,6 @@ class Property_model extends CI_Model {
 
         return $query->result_array();
     }
-
-    
 
     /**
      * get property list by parent id
@@ -342,7 +341,7 @@ class Property_model extends CI_Model {
             $this->db->where_in('property_rooms', $bedrooms);
         }
 
-        if ($off_plan) {
+        if ($off_plan!=null) {
 
             $this->db->where_in('property_off_plan', $off_plan);
         }

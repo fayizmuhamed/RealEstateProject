@@ -12,7 +12,7 @@
  * @author DELL
  */
 class Property extends AdminController {
-    //put your code here
+//put your code here
 
     /**
      * Responsible for auto load the model
@@ -34,31 +34,31 @@ class Property extends AdminController {
 
         $limit = ADMIN_ITEM_PER_LIST_PAGE;
 
-        //all the posts sent by the view
+//all the posts sent by the view
         $filter = $this->input->post('filter');
         $search_string = $this->input->post('search_string');
 
         $query_array = array(
             $filter => $search_string
         );
-        
+
         $properties = $this->Property_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
 
         $data['properties'] = $properties;
         $data['sort_order'] = $sort_order;
         $data['sort_by'] = $sort_by;
-        
-         //pagination settings
+
+//pagination settings
         $config = array();
         $config['base_url'] = site_url("admin/properties/$sort_by/$sort_order");
         $config["total_rows"] = $this->Property_model->record_count($query_array);
         $config["per_page"] = $limit;
         $config["uri_segment"] = 5;
 
-        //initializate the panination helper 
+//initializate the panination helper 
         $this->pagination->initialize($config);
 
-        //load the view
+//load the view
         $data['content'] = 'admin/properties/list';
 
 
@@ -67,7 +67,7 @@ class Property extends AdminController {
 
     public function property_navigations($property_ref_no) {
 
-        //if save button was clicked, get the data sent via post
+//if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
             $data_to_store = array(
@@ -75,7 +75,7 @@ class Property extends AdminController {
                 'property_navigations' => $this->getPropertyNavigations()
             );
 
-            //if the insert has returned true then we show the flash message
+//if the insert has returned true then we show the flash message
             if ($this->Property_navigation_model->insert_property_navigations($property_ref_no, $data_to_store)) {
 
                 $this->session->set_flashdata('flash_message', TRUE);
@@ -91,7 +91,7 @@ class Property extends AdminController {
         $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property_ref_no);
 
         $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
-        //load the view
+//load the view
         $data['content'] = 'admin/properties/property_navigations';
         $this->load->view('includes/admin_template', $data);
     }
@@ -106,6 +106,9 @@ class Property extends AdminController {
         } else {
             return null;
         }
+        
+        //test xml
+        //return 'http://localhost/RealEstateProject/assets/sample.xml';
     }
 
     function getPropertyModel($name) {
@@ -134,21 +137,29 @@ class Property extends AdminController {
         $context = stream_context_create(array('http' => array('header' => 'Accept: application/xml')));
 
         $url = $this->getUrl();
+        try {
+            
+            if ($url == null || empty($url)) {
 
-        if ($url) {
+                log_message('error', 'XML integration url not configured');
+                $this->session->set_flashdata('flash_message', 'XML integration url not configured');
+
+                return;
+            }
 
 
             //get the raw textdata of sample.xml
             $xmlRaw = file_get_contents($url, false, $context);
-
+            
             if ($xmlRaw) {
 
                 $xml = simplexml_load_string($xmlRaw, null, LIBXML_NOCDATA);
                 $json = json_encode($xml);
                 $array = json_decode($json, TRUE);
 
-                $listings = $array['Listing'];
-
+                $listings = array_key_exists('Listing', $array)?$array['Listing']:null;
+                
+                $properties_inserted= array('-1');
                 if ($listings) {
 
                     foreach ($listings as $item) {
@@ -187,14 +198,7 @@ class Property extends AdminController {
                         $listing_agent_email = array_key_exists('Listing_Agent_Email', $item) ? $item['Listing_Agent_Email'] : "";
                         $listing_agent_photo = array_key_exists('Listing_Agent_Photo', $item) ? $item['Listing_Agent_Photo'] : "";
 
-//            if (is_null($unit_model)||empty($unit_model) ||$unit_model=="") {
-//
-//                $unit_model = $this->getPropertyModel($unit_type);
-//            }
-
                         $unit_model = $this->getPropertyModel($unit_type);
-
-                        $projectRefNos[] = $property_ref_no;
 
                         $data_to_store = array(
                             'property_ad_type' => is_null($ad_type) || empty($ad_type) ? "" : $ad_type,
@@ -230,17 +234,19 @@ class Property extends AdminController {
                         );
 
                         $property = $this->getExistingProperty($property_ref_no);
+                        
+                        array_push($properties_inserted, $property_ref_no);
 
                         if ($property == null) {
 
-                            //if the insert has returned true then we show the flash message
+//if the insert has returned true then we show the flash message
                             if (!$this->Property_model->insert($data_to_store)) {
 
                                 log_message('error', 'Property insertion  failed for' + var_export($data_to_store, TRUE));
                             }
                         } else {
 
-                            //if the insert has returned true then we show the flash message
+//if the insert has returned true then we show the flash message
                             if (!$this->Property_model->update($property->property_id, $data_to_store)) {
 
                                 log_message('error', 'Property updation  failed for ' + var_export($data_to_store, TRUE));
@@ -250,14 +256,17 @@ class Property extends AdminController {
 
                     $this->session->set_flashdata('flash_message', 'success');
                 }
+                
+                $this->Property_model->delete_except_listed_property_ref($properties_inserted);
+                
             } else {
                 log_message('error', 'Unable to connect to xml url');
                 $this->session->set_flashdata('flash_message', 'Unable to connect to xml url');
             }
-        } else {
-            log_message('error', 'XML integration url not configured');
-            $this->session->set_flashdata('flash_message', 'XML integration url not configured');
+        } catch (Exception $ex) {
+            log_message('error', $ex);
         }
+
 
         redirect('admin/properties');
     }
@@ -287,7 +296,7 @@ class Property extends AdminController {
         return json_encode($property_navigations);
     }
 
-    //        $doc = new DOMDocument();
+//        $doc = new DOMDocument();
 //        $doc->load($url);
 //
 //        foreach ($doc->getElementsByTagName('Listing') as $node) {

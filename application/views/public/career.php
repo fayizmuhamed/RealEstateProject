@@ -86,17 +86,19 @@
                     <div class="col s12 m12 l12">
                         <div class="box-white form-upload">
                             <h2>DROP MY CV</h2>
-                            <span>Lorem Ipsum is simply dummy text </span>
+<!--                            <span>Lorem Ipsum is simply dummy text </span>-->
                             <br>
                             <br>
+                            <?php $attributes = array('id' => 'frm_drop_my_cv'); ?>
+                            <?php echo form_open_multipart('', $attributes); ?>
                             <div class="row">
-                                <div class="col s12 l6 m6"><input type="text" placeholder="First Name" name=""></div>
-                                <div class="col s12 l6 m6"><input type="text" placeholder="Last Name" name=""></div>
-                                <div class="col s12 l6 m6"><input type="text" placeholder="E-mail" name=""></div>
-                                <div class="col s12 l6 m6"><input type="text" placeholder="Mobie Number" name=""></div>
+                                <div class="col s12 l6 m6"><input type="text" placeholder="First Name" name="first_name" id="first_name"></div>
+                                <div class="col s12 l6 m6"><input type="text" placeholder="Last Name" name="last_name" id="last_name"></div>
+                                <div class="col s12 l6 m6"><input type="text" placeholder="E-mail" name="email" id="email"></div>
+                                <div class="col s12 l6 m6"><input type="text" placeholder="Mobie Number" name="contact" id="contact"></div>
                                 <div class="col s12 l6 m6">
                                     <div class="input-field">
-                                        <select multiple>
+                                        <select multiple name="applied_for" id="applied_for">
                                             <option value="" selected>Applied For</option>
                                             <?php
                                             foreach ($opportunities as $opportunity) {
@@ -112,10 +114,10 @@
                                     <div class="file-field input-field">
                                         <div class="bt-file">
                                             <span>File</span>
-                                            <input type="file" >
+                                            <input type="file" name="resume"  id="resume">
                                         </div>
                                         <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" placeholder="Upload CV (Max size: 200 KB):">
+                                            <input class="file-path validate" type="text" placeholder="Upload CV (Max size: 200 KB):"  >
                                         </div>
                                     </div>
                                 </div>
@@ -123,10 +125,11 @@
                                 <div class="col l12 s12 m12">
                                     <br>
                                     <br>
-                                    <button class="waves-effect waves-light bt-normal-red"><a href="#">SUBMIT</a></button>
+                                    <button class="waves-effect waves-light bt-normal-red" type="submit">SUBMIT</button>
                                 </div>
 
                             </div>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>

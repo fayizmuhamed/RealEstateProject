@@ -20,13 +20,12 @@ class User_model extends CI_Model {
         $this->db->from('users');
         $this->db->where('user_type', $usertype);
         $this->db->where('user_name', $username);
-        $this->db->where('password',  $password);
         $this->db->limit(1);
 
         $query = $this->db->get();
 
         if ($query->num_rows() == 1) {
-            return $query->result();
+            return $query->row();
         } else {
             return false;
         }
@@ -44,6 +43,18 @@ class User_model extends CI_Model {
 
         if ($query->num_rows() == 1) {
             return $query->result();
+        } else {
+            return false;
+        }
+    }
+    
+     function update_password($username, $data) {
+        $this->db->where('user_name', $username);
+        $this->db->update('users', $data);
+        $report = array();
+        $report['error'] = $this->db->error();
+        if ($report !== 0) {
+            return true;
         } else {
             return false;
         }

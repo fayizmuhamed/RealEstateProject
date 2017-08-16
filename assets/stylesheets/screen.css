@@ -2833,6 +2833,8 @@ footer .links-f ul li:hover {
   overflow: hidden;
   background-color: #666;
 }
+
+
 /* line 65, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-head img {
   object-fit: cover;

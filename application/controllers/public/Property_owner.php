@@ -20,7 +20,8 @@ class Property_owner extends PublicController {
         parent::__construct();
 
         $this->load->library('image_lib');
-       
+        $this->load->model('Employee_model');
+        $this->load->model('Property_type_model');
     }
 
     /**
@@ -30,14 +31,13 @@ class Property_owner extends PublicController {
      */
     function index() {
 
-
-       //load the view
+        $data['employees'] = $this->Employee_model->find_all();
+        $data['property_types'] = $this->Property_type_model->find_all();
+        //load the view
         $data['content'] = 'public/property_owner';
         $this->load->view('includes/public/template', $data);
     }
-    
-    
-    
+
     /**
      * Check if the user is logged in, if he's not, 
      * send him to the login page
@@ -49,4 +49,5 @@ class Property_owner extends PublicController {
         $data['content'] = 'public/owners_guide';
         $this->load->view('includes/public/template', $data);
     }
+
 }

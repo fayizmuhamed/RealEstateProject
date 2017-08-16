@@ -101,7 +101,7 @@ var findTeamTestimonial = function (agent, page) {
         data: {testimonial_agent: agent, page: page, order: 'testimonial_updated_at', order_type: 'DESC'},
         dataType: "json"
     }).done(function (response) {
-     
+
         var testimonial = "";
         console.log(response.status);
         if (response.status === 'success') {
@@ -148,7 +148,7 @@ var findTestimonial = function (page) {
         data: {page: page, order: 'testimonial_updated_at', order_type: 'DESC'},
         dataType: "json"
     }).done(function (response) {
-       
+
         var testimonial = "";
         console.log(response.status);
         if (response.status === 'success') {
@@ -226,7 +226,7 @@ var findTestimonial = function (page) {
     });
 };
 var alertMessage = function (parent, alert_type, message, duration) {
-    
+
     var parent_element = $(parent);
     var alert = '';
     if (alert_type === "news") {
@@ -269,31 +269,6 @@ var alertMessage = function (parent, alert_type, message, duration) {
     parent_element.html(alert);
     ;
 };
-var sendFeedback = function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: document.BaseUrl + "contact/sendfeedback",
-        data: new FormData(this),
-        processData: false,
-        contentType: false,
-        dataType: "json",
-        success: function (response) {
-            console.log(response.status);
-            if (response.status === 'success') {
-                // alertMessage('#message', 'success', response.data, 6000 );
-                // $('#frm_send_feedback #response').addClass('alert alert-success').html(response.data);
-                $('#frm_send_feedback')[0].reset();
-                Materialize.toast(response.data, 10000);
-            } else {
-                Materialize.toast(response.data, 10000);
-                //alertMessage('#message', 'error', response.data, 6000);
-                // $('#frm_send_feedback #response').addClass('alert alert-error').html(response.data);
-            }
-        }
-
-    });
-};
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -326,7 +301,7 @@ var searchBuyProperties = function (params) {
                 property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
                 property += '</ul>';
-                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
                 property += '</div>';
                 property += '<div class="property-thumb">';
@@ -389,7 +364,7 @@ var searchRentProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
-             
+
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -401,7 +376,7 @@ var searchRentProperties = function (params) {
                 property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
                 property += '</ul>';
-                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
                 property += '</div>';
                 property += '<div class="property-thumb">';
@@ -447,6 +422,154 @@ var searchRentProperties = function (params) {
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var searchBuySubProperties = function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "properties/search",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var property = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                property += '<div class="col s12 l3 m6">';
+                property += '<div class="list-card">';
+                property += '<div class="over-card">';
+                property += '<ul>';
+                property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
+                property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
+                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                property += '</ul>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
+                property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
+                property += '</div>';
+                property += '<div class="property-thumb">';
+                var images = $.parseJSON(value.property_images);
+                if (images && images.image && images.image.length > 0) {
+                    property += '<img src="' + images.image[0] + '">';
+                } else {
+                    property += '<img src="#">';
+                }
+
+                property += '</div>';
+                property += '<div class="property-list-details">';
+                property += '<h3>' + value.property_title + '</h3>';
+                property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
+                property += '<div class="button-block">';
+                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+
+
+            });
+            if (page === "1") {
+                $('#buy-sub-property-container').html(property);
+                $('#button_buy_sub_load_more').data('page', page);
+            } else {
+                $('#buy-sub-property-container').append(property);
+                if (response.data.length > 0) {
+
+                    $('#button_buy_sub_load_more').data('page', page);
+                }
+            }
+        } else {
+            $('#buy-sub-property-container').html(property);
+        }
+
+
+    });
+};
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+var searchRentSubProperties = function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "properties/search",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var property = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+
+                property += '<div class="col s12 l3 m6">';
+                property += '<div class="list-card">';
+                property += '<div class="over-card">';
+                property += '<ul>';
+                property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
+                property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
+                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                property += '</ul>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
+                property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
+                property += '</div>';
+                property += '<div class="property-thumb">';
+                var images = $.parseJSON(value.property_images);
+                if (images && images.image && images.image.length > 0) {
+                    property += '<img src="' + images.image[0] + '">';
+                } else {
+                    property += '<img src="#">';
+                }
+
+                property += '</div>';
+                property += '<div class="property-list-details">';
+                property += '<h3>' + value.property_title + '</h3>';
+                property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
+                property += '<div class="button-block">';
+                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+
+
+            });
+            if (page === "1") {
+                $('#rent-sub-property-container').html(property);
+                $('#button_rent_sub_load_more').data('page', page);
+            } else {
+                $('#rent-sub-property-container').append(property);
+                if (response.data.length > 0) {
+
+                    $('#button_rent_sub_load_more').data('page', page);
+                }
+            }
+        } else {
+            $('#rent-sub-property-container').html(property);
+        }
+
+    });
+};
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 var findEmployeeProperties = function (params) {
 
     var page = 'page' in params ? params['page'] : 1;
@@ -476,7 +599,7 @@ var findEmployeeProperties = function (params) {
                 property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
                 property += '</ul>';
-                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + (value.property_ad_type === 'sale' ? 'buydetail/' : 'rentdetail/') + value.property_id + '">View Detail</a></button>';
                 property += '</div>';
                 property += '<div class="property-thumb">';
@@ -549,7 +672,7 @@ var addMoreCommunitySaleList = function (params) {
                 property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
                 property += '</ul>';
-                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
                 property += '</div>';
                 property += '<div class="property-thumb">';
@@ -609,7 +732,7 @@ var addMoreCommunityRentList = function (params) {
 
 
             $.each(response.data, function (key, value) {
-              
+
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -621,7 +744,7 @@ var addMoreCommunityRentList = function (params) {
                 property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
                 property += '</ul>';
-                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="modal1"><a href="#">Make Enquiry</a></button>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
                 property += '</div>';
                 property += '<div class="property-thumb">';
@@ -660,6 +783,450 @@ var addMoreCommunityRentList = function (params) {
         }
     });
 };
+$("#frm_send_feedback").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "contact/sendfeedback",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                // alertMessage('#message', 'success', response.data, 6000 );
+                // $('#frm_send_feedback #response').addClass('alert alert-success').html(response.data);
+                $('#frm_send_feedback')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+                //alertMessage('#message', 'error', response.data, 6000);
+                // $('#frm_send_feedback #response').addClass('alert alert-error').html(response.data);
+            }
+        }
+
+    });
+});
+$("#frm_quick_enquiry").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/quickenquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_quick_enquiry')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_quick_contact").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/quickenquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_quick_contact')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_send_enquiry_model").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/quickenquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_send_enquiry_model')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_project_detail_send_enquiry").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/quickenquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_project_detail_send_enquiry')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_drop_my_cv").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "career/dropmycv",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_drop_my_cv')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_contact_make_enquiry_buy").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/enquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_contact_make_enquiry_buy')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_contact_make_enquiry_rent").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/enquiry",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_contact_make_enquiry_rent')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_list_your_property_buy").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/listyourproperty",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_list_your_property_buy')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_list_your_property_rent").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/listyourproperty",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_list_your_property_rent')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_request_pre_valuation_buy").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/requestprevaluation",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_request_pre_valuation_buy')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_request_pre_valuation_rent").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/requestprevaluation",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_request_pre_valuation_rent')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_owner_list_your_property_buy").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/listyourproperty",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_owner_list_your_property_buy')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_owner_list_your_property_rent").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/listyourproperty",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_owner_list_your_property_rent')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_owner_request_pre_valuation_buy").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/requestprevaluation",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_owner_request_pre_valuation_buy')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_owner_request_pre_valuation_rent").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "email/requestprevaluation",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        cache: false,
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_owner_request_pre_valuation_rent')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        }
+
+    });
+});
+
+$("#frm_send_message").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "team/sendmessage",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_send_message')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        },
+        error: function (xhr) {
+            console.log("Error: " + xhr);
+        },
+        complete: function () {
+            // Handle the complete event
+            console.log('completed');
+        }
+
+    });
+});
+
+$("#frm_request_call_back").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "team/requestcallback",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                $('#frm_request_call_back')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+            }
+        },
+        error: function () {
+            console.log('failed');
+        },
+        complete: function () {
+            // Handle the complete event
+            console.log('completed');
+        }
+
+    });
+});
+
+var makeEnquiry = function (type, ref_name, ref_number) {
+
+    $('#frm_send_enquiry_model #type').val(type);
+    $('#frm_send_enquiry_model #ref_number').val(ref_number);
+    $('#frm_send_enquiry_model #ref_name').val(ref_name);
+};
+
+var sendMessage = function (agent, property_ref, property_name) {
+
+    $('#frm_send_message #agent').val(agent);
+    $('#frm_send_message #property_ref_no').val(property_ref);
+    $('#frm_send_message #property_title').val(property_name);
+};
+
+var requestForCallBack = function (agent, property_ref, property_name) {
+
+    $('#frm_request_call_back #agent').val(agent);
+    $('#frm_request_call_back #property_ref_no').val(property_ref);
+    $('#frm_request_call_back #property_title').val(property_name);
+};
 
 $(document).ready(function () {
 
@@ -697,20 +1264,21 @@ $(document).ready(function () {
         var page = $(this).data('page');
         findTestimonial(page);
     });
-    $("#frm_send_feedback").on('submit', sendFeedback);
     $("#button_buy_load_more").on('click', function (e) {
 
         e.preventDefault();
         var params = {};
         params['unit_category'] = 'sale';
-        var tab = $('ul.tabs.active').attr('value');
+        var tab = $('.tabs .tab .active').attr('value');
         switch (tab) {
 
             case 'residential':
                 params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
                 break;
             case 'commercial':
                 params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
                 break;
             case 'off_plan':
                 params['off_plan'] = '1';
@@ -720,6 +1288,7 @@ $(document).ready(function () {
                 break;
             case 'plots':
                 params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
                 break;
         }
         var page = $(this).data('page');
@@ -736,9 +1305,11 @@ $(document).ready(function () {
 
             case 'residential':
                 params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
                 break;
             case 'commercial':
                 params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
                 break;
             case 'off_plan':
                 params['off_plan'] = '1';
@@ -748,6 +1319,7 @@ $(document).ready(function () {
                 break;
             case 'plots':
                 params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
                 break;
         }
         params['page'] = '1';
@@ -756,17 +1328,20 @@ $(document).ready(function () {
 
 
     $("#button_rent_load_more").on('click', function (e) {
+
         e.preventDefault();
         var params = {};
         params['unit_category'] = 'rent';
-        var tab = $('ul.tabs.active').attr('value');
+        var tab = $('.tabs .tab .active').attr('value');
         switch (tab) {
 
             case 'residential':
                 params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
                 break;
             case 'commercial':
                 params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
                 break;
             case 'off_plan':
                 params['off_plan'] = '1';
@@ -776,6 +1351,7 @@ $(document).ready(function () {
                 break;
             case 'plots':
                 params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
                 break;
         }
         var page = $(this).data('page');
@@ -791,9 +1367,11 @@ $(document).ready(function () {
 
             case 'residential':
                 params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
                 break;
             case 'commercial':
                 params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
                 break;
             case 'off_plan':
                 params['off_plan'] = '1';
@@ -803,11 +1381,131 @@ $(document).ready(function () {
                 break;
             case 'plots':
                 params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
                 break;
         }
         params['page'] = '1';
         searchRentProperties(params);
     });
+
+    $("#button_buy_sub_load_more").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'sale';
+        var unit_model = $('#buy_unit_model').attr('value');
+        params['unit_model'] = unit_model;
+        
+        var property_type = $('.tabs .tab .active').attr('value');
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        var page = $(this).data('page');
+        params['page'] = parseInt(page) + 1;
+        params['property_type'] = property_type;
+        searchBuySubProperties(params);
+    });
+    $(".buy-sub-tab").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'sale';
+        var unit_model = $('#buy_unit_model').attr('value');
+        params['unit_model'] = unit_model;
+        var property_type = $(this).attr('value');
+        
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        params['property_type'] = property_type;
+        
+        params['page'] = '1';
+        searchBuySubProperties(params);
+    });
+    
+    $("#button_rent_sub_load_more").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'rent';
+        var unit_model = $('#buy_unit_model').attr('value');
+        params['unit_model'] = unit_model;
+        
+        var property_type = $('.tabs .tab .active').attr('value');
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        var page = $(this).data('page');
+        params['page'] = parseInt(page) + 1;
+        params['property_type'] = property_type;
+        searchRentSubProperties(params);
+    });
+    $(".rent-sub-tab").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'rent';
+        var unit_model = $('#rent_unit_model').attr('value');
+        params['unit_model'] = unit_model;
+        var property_type = $(this).attr('value');
+        
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        params['property_type'] = property_type;
+        
+        params['page'] = '1';
+        searchRentSubProperties(params);
+    });
+
 
     $("#button_team_property_load_more").on('click', function (e) {
         e.preventDefault();
@@ -848,21 +1546,21 @@ $(document).ready(function () {
 
     $("#btn_property_desc_more").on('click', function (e) {
         e.preventDefault();
-        
+
         var more = $(this).data('more');
-        
-        if(more==0){
-             $(this).data('more',"1");
-             $(this).children('a').html("READ LESS");
-        }else{
-             $(this).data('more',"0");
-             $(this).children('a').html("READ MORE");
+
+        if (more == 0) {
+            $(this).data('more', "1");
+            $(this).children('a').html("READ LESS");
+        } else {
+            $(this).data('more', "0");
+            $(this).children('a').html("READ MORE");
         }
-         $("#property_desc_container").toggleClass('property-desc property-desc-more');
+        $("#property_desc_container").toggleClass('property-desc property-desc-more');
     });
 
 
-   
+
 });
 
 

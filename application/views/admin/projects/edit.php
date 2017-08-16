@@ -38,7 +38,7 @@
 
             </div>
             <div class="input-field col s4">
-                <input id="project_location" type="text" name="project_location"  class="validate" value="<?php echo $project['project_location']; ?>">
+                <input id="project_location" type="text" name="project_location"  class="validate" value='<?php echo $project['project_location']; ?>'>
                 <label class="active" for="project_location">Property Location</label>
             </div>
             <!--            <div class="input-field col s4">
