@@ -251,7 +251,7 @@ class Property_model extends CI_Model {
      */
     function delete_except_listed_property_ref($values) {
         $this->db->where_not_in('property_ref_no', $values);
-        
+
         $this->db->delete('properties');
     }
 
@@ -341,7 +341,7 @@ class Property_model extends CI_Model {
             $this->db->where_in('property_rooms', $bedrooms);
         }
 
-        if ($off_plan!=null) {
+        if ($off_plan != null) {
 
             $this->db->where_in('property_off_plan', $off_plan);
         }
@@ -501,6 +501,31 @@ class Property_model extends CI_Model {
         }
 
         return $property_price_query;
+    }
+
+    function find_agents_from_properties($limit, $offset, $community, $order = 'property_id', $order_type = 'Asc') {
+
+        $this->db->distinct();
+        $this->db->select('employees.*,dep_name,des_name');
+        $this->db->from('properties');
+        $this->db->where('property_community', $community);
+        $this->db->join('employees', 'property_listing_agent_email = emp_email_id', 'inner');
+        $this->db->join('departments', 'emp_department = dep_id', 'left');
+        $this->db->join('designations', 'emp_designation = des_id', 'left');
+
+        if ($order) {
+
+            $this->db->order_by($order, $order_type);
+        } else {
+
+            $this->db->order_by('property_id', $order_type);
+        }
+
+        $this->db->limit($limit, $offset);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
     }
 
 }

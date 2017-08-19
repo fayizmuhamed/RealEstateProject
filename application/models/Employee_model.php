@@ -187,6 +187,20 @@ class Employee_model extends CI_Model {
 
         return $query->result_array();
     }
+    
+    function find_by_ids($limit,$offset,$ids){
+        
+        $this->db->select('*');
+        $this->db->from('employees');
+        $this->db->join('departments', 'emp_department = dep_id', 'left');
+        $this->db->join('designations', 'emp_designation = des_id', 'left');
+        $this->db->where_in('emp_id', $ids);
+        $this->db->limit($limit, $offset);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 
     /**
      * get employees

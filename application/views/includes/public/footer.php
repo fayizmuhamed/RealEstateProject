@@ -58,14 +58,6 @@
         <div class="container">
             <div class="row">
                 <div class="col s12 l6 m6"><p>2017 All Right Reserved</p></div>
-                <!--                <div class="col s12 l6 m6">
-                                    <ul>
-                                        <li><a href="#">FAQ</a></li>
-                                        <li><a href="#">HELP</a></li>
-                                        <li><a href="#">PRIVACY</a></li>
-                                        <li><a href="#">TERM</a></li>    
-                                    </ul>
-                                </div>-->
             </div>
         </div>
     </div>

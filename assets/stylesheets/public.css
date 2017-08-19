@@ -101,17 +101,17 @@
 
 }
 
- .loader {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: #333;
-  opacity: .2;
-  z-index: 20140628;
-  height:1100px;
+.loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #333;
+    opacity: .2;
+    z-index: 20140628;
+    height:1100px;
 }
 
 @keyframes spin {
@@ -151,3 +151,83 @@ button{
     
     width :95%
 }*/
+
+.agent-card .agent-image img{
+
+    height: 100%;
+}
+
+/* line 214, ../sass/layout/Pages/_testimonial.scss */
+.property-card .sold {
+    position: absolute;
+    padding: 0px !important;
+    margin: 0px !important;
+    z-index: 666;
+    width: 78px;
+    height: 65px;
+    background-image: url(../images/sold.svg);
+    background-repeat: no-repeat;
+    right: -4px;
+    top: -4px;
+    background-position: top right;
+}
+
+.property-card .rented {
+    position: absolute;
+    padding: 0px !important;
+    margin: 0px !important;
+    z-index: 666;
+    width: 78px;
+    height: 65px;
+    background-image: url(../images/rented.svg);
+    background-repeat: no-repeat;
+    right: -4px;
+    top: -4px;
+    background-position: top right;
+}
+
+.property-desc{
+    height:100px;
+    overflow: hidden;
+}
+
+.property-desc-more{
+    height:auto;
+    overflow: hidden;
+}
+
+.facts ul li strong {
+    width: 90px;
+    display: inline-block;
+    color: #19223D;
+}
+
+.facts {
+    height: 170px;
+    overflow: visible;
+}
+
+.margin-bottom-0{
+
+    margin-bottom: 0px !important;
+}
+
+.fact-row{
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    overflow: hidden;
+    height: 16px;
+
+}
+
+.fact-row i{
+    margin-right: 10px;
+}
+
+.aminities {
+    height: 280px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    color: #19223D;
+    background-color: #fff;
+}

@@ -20,6 +20,7 @@ class Project extends PublicController {
 
         $this->load->library('image_lib');
         $this->load->model('Project_model');
+        $this->load->model('Employee_model');
     }
 
     /**
@@ -32,19 +33,31 @@ class Project extends PublicController {
         if ($id == null) {
 
             //load the view
-            $projects = $this->Project_model->find_with_search(PROJECT_COUNT_PER_PAGE, 0,$query_array=[], 'project_updated_at', 'desc');
+            $projects = $this->Project_model->find_with_search(PROJECT_COUNT_PER_PAGE, 0, $query_array = [], 'project_updated_at', 'desc');
 
             $data['projects'] = $projects;
 
             $data['content'] = 'public/project';
+
             $this->load->view('includes/public/template', $data);
         } else {
             $project = $this->Project_model->find_by_id($id);
 
-            $data['project'] = $project;
+
+            if ($project) {
+                $project_agents = isset($project[0]['project_agents']) ? json_decode($project[0]['project_agents'], true) : array();
+
+                $data['employees'] = $this->Employee_model->find_by_ids(PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0, $project_agents);
+            }
+
+            //$agents=($project&&isset($project[0]));
+
+            $data['project'] = $project == null ? [] : $project[0];
+
             $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
             //load the view
             $data['content'] = 'public/project_detail';
+
             $this->load->view('includes/public/template', $data);
         }
     }
@@ -59,6 +72,32 @@ class Project extends PublicController {
         //load the view
         $data['content'] = 'public/project_detail';
         $this->load->view('includes/public/template', $data);
+    }
+
+    public function findProjectAgents() {
+
+        $project_id = $this->input->get('project');
+
+        $page = $this->input->get('page', TRUE);
+
+        //math to get the initial record to be select in the database
+        $offset = ($page * PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE) - PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE;
+        if ($offset < 0) {
+            $offset = 0;
+        }
+
+        $project = $this->Project_model->find_by_id($project_id);
+
+        $employees=[];
+
+        if ($project) {
+            
+            $project_agents = isset($project[0]['project_agents']) ? json_decode($project[0]['project_agents'], true) : array();
+
+            $employees = $this->Employee_model->find_by_ids(PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE, $offset, $project_agents);
+        }
+
+        exit($this->send_response('success', $employees));
     }
 
 }

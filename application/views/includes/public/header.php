@@ -6,7 +6,7 @@
         <!--Import Google Icon Font-->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/materialize.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/screen.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/public.css">
@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/animations.css" type="text/css">
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/flexslider.css" type="text/css">
-<!--        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
         <script src="http://maps.google.com/maps/api/js?key=AIzaSyAVAx9nB-cldiFBNKNHu1cNF2Rn6bsbtdo" type="text/javascript"></script>
 
 
@@ -26,8 +26,8 @@
         <!-- CSS file -->
 <!--        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/easy-autocomplete.min.css"> -->
 
-        <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.min.js"></script>
-        <script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>
+<!--        <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>-->
 
     </head>
     <body class="inner-bg">

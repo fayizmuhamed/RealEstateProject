@@ -182,9 +182,11 @@ $route['teams/findEmployeesWithSearch']='public/team/findEmployeesWithSearch';
 $route['teams']='public/team';
 $route['teams/(:any)']='public/team/index/$1';
 
+$route['communities/findCommunityAgents']='public/community/findCommunityAgents';
 $route['communities/getCommunities']='public/community/getCommunities';
 $route['communities/(:num)']='public/community/index/$1';
 $route['communities']='public/community';
+$route['projects/findProjectAgents']='public/project/findProjectAgents';
 $route['projects/(:num)']='public/project/index/$1';
 $route['projects']='public/project';
 $route['default_controller'] = 'public/index';

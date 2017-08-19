@@ -76,13 +76,27 @@
         </div>
 
         <div class="row">
+            <div class="input-field col s12 m6">
+                <select class="icons" multiple name="project_agents[]">
+                    <option value="" disabled selected>Choose Agents</option>
+                    <?php
+                    foreach ($employees as $employee) {
+
+                        echo '<option value="' . $employee['emp_id'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="input-field col s12">
                 <textarea id="project_description" class="materialize-textarea" name="project_description" value="<?php echo set_value('project_description'); ?>"></textarea>
                 <label for="project_description">Description</label>
             </div>
         </div>
-        
-         <!-- Community Location -->
+
+        <!-- Community Location -->
         <div class="row">
 
             <div class="input-field col s12">

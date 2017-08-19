@@ -145,8 +145,11 @@
                             </div>
                         </div>
                         <div class=" col s6" style="margin-top: 1rem;    position: relative;">
-                            <input type="checkbox" id="testimonial_property_status" class="filled-in" name="testimonial_property_status" value="1"  <?php echo set_checkbox('testimonial_property_status', "1",( !empty($testimonial['testimonial_property_status']) && $testimonial['testimonial_property_status'] == "1" ? TRUE : FALSE) );  ?>/>
-                            <label for="testimonial_property_status">Sold</label>
+                            <input type="radio" id="testimonial_property_status_sold" class="with-gap" name="testimonial_property_status" value="1"  <?php echo set_checkbox('testimonial_property_status', "1",( !empty($testimonial['testimonial_property_status']) && $testimonial['testimonial_property_status'] == "1" ? TRUE : FALSE) );  ?>/>
+                            <label for="testimonial_property_status_sold">Sold</label>
+                            <input type="radio" id="testimonial_property_status_rent" class="with-gap" name="testimonial_property_status" value="2"  <?php echo set_checkbox('testimonial_property_status', "2",( !empty($testimonial['testimonial_property_status']) && $testimonial['testimonial_property_status'] == "2" ? TRUE : FALSE) );  ?>/>
+                            <label for="testimonial_property_status_rent">Rent</label>
+                            
                         </div>
 
                     </div>

@@ -1228,6 +1228,108 @@ var requestForCallBack = function (agent, property_ref, property_name) {
     $('#frm_request_call_back #property_title').val(property_name);
 };
 
+var findCommunityAgents = function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "communities/findCommunityAgents",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var employee = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                employee += '<div class="col s12 m4 l3">';
+                employee += '<div class="agent-card">';
+                employee += '<div class="agent-image">';
+                employee += '<div class="view"><button><a href="' + document.BaseUrl + "viewprofile/" + value.emp_id + '">View Profile</a></button></div>';
+                employee += '<img src="' + document.BaseUrl + "uploads/emp-profile/" + value.emp_profile_image + '">';
+                employee += '</div>';
+                employee += '<div class="agent-name">';
+                employee += '<h3>' + $.trim(value.emp_name) + '</h3>';
+                employee += '<span>' + $.trim(value.des_name) + '</span>';
+                employee += '</div>';
+                employee += '<div class="spcial">';
+                employee += '<span><strong>Area Specializes in</strong>' + $.trim(value.emp_area_specialized) + '</span>';
+                employee += '<span><strong>From</strong>' + $.trim(value.emp_location) + '</span>';
+                employee += '<span><strong>Speaks</strong>' + $.trim(value.emp_languages) + '</span>';
+                employee += '</div>';
+                employee += '</div>';
+                employee += '</div>';
+            });
+            if (page === "1") {
+                $('#community_employee_container').html(employee);
+                $('#btn_community_employee_add_more').data('page', page);
+            } else {
+                $('#community_employee_container').append(employee);
+                if (response.data.length > 0) {
+
+                    $('#btn_community_employee_add_more').data('page', page);
+                }
+            }
+        } else {
+            $('#community_employee_container').html(employee);
+        }
+    });
+};
+
+var findProjectAgents = function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "projects/findProjectAgents",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var employee = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                employee += '<div class="col s12 m4 l3">';
+                employee += '<div class="agent-card">';
+                employee += '<div class="agent-image">';
+                employee += '<div class="view"><button><a href="' + document.BaseUrl + "viewprofile/" + value.emp_id + '">View Profile</a></button></div>';
+                employee += '<img src="' + document.BaseUrl + "uploads/emp-profile/" + value.emp_profile_image + '">';
+                employee += '</div>';
+                employee += '<div class="agent-name">';
+                employee += '<h3>' + $.trim(value.emp_name) + '</h3>';
+                employee += '<span>' + $.trim(value.des_name) + '</span>';
+                employee += '</div>';
+                employee += '<div class="spcial">';
+                employee += '<span><strong>Area Specializes in</strong>' + $.trim(value.emp_area_specialized) + '</span>';
+                employee += '<span><strong>From</strong>' + $.trim(value.emp_location) + '</span>';
+                employee += '<span><strong>Speaks</strong>' + $.trim(value.emp_languages) + '</span>';
+                employee += '</div>';
+                employee += '</div>';
+                employee += '</div>';
+            });
+            if (page === "1") {
+                $('#project_employee_container').html(employee);
+                $('#btn_project_employee_add_more').data('page', page);
+            } else {
+                $('#project_employee_container').append(employee);
+                if (response.data.length > 0) {
+
+                    $('#btn_project_employee_add_more').data('page', page);
+                }
+            }
+        } else {
+            $('#project_employee_container').html(employee);
+        }
+    });
+};
+
 $(document).ready(function () {
 
 
@@ -1395,7 +1497,7 @@ $(document).ready(function () {
         params['unit_category'] = 'sale';
         var unit_model = $('#buy_unit_model').attr('value');
         params['unit_model'] = unit_model;
-        
+
         var property_type = $('.tabs .tab .active').attr('value');
         switch (unit_model) {
 
@@ -1425,7 +1527,7 @@ $(document).ready(function () {
         var unit_model = $('#buy_unit_model').attr('value');
         params['unit_model'] = unit_model;
         var property_type = $(this).attr('value');
-        
+
         switch (unit_model) {
 
             case 'residential':
@@ -1442,11 +1544,11 @@ $(document).ready(function () {
                 break;
         }
         params['property_type'] = property_type;
-        
+
         params['page'] = '1';
         searchBuySubProperties(params);
     });
-    
+
     $("#button_rent_sub_load_more").on('click', function (e) {
 
         e.preventDefault();
@@ -1454,7 +1556,7 @@ $(document).ready(function () {
         params['unit_category'] = 'rent';
         var unit_model = $('#buy_unit_model').attr('value');
         params['unit_model'] = unit_model;
-        
+
         var property_type = $('.tabs .tab .active').attr('value');
         switch (unit_model) {
 
@@ -1484,7 +1586,7 @@ $(document).ready(function () {
         var unit_model = $('#rent_unit_model').attr('value');
         params['unit_model'] = unit_model;
         var property_type = $(this).attr('value');
-        
+
         switch (unit_model) {
 
             case 'residential':
@@ -1501,7 +1603,7 @@ $(document).ready(function () {
                 break;
         }
         params['property_type'] = property_type;
-        
+
         params['page'] = '1';
         searchRentSubProperties(params);
     });
@@ -1542,6 +1644,28 @@ $(document).ready(function () {
         params['community'] = community;
         params['unit_category'] = 'rent';
         addMoreCommunityRentList(params);
+    });
+
+    $("#btn_community_employee_add_more").on('click', function (e) {
+        e.preventDefault();
+        var params = {};
+        var page = $(this).data('page');
+        var community = $(this).data('community');
+
+        params['page'] = parseInt(page) + 1;
+        params['community'] = community;
+        findCommunityAgents(params);
+    });
+    
+    $("#btn_project_employee_add_more").on('click', function (e) {
+        e.preventDefault();
+        var params = {};
+        var page = $(this).data('page');
+        var project = $(this).data('project');
+
+        params['page'] = parseInt(page) + 1;
+        params['project'] = project;
+        findProjectAgents(params);
     });
 
     $("#btn_property_desc_more").on('click', function (e) {

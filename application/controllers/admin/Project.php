@@ -20,6 +20,7 @@ class Project extends AdminController {
      */
     public function __construct() {
         parent::__construct();
+        $this->load->model('Employee_model');
         $this->load->model('Property_type_model');
         $this->load->model('Project_model');
     }
@@ -70,7 +71,7 @@ class Project extends AdminController {
     public function add() {
 
         //load the view
-
+        $data['employees'] = $this->Employee_model->find_all();
         $data['property_types'] = $this->Property_type_model->find_all();
         $data['content'] = 'admin/projects/add';
         $this->load->view('includes/admin_template', $data);
@@ -81,7 +82,7 @@ class Project extends AdminController {
      */
     public function edit($id) {
 
-
+        $data['employees'] = $this->Employee_model->find_all();
         //project data 
         $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
         $data['property_types'] = $this->Property_type_model->find_all();
@@ -112,6 +113,8 @@ class Project extends AdminController {
             //if the form has passed through the validation
             if ($this->form_validation->run() && $this->do_upload()) {
 
+
+
                 $data_to_store = array(
                     'project_reference' => $this->input->post('project_reference'),
                     'project_name' => $this->input->post('project_name'),
@@ -128,6 +131,7 @@ class Project extends AdminController {
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? "" : $this->upload_data['project_floor_plan']['file_name'],
                     'project_location_url' => $this->input->post('project_location_url'),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
+                    'project_agents' => json_encode($this->input->post('project_agents')),
                     'project_navigations' => $this->getProjectNavigations()
                 );
 
@@ -199,6 +203,7 @@ class Project extends AdminController {
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? $this->input->post('project_floor_plan_hidden') : $this->upload_data['project_floor_plan']['file_name'],
                     'project_location_url' => $this->input->post('project_location_url'),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
+                    'project_agents' => json_encode($this->input->post('project_agents')),
                     'project_navigations' => $this->getProjectNavigations()
                 );
 
@@ -513,15 +518,18 @@ class Project extends AdminController {
 
         $project_navigations = array();
 
-        foreach ($navigations as $key => $value) {
+        if ($navigations) {
 
-            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
+            foreach ($navigations as $key => $value) {
 
-            if ($navigation_key) {
+                $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
 
-                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+                if ($navigation_key) {
 
-                $project_navigations[$navigation_key] = $navigation_value;
+                    $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+
+                    $project_navigations[$navigation_key] = $navigation_value;
+                }
             }
         }
 

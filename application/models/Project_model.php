@@ -90,6 +90,8 @@ class Project_model extends CI_Model {
 
         return $query->result_array();
     }
+    
+   
 
     /**
      * get projects list by search conditions

@@ -41,6 +41,7 @@ class Community extends PublicController {
             $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
             $data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'sale',null,null);
             $data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'rent',null,null);
+            $data['employees'] = $this->Property_model->find_agents_from_properties(COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0,$community[0]['community_name'],null,null);
 
             //load the view
             $data['content'] = 'public/community_detail';
@@ -78,4 +79,19 @@ class Community extends PublicController {
         exit;
     }
 
+    public function findCommunityAgents() {
+
+        $community = $this->input->get('community');
+
+        $page = $this->input->get('page', TRUE);
+
+        //math to get the initial record to be select in the database
+        $offset = ($page * COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE) - COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE;
+        if ($offset < 0) {
+            $offset = 0;
+        }
+        $employees = $this->Property_model->find_agents_from_properties(COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE, $offset,$community,null,null);
+
+        exit($this->send_response('success', $employees));
+    }
 }

@@ -87,7 +87,7 @@
                     <div class="col s12 l12 m12">
                         <h2>Location Map</h2>
                         <div class="map">
-                            <?php echo (isset($community[0]['community_location_url'])?$community[0]['community_location_url']:'') ; ?>
+                            <?php echo (isset($community[0]['community_location_url']) ? $community[0]['community_location_url'] : ''); ?>
                         </div>
                     </div>
                 </div>
@@ -96,77 +96,35 @@
             <div class="col s12 l12 m12">
                 <div class="row agent-det">
                     <h2>Agent</h2>
-                    <div class="col s12 m4 l3">
-                        <div class="agent-card">
-                            <div class="agent-image">
-                                <div class="view"><button><a href="#">View Profile</a></button></div>
-                                <img src="images/7.jpg">
-                            </div>
-                            <div class="agent-name">
-                                <h3>Thomas Miller</h3>
-                                <span>Business Development Manger</span>
-                            </div>
-                            <div class="spcial">
-                                <span><strong>Speaks</strong>English, Hindi, Arabic</span>
-                                <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4 l3">
-                        <div class="agent-card">
-                            <div class="agent-image">
-                                <div class="view"><button><a href="#">View Profile</a></button></div>
-                                <img src="images/7.jpg">
-                            </div>
-                            <div class="agent-name">
-                                <h3>Thomas Miller</h3>
-                                <span>Business Development Manger</span>
-                            </div>
-                            <div class="spcial">
-                                <span><strong>Speaks</strong>English, Hindi, Arabic</span>
-                                <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4 l3">
-                        <div class="agent-card">
-                            <div class="agent-image">
-                                <div class="view"><button><a href="#">View Profile</a></button></div>
-                                <img src="images/7.jpg">
-                            </div>
-                            <div class="agent-name">
-                                <h3>Thomas Miller</h3>
-                                <span>Business Development Manger</span>
-                            </div>
-                            <div class="spcial">
-                                <span><strong>Speaks</strong>English, Hindi, Arabic</span>
-                                <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col s12 m4 l3">
-                        <div class="agent-card">
-                            <div class="agent-image">
-                                <div class="view"><button><a href="#">View Profile</a></button></div>
-                                <img src="images/7.jpg">
-                            </div>
-                            <div class="agent-name">
-                                <h3>Thomas Miller</h3>
-                                <span>Business Development Manger</span>
-                            </div>
-                            <div class="spcial">
-                                <span><strong>Speaks</strong>English, Hindi, Arabic</span>
-                                <span><strong>Area Specializes in</strong>(Not Mandatory)</span>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="row agent-det" id="community_employee_container">
+                        <?php
+                        foreach ($employees as $employee) {
+                            ?>
 
-
-
-
+                            <div class="col s12 m4 l3">
+                                <div class="agent-card">
+                                    <div class="agent-image">
+                                        <div class="view"><button><a href="<?php echo base_url() . 'viewprofile/' . $employee['emp_id']; ?>">View Profile</a></button></div>
+                                        <img src="<?php echo base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']; ?>">
+                                    </div>
+                                    <div class="agent-name">
+                                        <h3><?php echo $employee['emp_name']; ?></h3>
+                                        <span><?php echo $employee['des_name']; ?></span>
+                                    </div>
+                                    <div class="spcial">
+                                        <span><strong>Area Specializes in</strong><?php echo $employee['emp_area_specialized']; ?></span>
+                                        <span><strong>From</strong><?php echo $employee['emp_location']; ?></span>
+                                        <span><strong>Speaks</strong><?php echo $employee['emp_languages']; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
                     <!-- more -->
                     <div class="col s12 more-button-block">
-                        <button class="bt-normal"><a href="#">VIEW MORE</a></button>
+                       <button class="bt-normal waves-effect waves-light" id="btn_community_employee_add_more" data-page="1" data-community="<?php echo $community[0]['community_name']; ?>">VIEW MORE</button>
                     </div>
 
                 </div>
@@ -221,7 +179,7 @@
 
                     <!-- more -->
                     <div class="col s12 more-button-block">
-                        <button class="bt-normal waves-effect waves-light" id="btn_community_detail_sale_add_more" data-page="1" data-community="<?php echo $community[0]['community_name']; ?>"><a href="#">VIEW MORE</a></button>
+                        <button class="bt-normal waves-effect waves-light" id="btn_community_detail_sale_add_more" data-page="1" data-community="<?php echo $community[0]['community_name']; ?>">VIEW MORE</button>
                     </div>
                 </div>
             </div>

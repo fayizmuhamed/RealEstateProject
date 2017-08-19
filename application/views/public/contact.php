@@ -122,7 +122,7 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="budget">
+                                        <select class="browser-default " name="budget">
                                             <option value="NA" disabled selected>Budget</option>
                                             <option value="Less than 1,000,000">Less than 1,000,000</option>
                                             <option value="1,000,000 – 1,500,000">1,000,000 – 1,500,000</option>
@@ -144,12 +144,12 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
                                             <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -272,12 +272,12 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                            <?php
+                                           <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -393,12 +393,12 @@
                                         <input type="text" placeholder="Expected Sales Price" name="expected_price">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
                                             <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -511,12 +511,12 @@
                                         <input type="text" placeholder="Expected Rent Price" name="expected_price">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                            <?php
+                                           <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -634,12 +634,12 @@
                                         <input type="text" placeholder="Primary View" name="primary_view">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                            <?php
+                                           <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -752,12 +752,12 @@
                                         <input type="text" placeholder="Primary View" name="primary_view">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                            <?php
+                                           <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -818,7 +818,7 @@
                                         <input type="text" placeholder="Mobile Number" name="testimonial_author_contact" id="testimonial_author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="testimonial_property_type">
+                                        <select class="icons" name="testimonial_property_type">
                                             <option value="" selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -841,14 +841,15 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="testimonial_agent" id="testimonial_agent">
+                                        <select class="icons" name="testimonial_agent" id="testimonial_agent">
                                             <option value="" disabled selected>Your Agent? </option>
                                             <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_id'] . '">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_id'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
+                                           
                                         </select>
                                     </div>
                                 </div>

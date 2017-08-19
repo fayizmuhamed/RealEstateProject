@@ -41,14 +41,6 @@
                 <input id="project_location" type="text" name="project_location"  class="validate" value='<?php echo $project['project_location']; ?>'>
                 <label class="active" for="project_location">Property Location</label>
             </div>
-            <!--            <div class="input-field col s4">
-                            <select id="project_location" name="project_location">
-                                <option value="" disabled selected>Property Location</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                        </div>-->
             <div class="input-field col s4">
                 <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project['project_no_of_bedrooms']); ?>" >
                 <label class="active" for="project_no_of_bedrooms">No of bedrooms</label>
@@ -71,7 +63,20 @@
                 <input type="date" class="datepicker" id ="project_end_date" name="project_end_date" value="<?php echo $project['project_end_date']; ?>">
             </div>
         </div>
-
+        <div class="row">
+            <div class="input-field col s12 m6">
+                <select class="icons" multiple name="project_agents[]">
+                    <option value="" disabled selected>Choose Agents</option>
+                    <?php
+                    $project_agents = isset($project['project_agents']) ?json_decode($project['project_agents'], true): array();
+                    foreach ($employees as $employee) {
+                        $isSelected = (in_array($employee['emp_id'], $project_agents)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle" '.$isSelected.'>' . $employee['emp_name'] . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
         <div class="row">
             <div class="input-field col s12">
                 <textarea id="project_description" class="materialize-textarea" name="project_description" ><?php echo $project['project_description']; ?></textarea>

@@ -97,7 +97,7 @@
                     echo '<span>' . $testimonial['testimonial_author_name'] . '</span>';
                     echo '</div>';
                     echo '<div class="property-card">';
-                    echo $testimonial['testimonial_property_status'] === '1' ? '<dir class="label"></dir>' : '';
+                    echo $testimonial['testimonial_property_status'] === '1' ? '<dir class="sold"></dir>' : '<dir class="rented"></dir>';
                     echo '<div class="main-bx-p">';
                     echo '<div class="p-detail">';
                     echo '<h2>' . $testimonial['testimonial_property_number'] . '&nbsp;' . $testimonial['testimonial_property_name'] . '</h2>';

@@ -56,6 +56,15 @@
 
     });
 </script>
+<script type="text/javascript">
+    $(document)
+            .ajaxStart(function () {
+                $("#loader").show();
+            })
+            .ajaxStop(function () {
+                $("#loader").hide();
+            });
+</script>
 </body>
 </html>
 

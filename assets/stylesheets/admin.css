@@ -135,3 +135,40 @@
 .dropdown-content li > a, .dropdown-content li > span {
     padding: 10px 15px;
 }
+
+
+
+.loader-spinner {
+    border: 3px solid #f3f3f3;  
+    border-top: 3px solid red;  
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 20141628;
+
+}
+
+ .loader {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: #333;
+  opacity: .2;
+  z-index: 20140628;
+  height:1100px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

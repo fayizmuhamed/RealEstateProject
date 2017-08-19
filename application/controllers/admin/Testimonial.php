@@ -90,7 +90,7 @@ class Testimonial extends AdminController {
                     'testimonial_property_type' => ($this->input->post('testimonial_property_type') === null) ? 0 :$this->input->post('testimonial_property_type'),
                     'testimonial_property_location' => $this->input->post('testimonial_property_location'),
                     'testimonial_image' => (empty($this->upload_data) || !isset($this->upload_data['testimonial_image'])) ? "" : $this->upload_data['testimonial_image']['file_name'],
-                    'testimonial_property_status' => ($this->input->post('testimonial_property_status') === null) ? 0 : 1
+                    'testimonial_property_status' => ($this->input->post('testimonial_property_status') === null) ? 0 : $this->input->post('testimonial_property_status')
                 );
 
                 //if the insert has returned true then we show the flash message
@@ -142,7 +142,7 @@ class Testimonial extends AdminController {
                     'testimonial_property_type' => ($this->input->post('testimonial_property_type') === null) ? 0 :$this->input->post('testimonial_property_type'),
                     'testimonial_property_location' => $this->input->post('testimonial_property_location'),
                     'testimonial_image' => (empty($this->upload_data) || !isset($this->upload_data['testimonial_image'])) ? $this->input->post('testimonial_image_hidden') : $this->upload_data['testimonial_image']['file_name'],
-                    'testimonial_property_status' => ($this->input->post('testimonial_property_status') === null) ? 0 : 1
+                    'testimonial_property_status' => ($this->input->post('testimonial_property_status') === null) ? 0 : $this->input->post('testimonial_property_status')
                 );
 
                 //if the insert has returned true then we show the flash message
