@@ -91,7 +91,7 @@
                 echo '<span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: ' . $row['project_developer'] . '</span>';
                 echo '<span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: ' . $row['project_property_type'] . '</span>';
                 echo '<span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: ' . $row['project_no_of_bedrooms'] . '</span>';
-                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . 'AED</span>';
+                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . ' AED</span>';
                 echo '<span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: ' . date('d M Y', strtotime($row['project_end_date'])) . '</span>';
                 echo '<br>';
                 echo '<button class="waves-effect waves-light"><a href="' . base_url() . 'projects/' . $row['project_id'] . '">VIEW DETAILS</a></button>';
@@ -330,7 +330,7 @@
             <div class="col s12">
                 <div class="who-we-are-content">
                     <?php
-                    echo isset($about_us_who_we_are) ? $about_us_who_we_are : '';
+                    echo htmlspecialchars_decode(isset($about_us_who_we_are) ? $about_us_who_we_are : '');
                     ?>
                 </div>
                 <ul class="tabs">
@@ -342,7 +342,7 @@
             <div id="vision" class="col s12">
                 <h1>Vision</h1>
                 <div class="who-we-are-content"><?php
-                    echo isset($about_us_vision) ? $about_us_vision : '';
+                    echo htmlspecialchars_decode(isset($about_us_vision) ? $about_us_vision : '');
                     ?></div>
             </div>
 
@@ -350,7 +350,7 @@
             <div id="mission" class="col s12">
                 <h1>Mission</h1>
                 <div class="who-we-are-content"><?php
-                    echo isset($about_us_mission) ? $about_us_mission : '';
+                    echo htmlspecialchars_decode(isset($about_us_mission) ? $about_us_mission : '');
                     ?></div>
             </div>
 
@@ -358,7 +358,7 @@
             <div id="value" class="col s12">
                 <h1>Value</h1>
                 <div class="who-we-are-content"><?php
-                    echo isset($about_us_value) ? $about_us_value : '';
+                    echo htmlspecialchars_decode(isset($about_us_value) ? $about_us_value : '');
                     ?></div>
             </div>
 
