@@ -2451,6 +2451,10 @@ footer .links-f ul li:hover {
   overflow: hidden;
   position: relative;
 }
+.height-565 {
+  height: 565px;
+}
+
 /* line 71, ../sass/layout/Pages/_project.scss */
 .inner-full-banner img {
   min-width: 100%;

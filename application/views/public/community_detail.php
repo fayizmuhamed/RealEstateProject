@@ -25,7 +25,7 @@
     </div>
 </section>
 
-<section class="inner-full-banner">
+<section class="inner-full-banner height-565">
     <img src="<?php echo base_url() . 'uploads/community/cover/' . $community[0]['community_cover_image']; ?>">
 </section>
 

@@ -18,7 +18,7 @@
     </div>
 </section>
 
-<section class="inner-full-banner ">
+<section class="inner-full-banner height-565">
 
     <div class="over-innr-pg">
         <div class="project-inner">

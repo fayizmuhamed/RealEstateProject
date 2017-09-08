@@ -42,7 +42,7 @@
                 <label class="active" for="project_location">Property Location</label>
             </div>
             <div class="input-field col s4">
-                <input id="project_no_of_bedrooms" type="number" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project['project_no_of_bedrooms']); ?>" >
+                <input id="project_no_of_bedrooms" type="text" name="project_no_of_bedrooms"  class="validate" value="<?php echo set_value('project_no_of_bedrooms', $project['project_no_of_bedrooms']); ?>" >
                 <label class="active" for="project_no_of_bedrooms">No of bedrooms</label>
             </div>
         </div>
