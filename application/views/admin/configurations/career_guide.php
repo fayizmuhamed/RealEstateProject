@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="add-new-form" style="float:left; width:100%">
-     <textarea class="editor" name="career_guide_description" id="career_guide_description" height="400px"><?php echo array_key_exists("career_guide_description", $configurations)? $configurations['career_guide_description']:""; ?></textarea>
+     <textarea class="editor" name="career_guide_description" id="career_guide_description" height="400px"><?php echo array_key_exists("career_guide_description", $configurations)? htmlspecialchars_decode($configurations['career_guide_description']):""; ?></textarea>
              
 
 

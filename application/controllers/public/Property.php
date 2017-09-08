@@ -20,8 +20,10 @@ class Property extends PublicController {
         parent::__construct();
 
         $this->load->library('image_lib');
-         $this->load->model('Property_model');
+        $this->load->model('Property_type_model');
+        $this->load->model('Property_model');
         $this->load->model('Employee_model');
+        $this->load->model('Community_model');
     }
 
     /**
@@ -30,33 +32,61 @@ class Property extends PublicController {
      * @return void
      */
     function index() {
-
+        
     }
-    
+
+    public function search() {
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+            $unit_category = $this->input->post('unit_category');
+            $communities = $this->input->post('locations');
+            $bedrooms = $this->input->post('bedrooms');
+            $budgets = $this->input->post('budgets');
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, null, null, $bedrooms, $budgets, null, null, null, null, null, $communities, null, null);
+
+            $this->data['properties'] = $properties;
+            $this->data['property_types'] = $this->Property_type_model->find_all();
+            $this->data['communities'] = $this->Community_model->find_all();
+            $this->data['unit_category'] = $unit_category;
+            $this->data['search_locations'] = $communities;
+            $this->data['search_bedrooms'] = $bedrooms;
+            $this->data['search_budgets'] = $budgets;
+            if ($unit_category == 'sale') {
+
+                //load the view
+                $this->data['content'] = 'public/buy';
+                $this->load->view('includes/public/template', $this->data);
+            } else {
+                //load the view
+                $this->data['content'] = 'public/rent';
+                $this->load->view('includes/public/template', $this->data);
+            }
+        }
+    }
 
     public function findPropertiesWithSearch() {
-        
-        $unit_category= $this->input->get('unit_category');
-        $unit_model= $this->input->get('unit_model');
-        $property_type= $this->input->get('property_type');
-        $bedrooms= $this->input->get('bedrooms');
-        $budgets= $this->input->get('budgets');
-        $size= $this->input->get('size');
-        $off_plan= $this->input->get('off_plan');
-        $featured= $this->input->get('featured');
-        $agent=$this->input->get('agent');
-        $community=$this->input->get('community');
+
+        $unit_category = $this->input->get('unit_category');
+        $unit_model = $this->input->get('unit_model');
+        $property_type = $this->input->get('property_type');
+        $bedrooms = $this->input->get('bedrooms');
+        $budgets = $this->input->get('budgets');
+        $size = $this->input->get('size');
+        $off_plan = $this->input->get('off_plan');
+        $featured = $this->input->get('featured');
+        $agent = $this->input->get('agent');
+        $community = $this->input->get('community');
         $search_string = $this->input->get('search_string');
         $order = $this->input->get('order');
         $order_type = $this->input->get('order_type');
-        
+
         $page = $this->input->get('page', TRUE);
-        
+
         $per_page = $this->input->get('count_per_page');
-        
-        if($per_page==null){
-            
-            $per_page=PROPERTIES_COUNT_PER_PAGE;
+
+        if ($per_page == null) {
+
+            $per_page = PROPERTIES_COUNT_PER_PAGE;
         }
 
 
@@ -66,18 +96,16 @@ class Property extends PublicController {
             $offset = 0;
         }
 
-        $properties = $this->Property_model->search_properties($per_page, $offset,$unit_category,$unit_model,$property_type,$bedrooms,$budgets,$size,$off_plan,$featured,$search_string,$agent,$community,$order,$order_type);
+        $properties = $this->Property_model->search_properties($per_page, $offset, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
 
-        exit ($this->send_response('success', $properties));
-        
+        exit($this->send_response('success', $properties));
     }
-    
-    
-    function propertyDetail($id){
-        
+
+    function propertyDetail($id) {
+
         $property = $this->Property_model->find_by_id($id);
 
-        $data['property'] = $property;
+        $this->data['property'] = $property;
 
         if (isset($property->property_listing_agent_email) && $property->property_listing_agent_email != "") {
 
@@ -85,13 +113,14 @@ class Property extends PublicController {
 
             if ($employees) {
 
-                $data['employee'] = $employees == null ? [] : $employees[0];
+                $this->data['employee'] = $employees == null ? [] : $employees[0];
             }
         }
 
 
         //load the view
-        $data['content'] = 'public/property_detail';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/property_detail';
+        $this->load->view('includes/public/template', $this->data);
     }
+
 }

@@ -23,6 +23,7 @@ class Rent extends PublicController {
         $this->load->model('Property_type_model');
         $this->load->model('Property_model');
         $this->load->model('Employee_model');
+        $this->load->model('Community_model');
     }
 
     /**
@@ -34,10 +35,12 @@ class Rent extends PublicController {
 
         $properties = $this->Property_model->search_properties(TEAM_PAGE_EMPLOYEE_COUNT_PER_PAGE, 0, 'rent', null, null, null, null, null, null, null, null, null, null, null, null);
 
-        $data['properties'] = $properties;
+        $this->data['properties'] = $properties;
+        $this->data['property_types'] = $this->Property_type_model->find_all();
+        $this->data['communities'] = $this->Community_model->find_all();
         //load the view
-        $data['content'] = 'public/rent';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/rent';
+        $this->load->view('includes/public/template', $this->data);
     }
     
     function rentCategory($category) {
@@ -77,12 +80,12 @@ class Rent extends PublicController {
 
             $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
 
-            $data['properties'] = $properties;
-            $data['property_types'] = $this->Property_type_model->find_by_model_name($unit_model);
-            $data['unit_model'] = $unit_model;
+            $this->data['properties'] = $properties;
+            $this->data['property_types'] = $this->Property_type_model->find_by_model_name($unit_model);
+            $this->data['unit_model'] = $unit_model;
             //load the view
-            $data['content'] = 'public/rent_sub';
-            $this->load->view('includes/public/template', $data);
+            $this->data['content'] = 'public/rent_sub';
+            $this->load->view('includes/public/template', $this->data);
         } else {
 
             redirect('/buy');
@@ -98,13 +101,13 @@ class Rent extends PublicController {
 
         $property = $this->Property_model->find_by_id($id);
 
-        $data['property'] = $property;
+        $this->data['property'] = $property;
         if (isset($property->property_listing_agent_email) && $property->property_listing_agent_email != "") {
 
             $employees = $this->Employee_model->find_by_email_id($property->property_listing_agent_email);
             if ($employees) {
 
-                $data['employee'] = $employees == null ? [] : $employees[0];
+                $this->data['employee'] = $employees == null ? [] : $employees[0];
             }
         }
         
@@ -112,12 +115,12 @@ class Rent extends PublicController {
 
             $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property->property_ref_no);
 
-            $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
+            $this->data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
         }
         
         //load the view
-        $data['content'] = 'public/rent_detail';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/rent_detail';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     /**
@@ -128,8 +131,8 @@ class Rent extends PublicController {
     function tenantsGuide() {
 
         //load the view
-        $data['content'] = 'public/tenants_guide';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/tenants_guide';
+        $this->load->view('includes/public/template', $this->data);
     }
 
 }

@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="own_guide_selling_process" id="own_guide_selling_process"><?php echo array_key_exists("own_guide_selling_process", $configurations)? $configurations['own_guide_selling_process']:""; ?></textarea>
+                    <textarea class="editor" name="own_guide_selling_process" id="own_guide_selling_process"><?php echo array_key_exists("own_guide_selling_process", $configurations)? htmlspecialchars_decode($configurations['own_guide_selling_process']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="own_guide_leasing_process" id="own_guide_leasing_process"><?php echo array_key_exists("own_guide_leasing_process", $configurations)? $configurations['own_guide_leasing_process']:""; ?></textarea>
+                    <textarea class="editor" name="own_guide_leasing_process" id="own_guide_leasing_process"><?php echo array_key_exists("own_guide_leasing_process", $configurations)? htmlspecialchars_decode($configurations['own_guide_leasing_process']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="own_guide_why_we_are" id="own_guide_why_we_are"><?php echo array_key_exists("own_guide_why_we_are", $configurations)? $configurations['own_guide_why_we_are']:""; ?></textarea>
+                    <textarea class="editor" name="own_guide_why_we_are" id="own_guide_why_we_are"><?php echo array_key_exists("own_guide_why_we_are", $configurations)? htmlspecialchars_decode($configurations['own_guide_why_we_are']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="own_guide_faq" id="own_guide_faq"><?php echo array_key_exists("own_guide_faq", $configurations)? $configurations['own_guide_faq']:""; ?></textarea>
+                    <textarea class="editor" name="own_guide_faq" id="own_guide_faq"><?php echo array_key_exists("own_guide_faq", $configurations)? htmlspecialchars_decode($configurations['own_guide_faq']):""; ?></textarea>
                 </div>
             </li>
         </ul>

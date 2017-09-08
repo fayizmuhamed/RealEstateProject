@@ -133,12 +133,18 @@ $(".image-upload").change(function (e) {
 
 //function to insert new payment plan in admin project page
 $(".add-payment-plan").on('click', function () {
+    debugger;
+    var dtPaymentPlanHead = $('#payment_plan_head');
     var dtPaymentPlanDate = $('#payment_plan_date');
     var txtPaymentPlanAmount = $('#payment_plan_amount');
 
 
-    $('#payment_plan_date_error, #payment_plan_amount_error').remove();
-    if (dtPaymentPlanDate.val() === '') {
+    $('#payment_plan_head_error,#payment_plan_date_error, #payment_plan_amount_error').remove();
+    if (dtPaymentPlanHead.val() === '') {
+        dtPaymentPlanHead.after('<span id="payment_plan_head_error">Choose payment plan head</span>').attr({"aria-describedby": "payment_plan_head_error", "aria-invalid": "true"});
+        dtPaymentPlanHead.focus();
+        return false;
+    } else if (dtPaymentPlanDate.val() === '') {
         dtPaymentPlanDate.after('<span id="payment_plan_date_error">Choose date</span>').attr({"aria-describedby": "payment_plan_date_error", "aria-invalid": "true"});
         dtPaymentPlanDate.focus();
         return false;
@@ -152,9 +158,11 @@ $(".add-payment-plan").on('click', function () {
     var rowCount = $('#table_payment_plan tbody tr').length;
 
     rowCount++;
+    
 
     $("#table_payment_plan tbody").append(
             "<tr>" +
+            "<td>" + dtPaymentPlanHead.val() + "</td>" +
             "<td>" + dtPaymentPlanDate.val() + "</td>" +
             "<td>" + txtPaymentPlanAmount.val() + "</td>" +
             "<td class='width-150 action-table'>" +
@@ -192,10 +200,12 @@ function getAllPaymentPlans() {
     var hiddenProjectPaymentPlans = $('#project_payment_plan_hidden');
 
     $('#table_payment_plan tbody tr').each(function () {
-        var paymentPlanDate = $(this).children("td:nth-child(1)").html();
-        var paymentPlanAmount = $(this).children("td:nth-child(2)").html();
+        var paymentPlanHead=$(this).children("td:nth-child(1)").html();
+        var paymentPlanDate = $(this).children("td:nth-child(2)").html();
+        var paymentPlanAmount = $(this).children("td:nth-child(3)").html();
 
         var paymentPlans = {
+            'head':paymentPlanHead,
             'date': paymentPlanDate,
             'amount': paymentPlanAmount
         };
@@ -206,6 +216,7 @@ function getAllPaymentPlans() {
 
 }
 ;
+
 
 var deleteProjectThumbnail = function (e) {
     e.preventDefault();

@@ -31,11 +31,11 @@ class Property_owner extends PublicController {
      */
     function index() {
 
-        $data['employees'] = $this->Employee_model->find_all();
-        $data['property_types'] = $this->Property_type_model->find_all();
+        $this->data['employees'] = $this->Employee_model->find_all();
+        $this->data['property_types'] = $this->Property_type_model->find_all();
         //load the view
-        $data['content'] = 'public/property_owner';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/property_owner';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     /**
@@ -46,8 +46,8 @@ class Property_owner extends PublicController {
     function ownersGuide() {
 
         //load the view
-        $data['content'] = 'public/owners_guide';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/owners_guide';
+        $this->load->view('includes/public/template', $this->data);
     }
 
 }

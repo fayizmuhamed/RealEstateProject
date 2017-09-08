@@ -35,21 +35,21 @@ class Testimonial extends PublicController {
 
             $testimonials = $this->Testimonial_model->find_approved_testimonial_by_agent(TESTIMONIAL_COUNT_PER_PAGE, 0, null, 'testimonial_updated_at', 'DESC');
 
-            $data['testimonials'] = $testimonials;
+            $this->data['testimonials'] = $testimonials;
             //load the view
-            $data['content'] = 'public/testimonial';
-            $this->load->view('includes/public/template', $data);
+            $this->data['content'] = 'public/testimonial';
+            $this->load->view('includes/public/template', $this->data);
         } else {
 
             $testimonials = $this->Testimonial_model->find_approved_testimonial_by_agent(TESTIMONIAL_COUNT_PER_PAGE, 0, $id, 'testimonial_updated_at', 'DESC');
-            $data['testimonials'] = $testimonials;
+            $this->data['testimonials'] = $testimonials;
 
             $employees = $this->Testimonial_model->find_by_id($id);
-            $data['employee'] = $employees == null ? [] : $employees[0];
+            $this->data['employee'] = $employees == null ? [] : $employees[0];
 
             //load the view
-            $data['content'] = 'public/team_testimonial';
-            $this->load->view('includes/public/template', $data);
+            $this->data['content'] = 'public/team_testimonial';
+            $this->load->view('includes/public/template', $this->data);
         }
     }
 

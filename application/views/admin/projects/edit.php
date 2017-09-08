@@ -68,10 +68,10 @@
                 <select class="icons" multiple name="project_agents[]">
                     <option value="" disabled selected>Choose Agents</option>
                     <?php
-                    $project_agents = isset($project['project_agents']) ?json_decode($project['project_agents'], true): array();
+                    $project_agents = isset($project['project_agents']) ? json_decode($project['project_agents'], true) : array();
                     foreach ($employees as $employee) {
                         $isSelected = (in_array($employee['emp_id'], $project_agents)) ? ' selected="selected"' : '';
-                        echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle" '.$isSelected.'>' . $employee['emp_name'] . '</option>';
+                        echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle" ' . $isSelected . '>' . $employee['emp_name'] . '</option>';
                     }
                     ?>
                 </select>
@@ -87,7 +87,7 @@
         <div class="row">
 
             <div class="input-field col s12">
-                <input id="project_location_url" type="text" name="project_location_url"  class="validate" value="<?php echo set_value('project_location_url', $project['project_location_url']); ?>">
+                <input id="project_location_url" type="text" name="project_location_url"  class="validate" value="<?php echo set_value('project_location_url', htmlspecialchars_decode($project['project_location_url'])); ?>">
                 <label class="active" for="project_location_url">Enter embed map url</label>
             </div>
         </div>
@@ -169,19 +169,31 @@
 
                     <div class="collapsible-body padd-10-0">
                         <div class="row">
-                            <!--                                <div class="input-field col s3">
-                                                                <label for="payment_plan_ins_number">Installment number</label>
-                                                                <input id="payment_plan_ins_number" name="payment_plan_ins_number"  type="number"  >
-                                                            </div>-->
-                            <div class="input-field col s4">
-                                <label for="payment_plan_date">Date</label>
-                                <input id="payment_plan_date" name="payment_plan_date"  type="date" class="datepicker" >
+                            <div class="input-field col s3">
+                                <select id="payment_plan_head" name="payment_plan_head">
+                                    <option value="" disabled selected>Choose Payment Head</option>
+                                    <option value="Booking Amount">Booking Amount</option>
+                                    <option value="1st Installment">1st Installment</option>
+                                    <option value="2nd Installment">2nd Installment</option>
+                                    <option value="3rd Installment">3rd Installment</option>
+                                    <option value="4th Installment">4th Installment</option>
+                                    <option value="5th Installment">5th Installment</option>
+                                    <option value="6th Installment">6th Installment</option>
+                                    <option value="7th Installment">7th Installment</option>
+                                    <option value="8th Installment">8th Installment</option>
+                                    <option value="9th Installment">9th Installment</option>
+                                    <option value="10th Installment">10th Installment</option>
+                                </select>
                             </div>
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
+                                <label for="payment_plan_date">Date</label>
+                                <input id="payment_plan_date" name="payment_plan_date"  type="text" >
+                            </div>
+                            <div class="input-field col s3">
                                 <label for="payment_plan_amount">Amount/Percentage</label>
                                 <input id="payment_plan_amount" name="payment_plan_amount"  type="text"  >
                             </div>
-                            <div class="input-field col s4">
+                            <div class="input-field col s3">
                                 <button class="btn normal-bt add-payment-plan" type="button" >Add</button>
                             </div>
                         </div>
@@ -189,7 +201,7 @@
                             <table class="striped responsive-table input-field" id="table_payment_plan">
                                 <thead>
                                     <tr>
-<!--                                        <th class="width-100">Sl No</th>-->
+                                        <th>Head</th>
                                         <th>Date</th>
                                         <th>Amount/Percentage</th>
                                         <th class="width-150" >Action</th>
@@ -205,6 +217,7 @@
 
                                         foreach ($project_payment_plans as $row_payment_plan) {
                                             echo '<tr id="test">';
+                                            echo '<td>' . $row_payment_plan['head'] . '</td>';
                                             echo '<td>' . $row_payment_plan['date'] . '</td>';
                                             echo '<td>' . $row_payment_plan['amount'] . '</td>';
                                             echo '<td class="width-150 action-table">

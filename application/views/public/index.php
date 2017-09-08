@@ -91,7 +91,7 @@
                 echo '<span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: ' . $row['project_developer'] . '</span>';
                 echo '<span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: ' . $row['project_property_type'] . '</span>';
                 echo '<span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: ' . $row['project_no_of_bedrooms'] . '</span>';
-                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . '</span>';
+                echo '<span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: ' . number_format($row['project_start_price']) . 'AED</span>';
                 echo '<span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: ' . date('d M Y', strtotime($row['project_end_date'])) . '</span>';
                 echo '<br>';
                 echo '<button class="waves-effect waves-light"><a href="' . base_url() . 'projects/' . $row['project_id'] . '">VIEW DETAILS</a></button>';
@@ -132,6 +132,20 @@
                     echo '<div class="row">';
 
                     foreach ($properties as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
                         echo '<div class="col s12 l3 m6">';
                         echo '<div class="list-card">';
                         echo '<div class="over-card">';
@@ -140,8 +154,12 @@
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
-                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
-                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                         echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
@@ -160,7 +178,7 @@
                         echo '<h3>' . $property['property_title'] . '</h3>';
                         echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                         echo '<div class="button-block">';
-                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
@@ -195,6 +213,20 @@
                     echo '<div class="row">';
 
                     foreach ($properties as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
                         echo '<div class="col s12 l3 m6">';
                         echo '<div class="list-card" >';
                         echo '<div class="over-card">';
@@ -203,8 +235,12 @@
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
-                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
-                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
                         echo '<button class="view-b"><a href="' . base_url() . 'rentdetail/' . $property['property_id'] . '">View Detail</a></button>';
@@ -226,7 +262,7 @@
                         echo '<h3>' . $property['property_title'] . '</h3>';
                         echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                         echo '<div class="button-block">';
-                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
@@ -292,11 +328,11 @@
 
         <div class="row">
             <div class="col s12">
-                <p class="para">
+                <div class="who-we-are-content">
                     <?php
                     echo isset($about_us_who_we_are) ? $about_us_who_we_are : '';
-// array_key_exists("about_us_who_we_are", var_dump($configurations)) ? var_dump($configurations)['about_us_who_we_are'] : ""; 
-                    ?></p>
+                    ?>
+                </div>
                 <ul class="tabs">
                     <li class="tab col s4"><a class="active" href="#vision">VISION</a></li>
                     <li class="tab col s4"><a href="#mission">MISSION</a></li>
@@ -305,28 +341,25 @@
             </div>
             <div id="vision" class="col s12">
                 <h1>Vision</h1>
-                <p><?php
+                <div class="who-we-are-content"><?php
                     echo isset($about_us_vision) ? $about_us_vision : '';
-//echo  array_key_exists("about_us_vision", $this->$configurations) ? $this->$configurations['about_us_vision'] : ""; 
-                    ?></p>
+                    ?></div>
             </div>
 
             <!-- Mission -->
             <div id="mission" class="col s12">
                 <h1>Mission</h1>
-                <p><?php
+                <div class="who-we-are-content"><?php
                     echo isset($about_us_mission) ? $about_us_mission : '';
-//echo $about_us_mission;array_key_exists("about_us_mission", $configurations) ? $configurations['about_us_mission'] : ""; 
-                    ?></p>
+                    ?></div>
             </div>
 
             <!-- Value -->
             <div id="value" class="col s12">
                 <h1>Value</h1>
-                <p><?php
+                <div class="who-we-are-content"><?php
                     echo isset($about_us_value) ? $about_us_value : '';
-//echo array_key_exists("about_us_value", $configurations) ? $configurations['about_us_value'] : ""; 
-                    ?></p>
+                    ?></div>
             </div>
 
         </div>

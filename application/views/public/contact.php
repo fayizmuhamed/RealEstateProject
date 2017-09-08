@@ -27,7 +27,7 @@
             <!-- OFFICE LOCATION -->
             <div id="test1" class="col s12">
                 <div class="row">
-                    <div class="col s12 l8 m6 contact-map" ><?php echo html_entity_decode(isset($contact_us_location) ? $contact_us_location : ''); ?></div>
+                    <div class="col s12 l8 m6 contact-map" ><?php echo htmlspecialchars_decode((isset($contact_us_location) ? $contact_us_location : '')); ?></div>
                     <div class="col s12 l4 m6">
                         <div class="contact-detail-bx">
                             <h2>Contact Details</h2>
@@ -37,7 +37,13 @@
                             <span><i class="zmdi zmdi-phone"></i><?php echo (isset($contact_us_contact_no) ? $contact_us_contact_no : ''); ?></span>
                             <br>
                             <span class="navy"><i class="zmdi zmdi-time"></i>Opening Hours</span>
-                            <span class="navy big"><?php echo (isset($contact_us_opening_hours) ? $contact_us_opening_hours : ''); ?></span>
+                            <span class="navy big">Sunday - Thursday</span>
+                            <span class="navy big">8.00 AM - 7.30 PM</span>
+                            <br>
+                            <span class="navy big">Friday & Saturday </span>
+                            <span class="navy big">10 AM - 5.30 PM</span>
+<!--                            <div class="navy big"><?php echo (isset($contact_us_opening_hours) ? $contact_us_opening_hours : ''); ?></div>-->
+<!--                            <span class="navy big"><?php echo (isset($contact_us_opening_hours) ? $contact_us_opening_hours : ''); ?></span>-->
                             <ul class="social">
                                 <li><a href="<?php echo ((isset($contact_us_facebook) && strlen($contact_us_facebook)) ? $contact_us_facebook : '#'); ?>"><i class="zmdi zmdi-facebook"></i></a></li>
                                 <li><a href="<?php echo ((isset($contact_us_twitter) && strlen($contact_us_twitter)) ? $contact_us_twitter : '#'); ?>"><i class="zmdi zmdi-twitter"></i></a></li>
@@ -73,7 +79,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -91,7 +97,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="NA" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -104,7 +110,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select  name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -112,7 +118,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -122,7 +128,7 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default " name="budget">
+                                        <select  name="budget">
                                             <option value="NA" disabled selected>Budget</option>
                                             <option value="Less than 1,000,000">Less than 1,000,000</option>
                                             <option value="1,000,000 – 1,500,000">1,000,000 – 1,500,000</option>
@@ -199,7 +205,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -217,7 +223,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="NA" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -230,7 +236,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select  name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -238,7 +244,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -248,7 +254,7 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="budget">
+                                        <select  name="budget" >
                                             <option value="NA" disabled selected>Budget</option>
                                             <option value="Less than 50,000">Less than 50,000</option>
                                             <option value="50,000 – 75,000">50,000 – 75,000</option>
@@ -332,7 +338,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -349,7 +355,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -362,7 +368,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select  name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -370,7 +376,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -450,7 +456,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -467,7 +473,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -480,7 +486,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select  name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -488,7 +494,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -573,7 +579,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -590,7 +596,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -603,7 +609,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select  name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -611,7 +617,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -691,7 +697,7 @@
                                         <input type="text" placeholder="Mobile Number" name="author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="property_type">
+                                        <select  name="property_type">
                                             <option value="" disabled selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -708,7 +714,7 @@
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="bedrooms">
+                                        <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
@@ -721,7 +727,7 @@
                                 </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="study_or_maid">
+                                        <select name="study_or_maid">
                                             <option value="NA"  selected>None</option>
                                             <option value="Study Room">Study Room</option>
                                             <option value="Maid Room">Maid Room</option>
@@ -729,7 +735,7 @@
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="furnish">
+                                        <select  name="furnish">
                                             <option value="Furnished"  selected>Furnished</option>
                                             <option value="Un Furnished">Un Furnished</option>
                                             <option value="Both">Both</option>
@@ -818,7 +824,7 @@
                                         <input type="text" placeholder="Mobile Number" name="testimonial_author_contact" id="testimonial_author_contact">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                        <select class="icons" name="testimonial_property_type">
+                                        <select  name="testimonial_property_type">
                                             <option value="" selected>Property Type</option>
                                             <?php
                                             foreach ($property_types as $property_type) {
@@ -832,7 +838,7 @@
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
-                                        <select class="browser-default" name="testimonial_author_relation" id="testimonial_author_relation">
+                                        <select  name="testimonial_author_relation" id="testimonial_author_relation">
                                             <option value="" disabled selected>Your Bridges & Allies Experience as a?</option>
                                             <option value="buyer">Buyer</option>
                                             <option value="tenant">Tenant</option>

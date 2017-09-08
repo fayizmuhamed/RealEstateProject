@@ -39,7 +39,7 @@
         <div class="row">
 
             <div class="input-field col s12">
-                <input id="community_location_url" type="text" name="community_location_url"  class="validate" value="<?php echo set_value('community_location_url', $community['community_location_url']); ?>">
+                <input id="community_location_url" type="text" name="community_location_url"  class="validate" value="<?php echo set_value('community_location_url', htmlspecialchars_decode($community['community_location_url'])); ?>">
                 <label class="active" for="community_location_url">Enter embed map url</label>
             </div>
         </div>

@@ -9,7 +9,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/materialize.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/screen.css">
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/select2.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/public.css">
+        
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
@@ -28,12 +30,12 @@
 
 <!--        <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>-->
-
+        <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>
     </head>
     <body class="inner-bg">
         <div class="loader" id="loader">
             <div class="loader-spinner">
-                
+
             </div>
         </div>
         <!-- Make Enquiry Modal Structure -->
@@ -52,7 +54,7 @@
                     <div class="col l12 m12 s12"><textarea placeholder="Message" name="author_message"></textarea></div>
                     <div class="col l12 m12 s12">
                         <button class="bt-normal auto waves-effect waves-light" type="submit">Send</button>
-                         <button class="cancel modal-close waves-effect waves-light" type="button">Cancel</button>
+                        <button class="cancel modal-close waves-effect waves-light" type="button">Cancel</button>
                     </div>
                     <?php echo form_close(); ?>
                 </div>
@@ -70,7 +72,7 @@
                         <div class="col l12 m12 s12"><textarea placeholder="Message"></textarea></div>
                         <div class="col l12 m12 s12">
                             <button class="bt-normal auto waves-effect waves-light" type="submit">Send</button>
-                             <button class="cancel modal-close waves-effect waves-light" type="button">Cancel</button>
+                            <button class="cancel modal-close waves-effect waves-light" type="button">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -116,7 +118,7 @@
                     <div class="col l12 m12 s12"><input type="text" placeholder="Preferred call back time" name="author_call_back_time"></div>
                     <div class="col l12 m12 s12"><textarea placeholder="Message" name="author_message"></textarea></div>
                     <div class="col l12 m12 s12">
-                       <button class="bt-normal auto waves-effect waves-light" type="submit">Send</button>
+                        <button class="bt-normal auto waves-effect waves-light" type="submit">Send</button>
                         <button class="cancel modal-close waves-effect waves-light" type="button">Cancel</button>
 
                     </div>

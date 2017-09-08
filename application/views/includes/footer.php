@@ -13,7 +13,13 @@
 <script>
     tinymce.init({
         selector: '.editor',
-        forced_root_block: ""
+        plugins: [
+            "advlist autolink lists link image charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | fontselect fontsizeselect",
+        fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt"
     });</script>
 <script type="text/javascript">
     $(".button-collapse").sideNav();
@@ -52,7 +58,7 @@
 <script>
     $(document).ready(function () {
         $('.tooltipped').tooltip({delay: 50});
-        
+
 
     });
 </script>

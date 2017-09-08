@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="about_us_who_we_are" id="about_us_who_we_are"><?php echo array_key_exists("about_us_who_we_are", $configurations)? $configurations['about_us_who_we_are']:""; ?></textarea>
+                    <textarea class="editor" name="about_us_who_we_are" id="about_us_who_we_are"><?php echo array_key_exists("about_us_who_we_are", $configurations)? htmlspecialchars_decode($configurations['about_us_who_we_are']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="about_us_vision" id="about_us_vision"><?php echo array_key_exists("about_us_vision", $configurations)? $configurations['about_us_vision']:""; ?></textarea>
+                    <textarea class="editor" name="about_us_vision" id="about_us_vision"><?php echo array_key_exists("about_us_vision", $configurations)? htmlspecialchars_decode($configurations['about_us_vision']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="about_us_mission" id="about_us_mission"><?php echo array_key_exists("about_us_mission", $configurations)? $configurations['about_us_mission']:""; ?></textarea>
+                    <textarea class="editor" name="about_us_mission" id="about_us_mission"><?php echo array_key_exists("about_us_mission", $configurations)? htmlspecialchars_decode($configurations['about_us_mission']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="about_us_value" id="about_us_value"><?php echo array_key_exists("about_us_value", $configurations)? $configurations['about_us_value']:""; ?></textarea>
+                    <textarea class="editor" name="about_us_value" id="about_us_value"><?php echo array_key_exists("about_us_value", $configurations)? htmlspecialchars_decode($configurations['about_us_value']):""; ?></textarea>
                 </div>
             </li>
         </ul>

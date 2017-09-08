@@ -34,32 +34,33 @@
         <div class="row">
             <div class="input-field col s6">
                 <input id="contact_us_opening_hours" type="text" name="contact_us_opening_hours"  value="<?php echo array_key_exists("contact_us_opening_hours", $configurations)? $configurations['contact_us_opening_hours']:""; ?>">
+                
                 <label class="active" for="contact_us_opening_hours">Opening hours</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="contact_us_location" type="text" name="contact_us_location"  value='<?php echo (array_key_exists("contact_us_location", $configurations)? $configurations['contact_us_location']:""); ?>'>
+                <input id="contact_us_location" type="text" name="contact_us_location"  value='<?php echo set_value('contact_us_location',array_key_exists("contact_us_location", $configurations)? htmlspecialchars_decode($configurations['contact_us_location']):""); ?>'>
                 <label class="active" for="contact_us_location">Location Map Url</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="contact_us_facebook" type="text" name="contact_us_facebook"  value="<?php echo array_key_exists("contact_us_facebook", $configurations)? $configurations['contact_us_facebook']:""; ?>">
+                <input id="contact_us_facebook" type="text" name="contact_us_facebook"  value="<?php echo array_key_exists("contact_us_facebook", $configurations)? htmlspecialchars_decode($configurations['contact_us_facebook']):""; ?>">
                 <label class="active" for="contact_us_facebook">Facebook Url</label>
             </div>
             <div class="input-field col s6">
-                <input id="contact_us_twitter" type="text" name="contact_us_twitter"  value="<?php echo array_key_exists("contact_us_twitter", $configurations)? $configurations['contact_us_twitter']:""; ?>">
+                <input id="contact_us_twitter" type="text" name="contact_us_twitter"  value="<?php echo array_key_exists("contact_us_twitter", $configurations)? htmlspecialchars_decode($configurations['contact_us_twitter']):""; ?>">
                 <label class="active" for="contact_us_twitter">Twitter Url</label>
             </div>
         </div>
         <div class="row">
              <div class="input-field col s6">
-                <input id="contact_us_linked_in" type="text" name="contact_us_linked_in" value="<?php echo array_key_exists("contact_us_linked_in", $configurations)? $configurations['contact_us_linked_in']:""; ?>">
+                <input id="contact_us_linked_in" type="text" name="contact_us_linked_in" value="<?php echo array_key_exists("contact_us_linked_in", $configurations)? htmlspecialchars_decode($configurations['contact_us_linked_in']):""; ?>">
                 <label class="active" for="contact_us_linked_in">Linked In Url</label>
             </div>
              <div class="input-field col s6">
-                <input id="contact_us_instagram" type="text" name="contact_us_instagram"  value="<?php echo array_key_exists("contact_us_instagram", $configurations)? $configurations['contact_us_instagram']:""; ?>">
+                <input id="contact_us_instagram" type="text" name="contact_us_instagram"  value="<?php echo array_key_exists("contact_us_instagram", $configurations)? htmlspecialchars_decode($configurations['contact_us_instagram']):""; ?>">
                 <label class="active" for="contact_us_instagram">Instagram Url</label>
             </div>
 

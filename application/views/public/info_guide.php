@@ -18,7 +18,7 @@
                 <ul class="tabs tabs-fixed-width">
                     <li class="tab"><a class="active" href="#info_dubai">DUBAI</a></li>
                     <li class="tab"><a href="#news_and_reports">News & Reports</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>#community-sec" target="_self">Dubai Communities</a></li>
+<!--                    <li class="tab"><a href="<?php echo base_url(); ?>#community-sec" target="_self">Dubai Communities</a></li>-->
                     <li class="tab"><a href="#rera_updates">RERA</a></li>
                      <li class="tab"><a href="#investor_visa">Investor Visa</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>ownersguide" target="_self">Owner’s Guide</a></li>
@@ -52,7 +52,7 @@
                         <div class="box-white">
                             <h2>DUBAI</h2>
                             <br>
-                            <p><?php echo isset($info_guide_dubai) ? $info_guide_dubai : ''; ?></p>
+                            <p><?php echo htmlspecialchars_decode(isset($info_guide_dubai) ? $info_guide_dubai : ''); ?></p>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         <div class="box-white">
                             <h2>Latest News & Reports</h2>
                             <br>
-                            <p><?php echo isset($info_guide_news_and_reports) ? $info_guide_news_and_reports : ''; ?></p>
+                            <p><?php echo htmlspecialchars_decode(isset($info_guide_news_and_reports) ? $info_guide_news_and_reports : ''); ?></p>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                         <div class="box-white">
                             <h2>Investor Visa</h2>
                             <br>
-                            <p><?php echo isset($info_guide_investor_visa) ? $info_guide_investor_visa : ''; ?></p>
+                            <p><?php echo htmlspecialchars_decode(isset($info_guide_investor_visa) ? $info_guide_investor_visa : ''); ?></p>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         <div class="box-white">
                             <h2>RERA Updates</h2>
                             <br>
-                            <p><?php echo isset($info_guide_rera_updates) ? $info_guide_rera_updates : ''; ?></p>
+                            <p><?php echo htmlspecialchars_decode(isset($info_guide_rera_updates) ? $info_guide_rera_updates : ''); ?></p>
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                         <div class="box-white">
                             <h2>FAQs</h2>
                             <br>
-                            <?php echo isset($info_guide_faq) ? $info_guide_faq : ''; ?>
+                            <?php echo htmlspecialchars_decode(isset($info_guide_faq) ? $info_guide_faq : ''); ?>
                         </div>
                     </div>
                 </div>

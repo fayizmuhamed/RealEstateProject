@@ -129,7 +129,7 @@ class Project extends AdminController {
                     'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? "" : $this->upload_data['project_cover_image']['file_name'],
                     'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? "" : $this->upload_data['project_brochure']['file_name'],
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? "" : $this->upload_data['project_floor_plan']['file_name'],
-                    'project_location_url' => $this->input->post('project_location_url'),
+                    'project_location_url' => htmlspecialchars($this->input->post('project_location_url')),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
                     'project_agents' => json_encode($this->input->post('project_agents')),
                     'project_navigations' => $this->getProjectNavigations()
@@ -201,7 +201,7 @@ class Project extends AdminController {
                     'project_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['project_cover_image'])) ? $this->input->post('project_cover_image_hidden') : $this->upload_data['project_cover_image']['file_name'],
                     'project_brochure' => (empty($this->upload_data) || !isset($this->upload_data['project_brochure'])) ? $this->input->post('project_brochure_hidden') : $this->upload_data['project_brochure']['file_name'],
                     'project_floor_plan' => (empty($this->upload_data) || !isset($this->upload_data['project_floor_plan'])) ? $this->input->post('project_floor_plan_hidden') : $this->upload_data['project_floor_plan']['file_name'],
-                    'project_location_url' => $this->input->post('project_location_url'),
+                    'project_location_url' => htmlspecialchars($this->input->post('project_location_url')),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
                     'project_agents' => json_encode($this->input->post('project_agents')),
                     'project_navigations' => $this->getProjectNavigations()

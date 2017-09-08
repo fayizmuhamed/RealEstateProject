@@ -35,11 +35,11 @@ class Project extends PublicController {
             //load the view
             $projects = $this->Project_model->find_with_search(PROJECT_COUNT_PER_PAGE, 0, $query_array = [], 'project_updated_at', 'desc');
 
-            $data['projects'] = $projects;
+            $this->data['projects'] = $projects;
 
-            $data['content'] = 'public/project';
+            $this->data['content'] = 'public/project';
 
-            $this->load->view('includes/public/template', $data);
+            $this->load->view('includes/public/template', $this->data);
         } else {
             $project = $this->Project_model->find_by_id($id);
 
@@ -47,18 +47,18 @@ class Project extends PublicController {
             if ($project) {
                 $project_agents = isset($project[0]['project_agents']) ? json_decode($project[0]['project_agents'], true) : array();
 
-                $data['employees'] = $this->Employee_model->find_by_ids(PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0, $project_agents);
+                $this->data['employees'] = $this->Employee_model->find_by_ids(PROJECT_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0, $project_agents);
             }
 
             //$agents=($project&&isset($project[0]));
 
-            $data['project'] = $project == null ? [] : $project[0];
+            $this->data['project'] = $project == null ? [] : $project[0];
 
-            $data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
+            $this->data['project_thumbnails'] = $this->Project_thumbnail_model->find_all($id);
             //load the view
-            $data['content'] = 'public/project_detail';
+            $this->data['content'] = 'public/project_detail';
 
-            $this->load->view('includes/public/template', $data);
+            $this->load->view('includes/public/template', $this->data);
         }
     }
 
@@ -70,8 +70,8 @@ class Project extends PublicController {
     function view() {
 
         //load the view
-        $data['content'] = 'public/project_detail';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/project_detail';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     public function findProjectAgents() {

@@ -130,7 +130,15 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('select').material_select();
+        $('select:not(.location-select)').material_select();
+
+        $('select:not(.location-select)').on('contentChanged', function () {
+            // re-initialize (update)
+            $(this).material_select();
+        });
+
+        $(".location-select").select2();
+
     });
 </script>
 

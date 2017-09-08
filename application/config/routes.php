@@ -169,7 +169,8 @@ $route['rentdetail/(:num)']='public/rent/rentDetails/$1';
 $route['rent/sub/(:any)']='public/rent/rentCategory/$1';
 $route['rent']='public/rent';
 
-$route['properties/search']='public/property/findPropertiesWithSearch';
+$route['properties/search']='public/property/search';
+$route['properties/findPropertiesWithSearch']='public/property/findPropertiesWithSearch';
 $route['buyersguide']='public/buy/buyersGuide';
 $route['buydetail/(:num)']='public/buy/buyDetails/$1';
 $route['buy/sub/(:any)']='public/buy/buyCategory/$1';
@@ -182,6 +183,7 @@ $route['teams/findEmployeesWithSearch']='public/team/findEmployeesWithSearch';
 $route['teams']='public/team';
 $route['teams/(:any)']='public/team/index/$1';
 
+$route['communities/findAllCommunities']='public/community/findAllCommunities';
 $route['communities/findCommunityAgents']='public/community/findCommunityAgents';
 $route['communities/getCommunities']='public/community/getCommunities';
 $route['communities/(:num)']='public/community/index/$1';

@@ -15,39 +15,65 @@
 <!-- Modal Structure -->
 <div id="modal-filter" class="modal bottom-sheet">
     <div class="modal-content">
-        <h4>Flter</h4>
+        <h4>Filter</h4>
         <div class="filters">
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Property Type</option>
-                    <option value="1">Apartment</option>
-                    <option value="2">Villas</option>
-                    <option value="3">Residential</option>
-                    <option value="4">Retail</option>
-                    <option value="5">Official</option>
-                    <option value="6">Commercial</option>
+                <select  name="property_type[]" multiple>
+                    <option value="" disabled selected>Property Type</option>
+                    <?php
+                    foreach ($property_types as $property_type) {
+
+                        echo '<option value="' . $property_type['pt_name'] . '">' . $property_type['pt_name'] . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Bed Room</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                <select class="js-example-responsive location-select" multiple="multiple" name="search_location" id="filter_location" name="filter_location">
+                   <?php
+                    foreach ($communities as $community) {
+
+                        echo '<option value="' . $community['community_name'] . '">' . $community['community_name'] . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
+
+
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Budget</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                <select name="bedrooms" multiple>
+                    <option value="NA" disabled selected>Bed Rooms</option>
+                    <?php
+                    for ($i = 1; $i <= 10; $i++) {
+
+                        echo '<option value="' . $i . '">' . $i . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <div class="input-field col s12">
+                <select  name="budget" multiple>
+                    <option value="NA" disabled selected>Budget</option>
+                    <option value="Less than 50,000">Less than 50,000</option>
+                    <option value="50,000 – 75,000">50,000 – 75,000</option>
+                    <option value="75,000 – 100,000">75,000 – 100,000</option>
+                    <option value="100,000 – 125,000">100,000 – 125,000</option>
+                    <option value="125,000 – 150,000">125,000 – 150,000</option>
+                    <option value="150,000 – 175,000">150,000 – 175,000</option>
+                    <option value="175,000 – 200,000">175,000 – 200,000</option>
+                    <option value="200,000 – 250,000">200,000 – 250,000</option>
+                    <option value="250,000 – 300,000">250,000 – 300,000</option>
+                    <option value="300,000 – 350,000">300,000 – 350,000</option>
+                    <option value="350,000 – 400,000">350,000 – 400,000</option>
+                    <option value="400,000 – 450,000">400,000 – 450,000</option>
+                    <option value="450,000 – 500,000">450,000 – 500,000</option>
+                    <option value="500,000 – 600,000">500,000 – 600,000</option>
+                    <option value="600,000 – 700,000">600,000 – 700,000</option>
+                    <option value="700,000 – 800,000">700,000 – 800,000</option>
+                    <option value="800,000 – 900,000">800,000 – 900,000</option>
+                    <option value="900,000 – 1,000,000">900,000 – 1,000,000</option>
+                    <option value="More than 1,000,000">More than 1,000,000</option>
                 </select>
             </div>
 
@@ -97,6 +123,20 @@
                 <div class="row mg-bt-none" id="rent-property-container">
                     <?php
                     foreach ($properties as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
                         echo '<div class="col s12 l3 m6">';
                         echo '<div class="list-card">';
                         echo '<div class="over-card">';
@@ -105,11 +145,15 @@
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
                         echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
-                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
-                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
-                        echo '<button class="view-b"><a href="'.base_url().'rentdetail/'.$property['property_id'].'">View Detail</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'rentdetail/' . $property['property_id'] . '">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';
 
@@ -127,7 +171,7 @@
                         echo '<h3>' . $property['property_title'] . '</h3>';
                         echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                         echo '<div class="button-block">';
-                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '<button class="price">AED ' . number_format($property['property_price'])  . '</button>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';

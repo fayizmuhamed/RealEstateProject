@@ -29,7 +29,7 @@
                     <span><i class="zmdi zmdi-aspect-ratio-alt"></i>&nbsp;Developer: <?php echo $project['project_developer']; ?></span>
                     <span><i class="zmdi zmdi-widgets"></i>&nbsp;Property Type: <?php echo $project['project_property_type']; ?></span>
                     <span><i class="icon-bed"></i>&nbsp;No of Bed Rooms: <?php echo $project['project_no_of_bedrooms']; ?></span>
-                    <span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: <?php echo number_format($project['project_start_price']); ?></span>
+                    <span><i class="zmdi zmdi-money-box"></i>&nbsp;Starting Price: <?php echo number_format($project['project_start_price']); ?> AED</span>
                     <span><i class="zmdi zmdi-calendar-alt"></i>&nbsp;Completion Date: <?php echo date('d M Y', strtotime($project['project_end_date'])); ?></span>
                     <br>
                     <!--				<button class="waves-effect waves-light"><a href="#">VIEW DETAILS</a></button>-->
@@ -84,26 +84,69 @@
                         <?php
                         $project_payment_plans = json_decode($project['project_payment_plans'], TRUE);
 
+                        $payment_plan_heads = array('0' => 'Booking Amount',
+                            '1' => '1st Installment',
+                            '2' => '2nd Installment',
+                            '3' => '3rd Installment',
+                            '4' => '4th Installment',
+                            '5' => '5th Installment',
+                            '6' => '6th Installment',
+                            '7' => '7th Installment',
+                            '8' => '8th Installment',
+                            '9' => '9th Installment',
+                            '10' => '10th Installment'
+                        );
+
                         if ($project_payment_plans == NULL) {
                             
                         } else {
-                            $i = 0;
+
+                            $project_payment_plan_map = [];
+
                             foreach ($project_payment_plans as $row_payment_plan) {
-                                $i++;
-                                echo '<div class="instalment-card">';
-                                echo '<div class="top">';
-                                echo '<h1>' . $i . date('S', mktime(1, 1, 1, 1, ( (($i >= 10) + ($i >= 20) + ($i == 0)) * 10 + $i % 10))) . '</h1>';
-                                echo '<span>Installment</span>';
-                                echo ' </div>';
-                                echo '<div class="percentage">' . $row_payment_plan['amount'] . '</div>';
-                                echo '<i>' . date('d M Y', strtotime($row_payment_plan['date'])) . '</i>';
-                                echo '</div>';
+
+                                $project_payment_plan_map[$row_payment_plan['head']] = $row_payment_plan;
                             }
+
+                            foreach ($payment_plan_heads as $key => $value) {
+
+                                if (isset($project_payment_plan_map[$value])) {
+
+                                    $row_payment_plan=$project_payment_plan_map[$value];
+                                    
+                                    echo '<div class="instalment-card">';
+                                    echo '<div class="top">';
+                                    if ($key == 0) {
+                                        echo '<span>Booking</span>';
+                                        echo '<span>Amount</span>';
+                                    } else {
+                                        echo '<h1>' . $key . date('S', mktime(1, 1, 1, 1, ( (($key >= 10) + ($key >= 20) + ($key == 0)) * 10 + $key % 10))) . '</h1>';
+                                        echo '<span>Installment</span>';
+                                    }
+                                    echo ' </div>';
+                                    echo '<div class="percentage">' . $row_payment_plan['amount'] . '</div>';
+                                    echo '<i>' . $row_payment_plan['date']. '</i>';
+                                    echo '</div>';
+                                }
+                            }
+
+//                            $i = 0;
+//                            foreach ($project_payment_plans as $row_payment_plan) {
+//                                $i++;
+//                                echo '<div class="instalment-card">';
+//                                echo '<div class="top">';
+//                                echo '<h1>' . $i . date('S', mktime(1, 1, 1, 1, ( (($i >= 10) + ($i >= 20) + ($i == 0)) * 10 + $i % 10))) . '</h1>';
+//                                echo '<span>Installment</span>';
+//                                echo ' </div>';
+//                                echo '<div class="percentage">' . $row_payment_plan['amount'] . '</div>';
+//                                echo '<i>' . date('d M Y', strtotime($row_payment_plan['date'])) . '</i>';
+//                                echo '</div>';
+//                            }
                         }
                         ?>
 
                         <p class="plan-footer">
-                            Estimated Construction Completion date :<?php echo date('d M Y', strtotime($project['project_end_date']));?><br>Project No. <?php echo $project['project_reference']; ?>
+                            Estimated Construction Completion date :<?php echo date('d M Y', strtotime($project['project_end_date'])); ?><br>Project No. <?php echo $project['project_reference']; ?>
                         </p>
                     </div>
                 </div>
@@ -122,7 +165,7 @@
 
                             foreach ($project_navigations as $key => $value) {
                                 echo '<div class="col s4 l3 m4">';
-                                echo '<span>' . navigation_icon($key) . '&nbsp;' . $value . ' Km to ' . navigation_display_name($key) . '</span>';
+                                echo '<span>' . navigation_icon($key) . '&nbsp;' . $value . ' to ' . navigation_display_name($key) . '</span>';
                                 echo '</div>';
                             }
                         }
@@ -137,10 +180,10 @@
                 <button class="half-button-navy"><a href="<?php echo empty($project['project_floor_plan']) ? "#" : base_url() . 'uploads/project/floor_plan/' . $project['project_floor_plan']; ?>" download><i class="zmdi zmdi-file"></i>&nbsp;Floor Plan</a></button>
             </div>
 
-            
+
             <div class="col s12 l12 m12">
-             
-                <button class="full-button modal-trigger waves-effect waves-light" data-target="make_enquiry_model" ><a href="#" onclick="makeEnquiry('project', '<?php echo $project['project_name']; ?>','<?php echo $project['project_reference']; ?>');return false;">Make Enquiry</a></button>
+
+                <button class="full-button modal-trigger waves-effect waves-light" data-target="make_enquiry_model" ><a href="#" onclick="makeEnquiry('project', '<?php echo $project['project_name']; ?>', '<?php echo $project['project_reference']; ?>');return false;">Make Enquiry</a></button>
             </div>
 
             <div class="col s12 l12 m12">
@@ -148,7 +191,7 @@
                     <div class="col s12 l12 m12">
                         <h2>Location Map</h2>
                         <div class="map">
-                            <?php echo (isset($project['project_location_url']) ? $project['project_location_url'] : ''); ?>
+                            <?php echo htmlspecialchars_decode(isset($project['project_location_url']) ? $project['project_location_url'] : ''); ?>
                         </div>
                     </div>
                 </div>
@@ -185,7 +228,7 @@
                     </div>
                     <!-- more -->
                     <div class="col s12 more-button-block">
-                       <button class="bt-normal waves-effect waves-light" id="btn_project_employee_add_more" data-page="1" data-project="<?php echo $project['project_id']; ?>">VIEW MORE</button>
+                        <button class="bt-normal waves-effect waves-light" id="btn_project_employee_add_more" data-page="1" data-project="<?php echo $project['project_id']; ?>">VIEW MORE</button>
                     </div>
                 </div>
             </div>

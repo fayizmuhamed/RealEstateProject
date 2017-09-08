@@ -38,12 +38,12 @@ class Team extends PublicController {
         //load the view
         $employees = $this->Employee_model->find_by_departments(TEAM_PAGE_EMPLOYEE_COUNT_PER_PAGE, 0, $department, 'emp_id', 'asc');
 
-        $data['employees'] = $employees;
-        $data['selected_department'] = $department;
-        $data['departments'] = $this->Department_model->find_all();
+        $this->data['employees'] = $employees;
+        $this->data['selected_department'] = $department;
+        $this->data['departments'] = $this->Department_model->find_all();
 
-        $data['content'] = 'public/team';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/team';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     /**
@@ -56,16 +56,16 @@ class Team extends PublicController {
         //load the view
         $employees = $this->Employee_model->find_by_id($id);
 
-        $data['employee'] = $employees == null ? [] : $employees[0];
+        $this->data['employee'] = $employees == null ? [] : $employees[0];
 
         if ($employees[0]['emp_email_id']) {
 
-            $data['properties'] = $this->Property_model->find_by_agent_email_id(PROPERTIES_COUNT_PER_PAGE, 0, $employees[0]['emp_email_id'], null, null);
+            $this->data['properties'] = $this->Property_model->find_by_agent_email_id(PROPERTIES_COUNT_PER_PAGE, 0, $employees[0]['emp_email_id'], null, null);
         }
 
 
-        $data['content'] = 'public/team_detail';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/team_detail';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     public function findEmployeesWithSearch() {

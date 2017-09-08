@@ -7,7 +7,7 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+small, strike, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
@@ -21,6 +21,15 @@ time, mark, audio, video {
   border: 0;
   font: inherit;
   font-size: 100%;
+  vertical-align: baseline;
+}
+
+strong {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
   vertical-align: baseline;
 }
 
@@ -164,6 +173,28 @@ body {
 /* line 90, ../sass/layout/_base.scss */
 .section-gap {
   padding: 50px 0px;
+}
+
+.dropdown-content li {
+    clear: both;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    min-height: 40px;
+    line-height: 1rem;
+    width: 100%;
+    text-align: left;
+    text-transform: none;
+}
+
+.icons .dropdown-content li {
+    clear: both;
+    color: rgba(0, 0, 0, 0.87);
+    cursor: pointer;
+    min-height: 50px;
+    line-height: 1rem;
+    width: 100%;
+    text-align: left;
+    text-transform: none;
 }
 
 /* line 93, ../sass/layout/_base.scss */
@@ -638,16 +669,47 @@ body {
 }
 /* line 97, ../sass/layout/_menu.scss */
 .search .search-form .searchfeild .search-text {
-  width: calc(100% - 338px);
+  width: calc(100% - 390px);
   float: left;
   overflow: hidden;
 }
 /* line 102, ../sass/layout/_menu.scss */
-.search .search-form .searchfeild .search-select {
+.search .search-form .searchfeild .search-select-room {
   width: 168px;
   float: left;
   margin-left: 1px;
+  margin-right: 10px;
 }
+
+.search .search-form .searchfeild .search-budget-select {
+  width: 200px;
+  float: left;
+  margin-left: 1px;
+  margin-right: 10px;
+}
+
+.search-form [type="checkbox"] + label {
+    position: relative;
+    padding-left: 24px;
+    cursor: pointer;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.search-form .dropdown-content li > span {
+    font-size: 12px;
+    color: #26a69a;
+    display: block;
+    line-height: 0px;
+    padding: 10px 16px;
+}
+
 /* line 106, ../sass/layout/_menu.scss */
 .search .search-form .searchfeild .search-select select {
   background-color: #fff;
@@ -1745,11 +1807,20 @@ footer .links-f ul li:hover {
 }
 
 /* line 2, ../sass/layout/Pages/_about.scss */
-.who-we-are .para {
+.who-we-are-content{
   display: block;
-  text-align: center;
-  padding: 10px 0px 20px 0px;
+  padding: 0px 0px 20px 0px;
+  font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
+.who-we-are-content strong{
+ font-weight: bold;
+}
+
+.who-we-are-content em{
+ font-style: italic;
+}
+
 /* line 8, ../sass/layout/Pages/_about.scss */
 .who-we-are .tabs .tab a {
   border: 1px solid #e1e1e1;

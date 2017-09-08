@@ -43,7 +43,7 @@
 							<div class="box-white">
 								<h2>RENTING PROCEDURE</h2>
 								<br>
-								<p><?php echo isset($ten_guide_renting_procedure)?$ten_guide_renting_procedure:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($ten_guide_renting_procedure)?$ten_guide_renting_procedure:'');?></p>
 							</div>
 					</div>
 				
@@ -57,7 +57,7 @@
 							<div class="box-white">
 								<h2>UAE PROPERTY LAWS</h2>
 								<br>
-								<p><?php echo isset($ten_guide_uae_property_law)?$ten_guide_uae_property_law:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($ten_guide_uae_property_law)?$ten_guide_uae_property_law:'');?></p>
 							</div>
 					</div>
 				
@@ -70,7 +70,7 @@
 							<div class="box-white">
 								<h2>WHY BRIDGES & ALLIES</h2>
 								<br>
-								<p><?php echo isset($ten_guide_why_we_are)?$ten_guide_why_we_are:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($ten_guide_why_we_are)?$ten_guide_why_we_are:'');?></p>
 							</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 							<div class="box-white">
 								<h2>FAQ</h2>
 								<br>
-								<p><?php echo isset($ten_guide_faq)?$ten_guide_faq:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($ten_guide_faq)?$ten_guide_faq:'');?></p>
 							</div>
 					</div>
 				</div>

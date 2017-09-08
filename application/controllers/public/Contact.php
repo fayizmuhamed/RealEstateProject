@@ -34,11 +34,11 @@ class Contact extends PublicController {
     function index() {
 
 
-        $data['employees'] = $this->Employee_model->find_all();
-        $data['property_types'] = $this->Property_type_model->find_all();
+        $this->data['employees'] = $this->Employee_model->find_all();
+        $this->data['property_types'] = $this->Property_type_model->find_all();
         //load the view
-        $data['content'] = 'public/contact';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/contact';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     function send_feedback() {

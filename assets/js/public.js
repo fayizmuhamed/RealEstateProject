@@ -1,3 +1,27 @@
+var number_format = function(number, decimals, decPoint, thousandsSep) {
+ number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+  var n = !isFinite(+number) ? 0 : +number;
+  var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+  var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+  var dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+  var s = ''
+  var toFixedFix = function (n, prec) {
+    var k = Math.pow(10, prec);
+    return '' + (Math.round(n * k) / k)
+      .toFixed(prec);
+  };
+  // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+  if (s[0].length > 3) {
+    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+  }
+  if ((s[1] || '').length < prec) {
+    s[1] = s[1] || '';
+    s[1] += new Array(prec - s[1].length + 1).join('0');
+  }
+  return s.join(dec);
+};
+
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -279,7 +303,7 @@ var searchBuyProperties = function (params) {
     var page = 'page' in params ? params['page'] : 1;
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -290,6 +314,16 @@ var searchBuyProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
+
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
+
+
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -298,8 +332,13 @@ var searchBuyProperties = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
@@ -317,7 +356,7 @@ var searchBuyProperties = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -353,7 +392,7 @@ var searchRentProperties = function (params) {
 
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -364,7 +403,14 @@ var searchRentProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
 
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -373,8 +419,13 @@ var searchRentProperties = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
@@ -392,7 +443,7 @@ var searchRentProperties = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -427,7 +478,7 @@ var searchBuySubProperties = function (params) {
     var page = 'page' in params ? params['page'] : 1;
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -438,6 +489,14 @@ var searchBuySubProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
+
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -446,8 +505,13 @@ var searchBuySubProperties = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
@@ -465,7 +529,7 @@ var searchBuySubProperties = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -501,7 +565,7 @@ var searchRentSubProperties = function (params) {
 
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -512,7 +576,14 @@ var searchRentSubProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
 
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -521,8 +592,13 @@ var searchRentSubProperties = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
@@ -540,7 +616,7 @@ var searchRentSubProperties = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -576,7 +652,7 @@ var findEmployeeProperties = function (params) {
 
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -587,7 +663,14 @@ var findEmployeeProperties = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
 
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -596,8 +679,13 @@ var findEmployeeProperties = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + (value.property_ad_type === 'sale' ? 'buydetail/' : 'rentdetail/') + value.property_id + '">View Detail</a></button>';
@@ -615,7 +703,7 @@ var findEmployeeProperties = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -649,7 +737,7 @@ var addMoreCommunitySaleList = function (params) {
 
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -660,7 +748,14 @@ var addMoreCommunitySaleList = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
 
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -669,8 +764,13 @@ var addMoreCommunitySaleList = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
@@ -688,7 +788,7 @@ var addMoreCommunitySaleList = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -721,7 +821,7 @@ var addMoreCommunityRentList = function (params) {
 
     $.ajax({
         type: "GET",
-        url: document.BaseUrl + "properties/search",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
         cache: false,
         data: params,
         dataType: "json"
@@ -732,7 +832,14 @@ var addMoreCommunityRentList = function (params) {
 
 
             $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
 
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
                 property += '<div class="col s12 l3 m6">';
                 property += '<div class="list-card">';
                 property += '<div class="over-card">';
@@ -741,8 +848,13 @@ var addMoreCommunityRentList = function (params) {
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
                 property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
-                property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
-                property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
                 property += '<button class="view-b"><a href="' + document.BaseUrl + 'rentdetail/' + value.property_id + '">View Detail</a></button>';
@@ -760,7 +872,7 @@ var addMoreCommunityRentList = function (params) {
                 property += '<h3>' + value.property_title + '</h3>';
                 property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
                 property += '<div class="button-block">';
-                property += '<button class="price">AED ' + value.property_price + '</button>';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
                 property += '</div>';
                 property += '</div>';
                 property += '</div>';
@@ -1330,6 +1442,31 @@ var findProjectAgents = function (params) {
     });
 };
 
+var loadLocations = function () {
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "communities/findAllCommunities",
+        cache: false,
+        dataType: "json"
+    }).done(function (response) {
+        var communities = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                communities += '<option value="' + value.community_name + '">' + value.community_name + '</option>';
+
+            });
+            $('#header_search_locations').html(communities);
+
+        } else {
+            $('#header_search_locations').html(communities);
+        }
+    });
+};
+
 $(document).ready(function () {
 
 
@@ -1656,7 +1793,7 @@ $(document).ready(function () {
         params['community'] = community;
         findCommunityAgents(params);
     });
-    
+
     $("#btn_project_employee_add_more").on('click', function (e) {
         e.preventDefault();
         var params = {};
@@ -1683,7 +1820,81 @@ $(document).ready(function () {
         $("#property_desc_container").toggleClass('property-desc property-desc-more');
     });
 
+    //loadLocations();
 
+    var buyBudgets = {
+        "Less than 1,000,000": "Less than 1,000,000",
+        "1,000,000 – 1,500,000": "1,000,000 – 1,500,000",
+        "1,500,000 – 2,000,000": "1,500,000 – 2,000,000",
+        "2,000,000 – 2,500,000": "2,000,000 – 2,500,000",
+        "2,500,000 – 3,000,000": "2,500,000 – 3,000,000",
+        "3,000,000 – 3,500,000": "3,000,000 – 3,500,000",
+        "3,500,000 – 4,000,000": "3,500,000 – 4,000,000",
+        "4,000,000 – 4,500,000": "4,000,000 – 4,500,000",
+        "4,500,000 – 5,000,000": "4,500,000 – 5,000,000",
+        "5,000,000 – 6,000,000": "5,000,000 – 6,000,000",
+        "6,000,000 – 7,000,000": "6,000,000 – 7,000,000",
+        "7,000,000 – 8,000,000": "7,000,000 – 8,000,000",
+        "8,000,000 – 9,000,000": "8,000,000 – 9,000,000",
+        "9,000,000 – 10,000,000": "9,000,000 – 10,000,000",
+        "10,000,000 – 15,000,000": "10,000,000 – 15,000,000",
+        "15,000,000 – 20,000,000": "15,000,000 – 20,000,000",
+        "More than 20,000,000": "More than 20,000,000"
+    };
+
+    var rentBudgets = {
+        "Less than 50,000": "Less than 50,000",
+        "50,000 – 75,000": "50,000 – 75,000",
+        "75,000 – 100,000": "75,000 – 100,000",
+        "100,000 – 125,000": "100,000 – 125,000",
+        "125,000 – 150,000": "125,000 – 150,000",
+        "150,000 – 175,000": "150,000 – 175,000",
+        "175,000 – 200,000": "175,000 – 200,000",
+        "200,000 – 250,000": "200,000 – 250,000",
+        "250,000 – 300,000": "250,000 – 300,000",
+        "300,000 – 350,000": "300,000 – 350,000",
+        "350,000 – 400,000": "350,000 – 400,000",
+        "400,000 – 450,000": "400,000 – 450,000",
+        "450,000 – 500,000": "450,000 – 500,000",
+        "500,000 – 600,000": "500,000 – 600,000",
+        "600,000 – 700,000": "600,000 – 700,000",
+        "700,000 – 800,000": "700,000 – 800,000",
+        "800,000 – 900,000": "800,000 – 900,000",
+        "900,000 – 1,000,000": "900,000 – 1,000,000",
+        "More than 1,000,000": "More than 1,000,000"
+    };
+
+    $("#search_category_buy").on('click', function (e) {
+        e.preventDefault();
+        var $el = $("#header_search_budgets");
+        $el.empty().html(' ');; // remove old options
+        $el.append('<option value="NA" disabled selected>Budget</option>');
+        $.each(buyBudgets, function (key, value) {
+            $el.append($("<option></option>")
+                    .attr("value", value).text(key));
+        });
+
+        $("#search_category_buy").addClass('active');
+        $("#search_category_rent").removeClass('active');
+        $("#unit_category").attr('value','sale');
+        $el.trigger('contentChanged');
+    });
+
+    $("#search_category_rent").on('click', function (e) {
+        e.preventDefault();
+        var $el = $("#header_search_budgets");
+        $el.empty().html(' ');; // remove old options
+        $el.append('<option value="NA" disabled selected>Budget</option>');
+        $.each(rentBudgets, function (key, value) {
+            $el.append($("<option></option>")
+                    .attr("value", value).text(key));
+        });
+        
+        $("#search_category_buy").removeClass('active');
+        $("#search_category_rent").addClass('active');
+        $("#unit_category").attr('value','rent');
+        $el.trigger('contentChanged');
+    });
 
 });
 

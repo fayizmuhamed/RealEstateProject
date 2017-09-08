@@ -107,7 +107,7 @@ class Community extends AdminController {
                     'community_name' => $this->input->post('community_name'),
                     'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
-                    'community_location_url' => $this->input->post('community_location_url'),
+                    'community_location_url' => htmlspecialchars($this->input->post('community_location_url')),
                     'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? "" : $this->upload_data['community_cover_image']['file_name'],
                     'community_navigations'=>$this->getCommunityNavigations()
                 );
@@ -158,7 +158,7 @@ class Community extends AdminController {
                     'community_name' => $this->input->post('community_name'),
                     'community_property_type' => $this->input->post('community_property_type'),
                     'community_description' => $this->input->post('community_description'),
-                    'community_location_url' => $this->input->post('community_location_url'),
+                    'community_location_url' => htmlspecialchars($this->input->post('community_location_url')),
                     'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? $this->input->post('community_cover_image_hidden') : $this->upload_data['community_cover_image']['file_name'],
                     'community_navigations'=>$this->getCommunityNavigations()
                 );

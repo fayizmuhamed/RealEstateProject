@@ -72,7 +72,7 @@
                         <div class="box-white">
                             <h2>CAREER GUIDE</h2>
                             <br>
-                            <p><?php echo isset($career_guide_description) ? $career_guide_description : ''; ?></p>
+                            <p><?php echo htmlspecialchars_decode(isset($career_guide_description) ? $career_guide_description : ''); ?></p>
                         </div>
                     </div>
                 </div>

@@ -441,60 +441,60 @@ class Property_model extends CI_Model {
     }
 
     function mapSalePriceRange($budget) {
-
+       
         $property_price_query = '';
 
         switch ($budget) {
 
-            case '1':
+            case "Less than 1,000,000":
                 $property_price_query = "property_price <='1000000'";
                 break;
-            case '2':
+            case "1,000,000 – 1,500,000":
                 $property_price_query = "property_price BETWEEN '1000000' AND '1500000'";
                 break;
-            case '3':
+            case "1,500,000 – 2,000,000":
                 $property_price_query = "property_price BETWEEN '1500000' AND '2000000'";
                 break;
-            case '4':
+            case "2,000,000 – 2,500,000":
                 $property_price_query = "property_price BETWEEN '2000000' AND '2500000'";
                 break;
-            case '5':
+            case "2,500,000 – 3,000,000":
                 $property_price_query = "property_price BETWEEN '2500000' AND '3000000'";
                 break;
-            case '6':
+            case "3,000,000 – 3,500,000":
                 $property_price_query = "property_price BETWEEN '3000000' AND '3500000'";
                 break;
-            case '7':
+            case "3,500,000 – 4,000,000":
                 $property_price_query = "property_price BETWEEN '3500000' AND '4000000'";
                 break;
-            case '8':
+            case "4,000,000 – 4,500,000":
                 $property_price_query = "property_price BETWEEN '4000000' AND '4500000'";
                 break;
-            case '9':
+            case "4,500,000 – 5,000,000":
                 $property_price_query = "property_price BETWEEN '4500000' AND '5000000'";
                 break;
-            case '10':
+            case "5,000,000 – 6,000,000":
                 $property_price_query = "property_price BETWEEN '5000000' AND '6000000'";
                 break;
-            case '11':
+            case "6,000,000 – 7,000,000":
                 $property_price_query = "property_price BETWEEN '6000000' AND '7000000'";
                 break;
-            case '12':
+            case "7,000,000 – 8,000,000":
                 $property_price_query = "property_price BETWEEN '7000000' AND '8000000' ";
                 break;
-            case '12':
+            case "8,000,000 – 9,000,000":
                 $property_price_query = "property_price BETWEEN '8000000' AND '9000000' ";
                 break;
-            case '12':
+            case "9,000,000 – 10,000,000":
                 $property_price_query = "property_price BETWEEN '9000000' AND '10000000' ";
                 break;
-            case '12':
+            case "10,000,000 – 15,000,000":
                 $property_price_query = "property_price BETWEEN '10000000' AND '15000000' ";
                 break;
-            case '12':
+            case "15,000,000 – 20,000,000":
                 $property_price_query = "property_price BETWEEN '15000000' AND '20000000'";
                 break;
-            case '12':
+            case "More than 20,000,000":
                 $property_price_query = "property_price >= '20000000' ";
                 break;
             default : $property_price_query = "";

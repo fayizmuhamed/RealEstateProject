@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="info_guide_dubai" id="info_guide_dubai"><?php echo array_key_exists("info_guide_dubai", $configurations)? $configurations['info_guide_dubai']:""; ?></textarea>
+                    <textarea class="editor" name="info_guide_dubai" id="info_guide_dubai"><?php echo array_key_exists("info_guide_dubai", $configurations)? htmlspecialchars_decode($configurations['info_guide_dubai']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="info_guide_news_and_reports" id="info_guide_news_and_reports"><?php echo array_key_exists("info_guide_news_and_reports", $configurations)? $configurations['info_guide_news_and_reports']:""; ?></textarea>
+                    <textarea class="editor" name="info_guide_news_and_reports" id="info_guide_news_and_reports"><?php echo array_key_exists("info_guide_news_and_reports", $configurations)? htmlspecialchars_decode($configurations['info_guide_news_and_reports']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="info_guide_investor_visa" id="info_guide_investor_visa"><?php echo array_key_exists("info_guide_investor_visa", $configurations)? $configurations['info_guide_investor_visa']:""; ?></textarea>
+                    <textarea class="editor" name="info_guide_investor_visa" id="info_guide_investor_visa"><?php echo array_key_exists("info_guide_investor_visa", $configurations)? htmlspecialchars_decode($configurations['info_guide_investor_visa']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="info_guide_rera_updates" id="info_guide_rera_updates"><?php echo array_key_exists("info_guide_rera_updates", $configurations)? $configurations['info_guide_rera_updates']:""; ?></textarea>
+                    <textarea class="editor" name="info_guide_rera_updates" id="info_guide_rera_updates"><?php echo array_key_exists("info_guide_rera_updates", $configurations)? htmlspecialchars_decode($configurations['info_guide_rera_updates']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="info_guide_faq" id="info_guide_faq"><?php echo array_key_exists("info_guide_faq", $configurations)? $configurations['info_guide_faq']:""; ?></textarea>
+                    <textarea class="editor" name="info_guide_faq" id="info_guide_faq"><?php echo array_key_exists("info_guide_faq", $configurations)? htmlspecialchars_decode($configurations['info_guide_faq']):""; ?></textarea>
                 </div>
             </li>
         </ul>

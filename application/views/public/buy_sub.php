@@ -128,7 +128,7 @@
                         echo '<h3>' . $property['property_title'] . '</h3>';
                         echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                         echo '<div class="button-block">';
-                        echo '<button class="price">AED ' . $property['property_price'] . '</button>';
+                        echo '<button class="price">AED ' . number_format($property['property_price'])  . '</button>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';

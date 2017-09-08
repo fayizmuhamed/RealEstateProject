@@ -37,15 +37,15 @@ class Community extends PublicController {
             //load the view
             $community = $this->Community_model->find_by_id($id);
 
-            $data['community'] = $community;
-            $data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
-            $data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'sale',null,null);
-            $data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'rent',null,null);
-            $data['employees'] = $this->Property_model->find_agents_from_properties(COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0,$community[0]['community_name'],null,null);
+            $this->data['community'] = $community;
+            $this->data['community_thumbnails'] = $this->Community_thumbnail_model->find_all($id);
+            $this->data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'sale',null,null);
+            $this->data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0,$community[0]['community_name'],'rent',null,null);
+            $this->data['employees'] = $this->Property_model->find_agents_from_properties(COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE, 0,$community[0]['community_name'],null,null);
 
             //load the view
-            $data['content'] = 'public/community_detail';
-            $this->load->view('includes/public/template', $data);
+            $this->data['content'] = 'public/community_detail';
+            $this->load->view('includes/public/template', $this->data);
         }
     }
 
@@ -93,5 +93,12 @@ class Community extends PublicController {
         $employees = $this->Property_model->find_agents_from_properties(COMMUNITY_PAGE_EMPLOYEES_COUNT_PER_PAGE, $offset,$community,null,null);
 
         exit($this->send_response('success', $employees));
+    }
+    
+    public function findAllCommunities() {
+
+        $communities = $this->Community_model->find_all();
+
+        exit($this->send_response('success', $communities));
     }
 }

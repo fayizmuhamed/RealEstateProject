@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="buy_guide_selling_procedure" id="buy_guide_selling_procedure"><?php echo array_key_exists("buy_guide_selling_procedure", $configurations)? $configurations['buy_guide_selling_procedure']:""; ?></textarea>
+                    <textarea class="editor" name="buy_guide_selling_procedure" id="buy_guide_selling_procedure"><?php echo array_key_exists("buy_guide_selling_procedure", $configurations)? htmlspecialchars_decode($configurations['buy_guide_selling_procedure']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="buy_guide_uae_property_law" id="buy_guide_uae_property_law"><?php echo array_key_exists("buy_guide_uae_property_law", $configurations)? $configurations['buy_guide_uae_property_law']:""; ?></textarea>
+                    <textarea class="editor" name="buy_guide_uae_property_law" id="buy_guide_uae_property_law"><?php echo array_key_exists("buy_guide_uae_property_law", $configurations)? htmlspecialchars_decode($configurations['buy_guide_uae_property_law']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="buy_guide_why_we_are" id="buy_guide_why_we_are"><?php echo array_key_exists("buy_guide_why_we_are", $configurations)? $configurations['buy_guide_why_we_are']:""; ?></textarea>
+                    <textarea class="editor" name="buy_guide_why_we_are" id="buy_guide_why_we_are"><?php echo array_key_exists("buy_guide_why_we_are", $configurations)? htmlspecialchars_decode($configurations['buy_guide_why_we_are']):""; ?></textarea>
                 </div>
             </li>
         </ul>
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="collapsible-body">
-                    <textarea class="editor" name="buy_guide_faq" id="buy_guide_faq"><?php echo array_key_exists("buy_guide_faq", $configurations)? $configurations['buy_guide_faq']:""; ?></textarea>
+                    <textarea class="editor" name="buy_guide_faq" id="buy_guide_faq"><?php echo array_key_exists("buy_guide_faq", $configurations)? htmlspecialchars_decode($configurations['buy_guide_faq']):""; ?></textarea>
                 </div>
             </li>
         </ul>

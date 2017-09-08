@@ -44,7 +44,7 @@
 							<div class="box-white">
 								<h2>SELLING PROCESS</h2>
 								<br>
-								<p><?php echo isset($own_guide_selling_process)?$own_guide_selling_process:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($own_guide_selling_process)?$own_guide_selling_process:'');?></p>
 							</div>
 					</div>
 				
@@ -58,7 +58,7 @@
 							<div class="box-white">
 								<h2>LEASING PROCESS</h2>
 								<br>
-								<p><?php echo isset($own_guide_leasing_process)?$own_guide_leasing_process:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($own_guide_leasing_process)?$own_guide_leasing_process:'');?></p>
 							</div>
 					</div>
 				
@@ -71,7 +71,7 @@
 							<div class="box-white">
 								<h2>WHY BRIDGES & ALLIES</h2>
 								<br>
-								<p><?php echo isset($own_guide_why_we_are)?$own_guide_why_we_are:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($own_guide_why_we_are)?$own_guide_why_we_are:'');?></p>
 							</div>
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 							<div class="box-white">
 								<h2>FAQ</h2>
 								<br>
-								<p><?php echo isset($own_guide_faq)?$own_guide_faq:'';?></p>
+								<p><?php echo htmlspecialchars_decode(isset($own_guide_faq)?$own_guide_faq:'');?></p>
 							</div>
 					</div>
 				</div>

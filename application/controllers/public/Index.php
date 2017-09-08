@@ -35,23 +35,23 @@ class Index extends PublicController {
         
        // $data['configurations'] = $this->Configuration_model->find_as_key_map();
 
-        $data['projects'] = $this->Project_model->find_latest_with_limit(INDEX_PAGE_PROJECT_COUNT);
-        $data['testimonials'] = $this->Testimonial_model->find_approved_testimonial_by_agent(INDEX_PAGE_TESTIMONIAL_COUNT, 0, NULL, 'testimonial_updated_at', 'DESC');
+        $this->data['projects'] = $this->Project_model->find_latest_with_limit(INDEX_PAGE_PROJECT_COUNT);
+        $this->data['testimonials'] = $this->Testimonial_model->find_approved_testimonial_by_agent(INDEX_PAGE_TESTIMONIAL_COUNT, 0, NULL, 'testimonial_updated_at', 'DESC');
         
-        $data['communities'] = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, NULL, NULL);
-        $data['featured_sales'] = $this->Property_model->fetch_featured_property_by_ad_type('sale');
-        $data['featured_rents'] = $this->Property_model->fetch_featured_property_by_ad_type('rent');
-        $data['employees'] = $this->Employee_model->fetch_featured_agent(FEATURED_AGENT_COUNT, 0);
+        $this->data['communities'] = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, NULL, NULL);
+        $this->data['featured_sales'] = $this->Property_model->fetch_featured_property_by_ad_type('sale');
+        $this->data['featured_rents'] = $this->Property_model->fetch_featured_property_by_ad_type('rent');
+        $this->data['employees'] = $this->Employee_model->fetch_featured_agent(FEATURED_AGENT_COUNT, 0);
         //load the view
-        $data['content'] = 'public/index';
-        $this->load->view('includes/public/template_home', $data);
+        $this->data['content'] = 'public/index';
+        $this->load->view('includes/public/template_home', $this->data);
     }
 
     
     function infoGuide(){
         //load the view
-        $data['content'] = 'public/info_guide';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/info_guide';
+        $this->load->view('includes/public/template', $this->data);
     }
     
 }

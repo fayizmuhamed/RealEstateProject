@@ -30,10 +30,10 @@ class Career extends PublicController {
      */
     function index() {
 
-        $data['opportunities'] = $this->Opportunity_model->find_all();
+        $this->data['opportunities'] = $this->Opportunity_model->find_all();
         //load the view
-        $data['content'] = 'public/career';
-        $this->load->view('includes/public/template', $data);
+        $this->data['content'] = 'public/career';
+        $this->load->view('includes/public/template', $this->data);
     }
 
     function drop_my_cv() {

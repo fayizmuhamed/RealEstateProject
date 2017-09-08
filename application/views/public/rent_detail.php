@@ -73,10 +73,13 @@
                                         <span><strong>From</strong>:&nbsp;<?php echo $employee['emp_location']; ?></span>
                                         <span><strong>Area Specializes in</strong>:&nbsp;<?php echo isset($employee['emp_area_specialized']) ? $employee['emp_area_specialized'] : '(Not Mandatory)'; ?></span>
                                     </div> 
+    <!--                                    <button class="bt-number"><a href="#"><i class="zmdi zmdi-phone"></i>&nbsp;9995540446</a></button>-->
+                                </div>
+                                 <div class="agent-footer">
+
                                     <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage('<?php echo $employee['emp_id']; ?>', '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">SEND MESSAGE</a></button>
                                     <button class="bt-half"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack('<?php echo $employee['emp_id']; ?>', '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
                                                 return false;">REQUEST FOR CALL BACK</a></button>
-    <!--                                    <button class="bt-number"><a href="#"><i class="zmdi zmdi-phone"></i>&nbsp;9995540446</a></button>-->
                                 </div>
                             </div>
                             <?php
@@ -92,7 +95,11 @@
                                         <span><strong>From</strong>:&nbsp;N/A</span>
                                         <span><strong>Area Specializes in</strong>:&nbsp;N/A</span>
                                     </div> 
-                                    <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
+                                  
+                                </div>
+                                 <div class="agent-footer">
+                                   
+                                     <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
                                                 return false;">SEND MESSAGE</a></button>
                                     <button class="bt-half"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
                                                 return false;">REQUEST FOR CALL BACK</a></button>

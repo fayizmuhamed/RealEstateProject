@@ -69,7 +69,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-money-box"></i>
-                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?>
+                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?> AED
                                 </span>
 
                                 <span>
@@ -115,7 +115,7 @@
 
                                 <span>
                                     <i class="zmdi zmdi-money-box"></i>
-                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?>
+                                    <strong>Starting Price</strong>: <?php echo number_format($row['project_start_price']); ?> AED
                                 </span>
 
                                 <span>

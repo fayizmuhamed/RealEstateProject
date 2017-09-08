@@ -45,13 +45,20 @@ class PublicController extends CommonController {
 
     public $configurations=[];
     
+    public $data=[];
+    
     public function __construct() {
         parent::__construct();
         $this->load->model('Configuration_model');
         
+        $this->load->model('Community_model');
+       
+        
         $this->configurations = $this->Configuration_model->find_as_key_map();
         
         $this->load->vars($this->configurations);
+        
+        $this->data['locations']= $this->Community_model->find_all();
     }
 
 }
