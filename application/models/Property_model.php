@@ -42,7 +42,7 @@ class Property_model extends CI_Model {
         return $query->row();
     }
 
-    function find_by_agent_email_id($limit, $offset, $email_id, $order = null, $order_type = 'Asc') {
+    function find_by_agent_email_id($limit, $offset, $email_id, $order = 'property_last_updated', $order_type = 'DESC') {
 
         $this->db->select('*');
         $this->db->from('properties');
@@ -62,12 +62,34 @@ class Property_model extends CI_Model {
         return $query->result_array();
     }
 
-    function find_by_community_and_ad_type($limit, $offset, $community, $ad_type, $order = 'property_id', $order_type = 'Asc') {
+    function find_by_community_and_ad_type($limit, $offset, $community, $ad_type, $order = 'property_last_updated', $order_type = 'DESC') {
 
         $this->db->select('*');
         $this->db->from('properties');
         $this->db->where('property_community', $community);
         $this->db->where('property_ad_type', $ad_type);
+        if ($order) {
+
+            $this->db->order_by($order, $order_type);
+        } else {
+
+            $this->db->order_by('property_id', $order_type);
+        }
+
+        $this->db->limit($limit, $offset);
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+
+    function find_by_community_and_ad_type_except_one($limit, $offset, $community, $ad_type, $property_id, $order = 'property_last_updated', $order_type = 'DESC') {
+
+        $this->db->select('*');
+        $this->db->from('properties');
+        $this->db->where('property_community', $community);
+        $this->db->where('property_ad_type', $ad_type);
+        $this->db->where('property_id !=', $property_id);
         if ($order) {
 
             $this->db->order_by($order, $order_type);
@@ -150,13 +172,13 @@ class Property_model extends CI_Model {
     /**
      * get property list by parent id
      */
-    function find_with_search($limit, $offset, $query_array, $sort_by = 'property_id', $sort_order = 'asc') {
+    function find_with_search($limit, $offset, $query_array, $sort_by = 'property_last_updated', $sort_order = 'DESC') {
 
         $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
 
-        $sort_column = array('property_ref_no', 'property_title', 'property_ad_type', 'property_unit_model', 'property_community', 'property_unit_type', 'property_listing_agent_phone', 'property_listing_agent_email');
+        $sort_column = array('property_ref_no', 'property_title', 'property_ad_type', 'property_unit_model', 'property_community', 'property_unit_type', 'property_listing_agent_phone', 'property_listing_agent_email', 'property_last_updated');
 
-        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'property_id';
+        $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'property_last_updated';
 
         $this->db->select('*');
         $this->db->from('properties');
@@ -270,7 +292,7 @@ class Property_model extends CI_Model {
     /**
      * get property list by parent id
      */
-    function search_properties($limit, $offset, $unit_category = null, $unit_model = null, $property_type = null, $bedrooms = null, $budgets = null, $size = null, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type = 'DESC') {
+    function search_properties($limit, $offset, $unit_category = null, $unit_model = null, $property_type = null, $bedrooms = null, $budgets = null, $size = null, $off_plan, $featured, $search_string, $agent, $community, $property_id, $order = 'property_last_updated', $order_type = 'DESC') {
 
         $this->db->select('*');
         $this->db->from('properties');
@@ -287,18 +309,21 @@ class Property_model extends CI_Model {
 
                     $this->db->group_start();
 
+                    $is_first = true;
+
                     for ($i = 0; $i < $count; $i++) {
 
                         $budget = $budgets[$i];
 
                         $property_price_query = $this->mapSalePriceRange($budget);
+                        if ($is_first) {
 
-                        if ($i === 0) {
+                            $this->db->where($property_price_query, NULL, TRUE);
 
-                            $this->db->where($property_price_query, NULL, FALSE);
+                            $is_first = false;
                         } else {
 
-                            $this->db->or_where($property_price_query, NULL, FALSE);
+                            $this->db->or_where($property_price_query, NULL, TRUE);
                         }
                     }
                     $this->db->group_end();
@@ -306,18 +331,22 @@ class Property_model extends CI_Model {
 
                     $this->db->group_start();
 
+                    $is_first = true;
+
                     for ($i = 0; $i < $count; $i++) {
 
                         $budget = $budgets[$i];
 
                         $property_price_query = $this->mapRentPriceRange($budget);
 
-                        if ($i === 0) {
+                        if ($is_first) {
 
-                            $this->db->where($property_price_query, NULL, FALSE);
+                            $this->db->where($property_price_query, NULL, TRUE);
+
+                            $is_first = false;
                         } else {
 
-                            $this->db->or_where($property_price_query, NULL, FALSE);
+                            $this->db->or_where($property_price_query, NULL, TRUE);
                         }
                     }
 
@@ -361,6 +390,11 @@ class Property_model extends CI_Model {
             $this->db->where_in('property_community', $community);
         }
 
+        if ($property_id) {
+
+            $this->db->where('property_id !=', $property_id);
+        }
+
 
         if ($order) {
 
@@ -369,6 +403,7 @@ class Property_model extends CI_Model {
 
             $this->db->order_by('property_id', $order_type);
         }
+      //  $this->db->order_by('type', 1);
 
         $this->db->limit($limit, $offset);
 
@@ -384,55 +419,55 @@ class Property_model extends CI_Model {
         switch ($budget) {
 
             case '1':
-                $property_price_query = "property_price <='50000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) <=50000";
                 break;
             case '2':
-                $property_price_query = "property_price BETWEEN '50000' AND '75000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 50000 AND 75000";
                 break;
             case '3':
-                $property_price_query = "property_price BETWEEN '75000' AND '100000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 75000 AND 100000";
                 break;
             case '4':
-                $property_price_query = "property_price BETWEEN '100000' AND '125000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 100000 AND 125000";
                 break;
             case '5':
-                $property_price_query = "property_price BETWEEN '125000' AND '150000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 125000 AND 150000";
                 break;
             case '6':
-                $property_price_query = "property_price BETWEEN '150000' AND '175000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 150000 AND 175000";
                 break;
             case '7':
-                $property_price_query = "property_price BETWEEN '175000' AND '200000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 175000 AND 200000";
                 break;
             case '8':
-                $property_price_query = "property_price BETWEEN '200000' AND '250000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 200000 AND 250000";
                 break;
             case '9':
-                $property_price_query = "property_price BETWEEN '300000' AND '350000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 300000 AND 350000";
                 break;
             case '10':
-                $property_price_query = "property_price BETWEEN '350000' AND '400000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 350000 AND 400000";
                 break;
             case '11':
-                $property_price_query = "property_price BETWEEN '450000' AND '500000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 450000 AND 500000";
                 break;
             case '12':
-                $property_price_query = "property_price BETWEEN '500000' AND '600000' ";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 500000 AND 600000 ";
                 break;
             case '12':
-                $property_price_query = "property_price BETWEEN '600000' AND '700000' ";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 600000 AND 700000 ";
                 break;
             case '12':
-                $property_price_query = "property_price BETWEEN '700000' AND '800000' ";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 700000 AND 800000 ";
                 break;
             case '12':
-                $property_price_query = "property_price BETWEEN '800000' AND '900000' ";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 800000 AND 900000 ";
                 break;
             case '12':
-                $property_price_query = "property_price BETWEEN '900000' AND '1000000'";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 900000 AND 1000000";
                 break;
             case '12':
-                $property_price_query = "property_price >= '1000000' ";
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) >= 1000000 ";
                 break;
             default : $property_price_query = "";
         }
@@ -441,61 +476,61 @@ class Property_model extends CI_Model {
     }
 
     function mapSalePriceRange($budget) {
-       
+
         $property_price_query = '';
 
         switch ($budget) {
 
-            case "Less than 1,000,000":
-                $property_price_query = "property_price <='1000000'";
+            case "1":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) <=1000000";
                 break;
-            case "1,000,000 – 1,500,000":
-                $property_price_query = "property_price BETWEEN '1000000' AND '1500000'";
+            case "2":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 1000000 AND 1500000";
                 break;
-            case "1,500,000 – 2,000,000":
-                $property_price_query = "property_price BETWEEN '1500000' AND '2000000'";
+            case "3":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 1500000 AND 2000000";
                 break;
-            case "2,000,000 – 2,500,000":
-                $property_price_query = "property_price BETWEEN '2000000' AND '2500000'";
+            case "4":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 2000000 AND 2500000";
                 break;
-            case "2,500,000 – 3,000,000":
-                $property_price_query = "property_price BETWEEN '2500000' AND '3000000'";
+            case "5":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 2500000 AND 3000000";
                 break;
-            case "3,000,000 – 3,500,000":
-                $property_price_query = "property_price BETWEEN '3000000' AND '3500000'";
+            case "6":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 3000000 AND 3500000";
                 break;
-            case "3,500,000 – 4,000,000":
-                $property_price_query = "property_price BETWEEN '3500000' AND '4000000'";
+            case "7":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 3500000 AND 4000000";
                 break;
-            case "4,000,000 – 4,500,000":
-                $property_price_query = "property_price BETWEEN '4000000' AND '4500000'";
+            case "8":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 4000000 AND 4500000";
                 break;
-            case "4,500,000 – 5,000,000":
-                $property_price_query = "property_price BETWEEN '4500000' AND '5000000'";
+            case "9":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 4500000 AND 5000000";
                 break;
-            case "5,000,000 – 6,000,000":
-                $property_price_query = "property_price BETWEEN '5000000' AND '6000000'";
+            case "10":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 5000000 AND 6000000";
                 break;
-            case "6,000,000 – 7,000,000":
-                $property_price_query = "property_price BETWEEN '6000000' AND '7000000'";
+            case "11":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 6000000 AND 7000000";
                 break;
-            case "7,000,000 – 8,000,000":
-                $property_price_query = "property_price BETWEEN '7000000' AND '8000000' ";
+            case "12":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 7000000 AND 8000000 ";
                 break;
-            case "8,000,000 – 9,000,000":
-                $property_price_query = "property_price BETWEEN '8000000' AND '9000000' ";
+            case "13":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 8000000 AND 9000000 ";
                 break;
-            case "9,000,000 – 10,000,000":
-                $property_price_query = "property_price BETWEEN '9000000' AND '10000000' ";
+            case "14":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 9000000 AND 10000000 ";
                 break;
-            case "10,000,000 – 15,000,000":
-                $property_price_query = "property_price BETWEEN '10000000' AND '15000000' ";
+            case "15":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 10000000 AND 15000000 ";
                 break;
-            case "15,000,000 – 20,000,000":
-                $property_price_query = "property_price BETWEEN '15000000' AND '20000000'";
+            case "16":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) BETWEEN 15000000 AND 20000000";
                 break;
-            case "More than 20,000,000":
-                $property_price_query = "property_price >= '20000000' ";
+            case "17":
+                $property_price_query = "CONVERT(SUBSTRING_INDEX(property_price,'-',-1),UNSIGNED INTEGER) >= 20000000 ";
                 break;
             default : $property_price_query = "";
         }
@@ -503,7 +538,7 @@ class Property_model extends CI_Model {
         return $property_price_query;
     }
 
-    function find_agents_from_properties($limit, $offset, $community, $order = 'property_id', $order_type = 'Asc') {
+    function find_agents_from_properties($limit, $offset, $community, $order = 'property_last_updated', $order_type = 'DESC') {
 
         $this->db->distinct();
         $this->db->select('employees.*,dep_name,des_name');

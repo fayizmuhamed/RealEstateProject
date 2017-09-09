@@ -330,8 +330,8 @@ var searchBuyProperties = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -417,8 +417,8 @@ var searchRentProperties = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -503,8 +503,8 @@ var searchBuySubProperties = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -590,8 +590,8 @@ var searchRentSubProperties = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -677,8 +677,8 @@ var findEmployeeProperties = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -762,8 +762,8 @@ var addMoreCommunitySaleList = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -846,8 +846,8 @@ var addMoreCommunityRentList = function (params) {
                 property += '<ul>';
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="icon-bath"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
                 if (is_maid_room) {
                     property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
                 }
@@ -895,6 +895,169 @@ var addMoreCommunityRentList = function (params) {
         }
     });
 };
+
+var addMoreBuyDetailPropertyList=function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var property = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
+
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
+                property += '<div class="col s12 l3 m6">';
+                property += '<div class="list-card">';
+                property += '<div class="over-card">';
+                property += '<ul>';
+                property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
+                property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
+                property += '</ul>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
+                property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
+                property += '</div>';
+                property += '<div class="property-thumb">';
+                var images = $.parseJSON(value.property_images);
+                if (images && images.image && images.image.length > 0) {
+                    property += '<img src="' + images.image[0] + '">';
+                } else {
+                    property += '<img src="#">';
+                }
+
+                property += '</div>';
+                property += '<div class="property-list-details">';
+                property += '<h3>' + value.property_title + '</h3>';
+                property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
+                property += '<div class="button-block">';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+
+
+            });
+            if (page === "1") {
+                $('#buy_detail_property_list_container').html(property);
+                $('#btn_buy_detail_property_list_add_more').data('page', page);
+            } else {
+                $('#buy_detail_property_list_container').append(property);
+                if (response.data.length > 0) {
+
+                    $('#btn_buy_detail_property_list_add_more').data('page', page);
+                }
+            }
+        } else {
+            $('#buy_detail_property_list_container').html(property);
+        }
+    });
+};
+
+var addMoreRentDetailPropertyList=function (params) {
+
+    var page = 'page' in params ? params['page'] : 1;
+
+    $.ajax({
+        type: "GET",
+        url: document.BaseUrl + "properties/findPropertiesWithSearch",
+        cache: false,
+        data: params,
+        dataType: "json"
+    }).done(function (response) {
+        var property = "";
+        console.log(response.status);
+        if (response.status === 'success') {
+
+
+            $.each(response.data, function (key, value) {
+                var is_maid_room = false;
+                var is_study_room = false;
+                var facilities = $.parseJSON(value.property_facilities);
+                if (facilities && facilities.facility && facilities.facility.length > 0) {
+
+                    is_maid_room = ($.inArray("Maid's room", facilities.facility) === -1) ? false : true;
+                    is_study_room = ($.inArray("Study", facilities.facility) === -1) ? false : true;
+                }
+                property += '<div class="col s12 l3 m6">';
+                property += '<div class="list-card">';
+                property += '<div class="over-card">';
+                property += '<ul>';
+                property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
+                property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
+                property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                if (is_maid_room) {
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                }
+
+                if (is_study_room) {
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                }
+                property += '</ul>';
+                property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
+                property += '<button class="view-b"><a href="' + document.BaseUrl + 'buydetail/' + value.property_id + '">View Detail</a></button>';
+                property += '</div>';
+                property += '<div class="property-thumb">';
+                var images = $.parseJSON(value.property_images);
+                if (images && images.image && images.image.length > 0) {
+                    property += '<img src="' + images.image[0] + '">';
+                } else {
+                    property += '<img src="#">';
+                }
+
+                property += '</div>';
+                property += '<div class="property-list-details">';
+                property += '<h3>' + value.property_title + '</h3>';
+                property += '<span><i class="zmdi zmdi-pin"></i>&nbsp;' + value.property_name + ',' + value.property_community + '</span>';
+                property += '<div class="button-block">';
+                property += '<button class="price">AED ' + number_format(value.property_price) + '</button>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+                property += '</div>';
+
+
+            });
+            if (page === "1") {
+                $('#rent_detail_property_list_container').html(property);
+                $('#btn_rent_detail_property_list_add_more').data('page', page);
+            } else {
+                $('#rent_detail_property_list_container').append(property);
+                if (response.data.length > 0) {
+
+                    $('#btn_rent_detail_property_list_add_more').data('page', page);
+                }
+            }
+        } else {
+            $('#rent_detail_property_list_container').html(property);
+        }
+    });
+};
+
 $("#frm_send_feedback").submit(function (event) {
     event.preventDefault();
     $.ajax({
@@ -1008,16 +1171,19 @@ $("#frm_project_detail_send_enquiry").submit(function (event) {
     });
 });
 
-$("#frm_drop_my_cv").submit(function (event) {
-    event.preventDefault();
-    $.ajax({
+var dropMyCV = function (e) {
+    e.preventDefault();
+    //var formData = new FormData($('#add_new_project')[0]);
+    //var dataString = $('#add_new_project').serialize();
+
+   $.ajax({
         type: "POST",
         url: document.BaseUrl + "career/dropmycv",
         data: new FormData(this),
+        mimeType: "multipart/form-data",
         processData: false,
         contentType: false,
         dataType: "json",
-        cache: false,
         success: function (response) {
             console.log(response.status);
             if (response.status === 'success') {
@@ -1029,7 +1195,9 @@ $("#frm_drop_my_cv").submit(function (event) {
         }
 
     });
-});
+};
+
+
 
 $("#frm_contact_make_enquiry_buy").submit(function (event) {
     event.preventDefault();
@@ -1823,55 +1991,56 @@ $(document).ready(function () {
     //loadLocations();
 
     var buyBudgets = {
-        "Less than 1,000,000": "Less than 1,000,000",
-        "1,000,000 – 1,500,000": "1,000,000 – 1,500,000",
-        "1,500,000 – 2,000,000": "1,500,000 – 2,000,000",
-        "2,000,000 – 2,500,000": "2,000,000 – 2,500,000",
-        "2,500,000 – 3,000,000": "2,500,000 – 3,000,000",
-        "3,000,000 – 3,500,000": "3,000,000 – 3,500,000",
-        "3,500,000 – 4,000,000": "3,500,000 – 4,000,000",
-        "4,000,000 – 4,500,000": "4,000,000 – 4,500,000",
-        "4,500,000 – 5,000,000": "4,500,000 – 5,000,000",
-        "5,000,000 – 6,000,000": "5,000,000 – 6,000,000",
-        "6,000,000 – 7,000,000": "6,000,000 – 7,000,000",
-        "7,000,000 – 8,000,000": "7,000,000 – 8,000,000",
-        "8,000,000 – 9,000,000": "8,000,000 – 9,000,000",
-        "9,000,000 – 10,000,000": "9,000,000 – 10,000,000",
-        "10,000,000 – 15,000,000": "10,000,000 – 15,000,000",
-        "15,000,000 – 20,000,000": "15,000,000 – 20,000,000",
-        "More than 20,000,000": "More than 20,000,000"
+        "1": "Less than 1,000,000",
+        "2": "1,000,000 – 1,500,000",
+        "3": "1,500,000 – 2,000,000",
+        "4": "2,000,000 – 2,500,000",
+        "5": "2,500,000 – 3,000,000",
+        "6": "3,000,000 – 3,500,000",
+        "7": "3,500,000 – 4,000,000",
+        "8": "4,000,000 – 4,500,000",
+        "9": "4,500,000 – 5,000,000",
+        "10": "5,000,000 – 6,000,000",
+        "11": "6,000,000 – 7,000,000",
+        "12": "7,000,000 – 8,000,000",
+        "13": "8,000,000 – 9,000,000",
+        "14": "9,000,000 – 10,000,000",
+        "15": "10,000,000 – 15,000,000",
+        "16": "15,000,000 – 20,000,000",
+        "17": "More than 20,000,000"
     };
 
     var rentBudgets = {
-        "Less than 50,000": "Less than 50,000",
-        "50,000 – 75,000": "50,000 – 75,000",
-        "75,000 – 100,000": "75,000 – 100,000",
-        "100,000 – 125,000": "100,000 – 125,000",
-        "125,000 – 150,000": "125,000 – 150,000",
-        "150,000 – 175,000": "150,000 – 175,000",
-        "175,000 – 200,000": "175,000 – 200,000",
-        "200,000 – 250,000": "200,000 – 250,000",
-        "250,000 – 300,000": "250,000 – 300,000",
-        "300,000 – 350,000": "300,000 – 350,000",
-        "350,000 – 400,000": "350,000 – 400,000",
-        "400,000 – 450,000": "400,000 – 450,000",
-        "450,000 – 500,000": "450,000 – 500,000",
-        "500,000 – 600,000": "500,000 – 600,000",
-        "600,000 – 700,000": "600,000 – 700,000",
-        "700,000 – 800,000": "700,000 – 800,000",
-        "800,000 – 900,000": "800,000 – 900,000",
-        "900,000 – 1,000,000": "900,000 – 1,000,000",
-        "More than 1,000,000": "More than 1,000,000"
+        "1": "Less than 50,000",
+        "2": "50,000 – 75,000",
+        "3": "75,000 – 100,000",
+        "4": "100,000 – 125,000",
+        "5": "125,000 – 150,000",
+        "6": "150,000 – 175,000",
+        "7": "175,000 – 200,000",
+        "8": "200,000 – 250,000",
+        "9": "250,000 – 300,000",
+        "10": "300,000 – 350,000",
+        "11": "350,000 – 400,000",
+        "12": "400,000 – 450,000",
+        "13": "450,000 – 500,000",
+        "14": "500,000 – 600,000",
+        "15": "600,000 – 700,000",
+        "16": "700,000 – 800,000",
+        "17": "800,000 – 900,000",
+        "18": "900,000 – 1,000,000",
+        "19": "More than 1,000,000"
     };
 
     $("#search_category_buy").on('click', function (e) {
         e.preventDefault();
+        debugger;
         var $el = $("#header_search_budgets");
         $el.empty().html(' ');; // remove old options
         $el.append('<option value="NA" disabled selected>Budget</option>');
         $.each(buyBudgets, function (key, value) {
             $el.append($("<option></option>")
-                    .attr("value", value).text(key));
+                    .attr("value", key).text(value));
         });
 
         $("#search_category_buy").addClass('active');
@@ -1881,13 +2050,14 @@ $(document).ready(function () {
     });
 
     $("#search_category_rent").on('click', function (e) {
+        debugger;
         e.preventDefault();
         var $el = $("#header_search_budgets");
         $el.empty().html(' ');; // remove old options
         $el.append('<option value="NA" disabled selected>Budget</option>');
         $.each(rentBudgets, function (key, value) {
             $el.append($("<option></option>")
-                    .attr("value", value).text(key));
+                    .attr("value", key).text(value));
         });
         
         $("#search_category_buy").removeClass('active');
@@ -1895,7 +2065,38 @@ $(document).ready(function () {
         $("#unit_category").attr('value','rent');
         $el.trigger('contentChanged');
     });
+    
+     $("#btn_buy_detail_property_list_add_more").on('click', function (e) {
+        e.preventDefault();
+        var params = {};
+        var page = $(this).data('page');
+        var community = $(this).data('community');
+        var property = $(this).data('property');
 
+        params['page'] = parseInt(page) + 1;
+        params['count_per_page'] = 4;
+        params['community'] = community;
+        params['property_id'] = property;
+        params['unit_category'] = 'sale';
+        addMoreBuyDetailPropertyList(params);
+    });
+
+    $("#btn_rent_detail_property_list_add_more").on('click', function (e) {
+        e.preventDefault();
+        var params = {};
+        var page = $(this).data('page');
+        var community = $(this).data('community');
+        var property = $(this).data('property');
+        
+        params['page'] = parseInt(page) + 1;
+        params['count_per_page'] = 4;
+        params['community'] = community;
+        params['property_id'] = property;
+        params['unit_category'] = 'rent';
+        addMoreRentDetailPropertyList(params);
+    });
+
+    $("#frm_drop_my_cv").on('submit', dropMyCV);
 });
 
 

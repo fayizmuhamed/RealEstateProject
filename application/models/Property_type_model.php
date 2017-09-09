@@ -44,6 +44,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
+        $this->db->select('pt_priority');
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
         $this->db->from('property_types');
@@ -60,6 +61,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
+        $this->db->select('pt_priority');
         $this->db->select('pm_name as pt_model_name');
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
@@ -68,6 +70,8 @@ class Property_type_model extends CI_Model {
         $this->db->join('property_models', 'pt_model_id = pm_id', 'inner');
         $this->db->where('pm_name', $model_name);
         $this->db->group_by('pt_id');
+        $this->db->order_by('pt_priority IS NULL , pt_priority ASC','',FALSE);
+        
 
 
 
@@ -81,6 +85,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
+        $this->db->select('pt_priority');
         $this->db->select('pm_name');
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
@@ -102,6 +107,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
+        $this->db->select('pt_priority');
         $this->db->select('pm_name as pt_model_name');
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');
@@ -110,6 +116,7 @@ class Property_type_model extends CI_Model {
         $this->db->join('property_models', 'pt_model_id = pm_id', 'left');
 
         $this->db->group_by('pt_id');
+        $this->db->order_by('pt_priority IS NULL , pt_priority ASC','',FALSE);
 
 
         $query = $this->db->get();
@@ -132,6 +139,7 @@ class Property_type_model extends CI_Model {
         $this->db->select('pt_id');
         $this->db->select('pt_name');
         $this->db->select('pt_model_id');
+        $this->db->select('pt_priority');
         $this->db->select('pm_name as pt_model_name');
         $this->db->select('pt_created_at');
         $this->db->select('pt_updated_at');

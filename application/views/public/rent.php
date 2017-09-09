@@ -55,25 +55,32 @@
             <div class="input-field col s12">
                 <select  name="budget" multiple>
                     <option value="NA" disabled selected>Budget</option>
-                    <option value="Less than 50,000">Less than 50,000</option>
-                    <option value="50,000 – 75,000">50,000 – 75,000</option>
-                    <option value="75,000 – 100,000">75,000 – 100,000</option>
-                    <option value="100,000 – 125,000">100,000 – 125,000</option>
-                    <option value="125,000 – 150,000">125,000 – 150,000</option>
-                    <option value="150,000 – 175,000">150,000 – 175,000</option>
-                    <option value="175,000 – 200,000">175,000 – 200,000</option>
-                    <option value="200,000 – 250,000">200,000 – 250,000</option>
-                    <option value="250,000 – 300,000">250,000 – 300,000</option>
-                    <option value="300,000 – 350,000">300,000 – 350,000</option>
-                    <option value="350,000 – 400,000">350,000 – 400,000</option>
-                    <option value="400,000 – 450,000">400,000 – 450,000</option>
-                    <option value="450,000 – 500,000">450,000 – 500,000</option>
-                    <option value="500,000 – 600,000">500,000 – 600,000</option>
-                    <option value="600,000 – 700,000">600,000 – 700,000</option>
-                    <option value="700,000 – 800,000">700,000 – 800,000</option>
-                    <option value="800,000 – 900,000">800,000 – 900,000</option>
-                    <option value="900,000 – 1,000,000">900,000 – 1,000,000</option>
-                    <option value="More than 1,000,000">More than 1,000,000</option>
+                    <?php
+                    $budgets = array('1' => 'Less than 50,000',
+                        '2' => '50,000 – 75,000',
+                        '3' => '75,000 – 100,000',
+                        '4' => '100,000 – 125,000',
+                        '5' => '125,000 – 150,000',
+                        '6' => '150,000 – 175,000',
+                        '7' => '175,000 – 200,000',
+                        '8' => '200,000 – 250,000',
+                        '9' => '300,000 – 350,000',
+                        '10' => '350,000 – 400,000',
+                        '11' => '400,000 – 450,000',
+                        '12' => '450,000 – 500,000',
+                        '13' => '500,000 – 600,000',
+                        '14' => '600,000 – 700,000',
+                        '15' => '700,000 – 800,000',
+                        '16' => '800,000 – 900,000',
+                        '17' => '900,000 – 1,000,000',
+                        '18' => 'More than 1,000,000'
+                    );
+                    $search_budgets = isset($search_budgets) ? $search_budgets : array();
+                    foreach ($budgets as $key => $value) {
+                        $isSelected = (in_array($key, $search_budgets)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $key . '"' . $isSelected . '>' . $value . '</option>';
+                    }
+                  ?>
                 </select>
             </div>
 
@@ -143,8 +150,8 @@
                         echo '<ul>';
                         echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
                         if ($is_maid_room) {
                             echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         }

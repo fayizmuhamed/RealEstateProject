@@ -122,12 +122,12 @@
                                         <input type="text" placeholder="Expected Sales Price" name="expected_price">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                       <select class="icons" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                           <?php
+                                            <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -146,7 +146,45 @@
                                         <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
-
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="title_deed"  id="title_deed">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Title Deed / Oqood / SPA "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="owners_passport"  id="owners_passport">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Owner’s Passport "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="other_documents[]"  id="other_documents" multiple>
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Other Documents "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
                                         <button class="waves-effect waves-light" type="submit">SUBMIT</button>
@@ -242,10 +280,10 @@
                                     <div class="col s12 m6 l6">
                                         <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                           <?php
+                                            <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -264,7 +302,45 @@
                                         <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
-
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="title_deed"  id="title_deed">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Title Deed / Oqood / SPA "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="owners_passport"  id="owners_passport">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Owner’s Passport "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="other_documents[]"  id="other_documents" multiple>
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Other Documents "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
                                         <button class="waves-effect waves-light" type="submit">SUBMIT</button>
@@ -286,11 +362,11 @@
             <!-- MAKE ENQUIRY -->
             <div id="request_pre_valuation" class="col s12">
                 <div class="row mg-bt-none">
-                     <div class="col s12 l6 m6">
+                    <div class="col s12 l6 m6">
                         <div class="form-bx">
                             <h3>Buy</h3>
                             <br>
-                           <?php echo form_open('', array('id' => 'frm_owner_request_pre_valuation_buy')); ?>
+                            <?php echo form_open('', array('id' => 'frm_owner_request_pre_valuation_buy')); ?>
                             <input type="hidden"  name="type" id="type" value="buy">
                             <div class="row">
                                 <div class="bloc-f">
@@ -368,12 +444,12 @@
                                         <input type="text" placeholder="Primary View" name="primary_view">
                                     </div>
                                     <div class="col s12 m6 l6">
-                                       <select class="icons" name="agent">
+                                        <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                           <?php
+                                            <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -392,7 +468,19 @@
                                         <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
-
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="title_deed"  id="title_deed">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Title Deed / Oqood / SPA "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
                                         <button class="waves-effect waves-light" type="submit">SUBMIT</button>
@@ -488,10 +576,10 @@
                                     <div class="col s12 m6 l6">
                                         <select class="icons" name="agent">
                                             <option value="" disabled selected>Choose Agent </option>
-                                           <?php
+                                            <?php
                                             foreach ($employees as $employee) {
 
-                                                echo '<option value="' . $employee['emp_name'] . '" data-icon="'.(base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']).'" class="circle">' . $employee['emp_name'] . '</option>';
+                                                echo '<option value="' . $employee['emp_id'] . '" data-icon="' . (base_url() . 'uploads/emp-profile/' . $employee['emp_profile_image']) . '" class="circle">' . $employee['emp_name'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -510,7 +598,19 @@
                                         <textarea placeholder="Mesage" name="author_message"></textarea>
                                     </div>
                                 </div>
-
+                                <div class="bloc-f">
+                                    <div class="col l12 s12 m12">
+                                        <div class="file-field input-field">
+                                            <div class="bt-file">
+                                                <span>File</span>
+                                                <input type="file" name="title_deed"  id="title_deed">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" placeholder="Title Deed / Oqood / SPA "  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="bloc-f">
                                     <div class="col s12 m12 l12">
                                         <button class="waves-effect waves-light" type="submit">SUBMIT</button>

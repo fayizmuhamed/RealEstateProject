@@ -1324,7 +1324,7 @@ footer .links-f ul li:hover {
 }
 
 /* line 31, ../sass/layout/_typography.scss */
-.icon-bath:before {
+.zmdi zmdi-hotel:before {
   content: "\e901";
 }
 
@@ -4247,4 +4247,119 @@ input:not([type]), input[type=text], input[type=password], input[type=email], in
   .image-buy-detail {
     margin-bottom: 10px;
   }
+}
+
+.navigation-item label{
+    padding-left: 25px;
+    padding-right: 5px;
+}
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?ij1362');
+  src:  url('fonts/icomoon.eot?ij1362#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?ij1362') format('truetype'),
+    url('fonts/icomoon.woff?ij1362') format('woff'),
+    url('fonts/icomoon.svg?ij1362#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+   font-size: 18px;
+}
+
+
+.icon-Airport-01:before {
+  content: "\e900";
+  color: #50505a;
+ 
+}
+.icon-Beach-01:before {
+  content: "\e901";
+  color: #50505a;
+}
+.icon-Burj-Al-Arab-01:before {
+  content: "\e902";
+  color: #50505a;
+}
+.icon-Burj-Khalifa-01:before {
+  content: "\e903";
+  color: #50505a;
+}
+.icon-Expo-2020-01:before {
+  content: "\e904";
+  color: #50505a;
+}
+.icon-Fitness-Centre-01:before {
+  content: "\e905";
+  color: #50505a;
+}
+.icon-Golf-course-01:before {
+  content: "\e906";
+  color: #50505a;
+}
+.icon-Hospital-01:before {
+  content: "\e907";
+  color: #50505a;
+}
+.icon-Lake-01:before {
+  content: "\e908";
+  color: #50505a;
+}
+.icon-Leisure-Centre-01:before {
+  content: "\e909";
+  color: #50505a;
+}
+.icon-Mall-01:before {
+  content: "\e90a";
+  color: #50505a;
+}
+.icon-Marina-01:before {
+  content: "\e90b";
+  color: #50505a;
+}
+.icon-Motor-Way:before {
+  content: "\e90c";
+  color: #50505a;
+}
+.icon-Highway-01:before {
+  content: "\e90c";
+  color: #50505a;
+}
+.icon-Palm-Jumeirah-01:before {
+  content: "\e90d";
+  color: #50505a;
+}
+.icon-Park-01:before {
+  content: "\e90e";
+  color: #50505a;
+}
+.icon-Public-Transport-01:before {
+  content: "\e90f";
+  color: #50505a;
+}
+.icon-Restaurants-01:before {
+  content: "\e910";
+  color: #50505a;
+}
+.icon-School-01:before {
+  content: "\e911";
+  color: #50505a;
+}
+.icon-Supermarket-01:before {
+  content: "\e912";
+  color: #50505a;
 }

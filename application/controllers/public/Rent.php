@@ -33,7 +33,7 @@ class Rent extends PublicController {
      */
     function index() {
 
-        $properties = $this->Property_model->search_properties(TEAM_PAGE_EMPLOYEE_COUNT_PER_PAGE, 0, 'rent', null, null, null, null, null, null, null, null, null, null, null, null);
+        $properties = $this->Property_model->search_properties(TEAM_PAGE_EMPLOYEE_COUNT_PER_PAGE, 0, 'rent', null, null, null, null, null, null, null, null, null, null, null, null,null);
 
         $this->data['properties'] = $properties;
         $this->data['property_types'] = $this->Property_type_model->find_all();
@@ -55,6 +55,7 @@ class Rent extends PublicController {
         $featured = null;
         $agent = null;
         $community = null;
+        $property_id=null;
         $search_string = null;
         $order = null;
         $order_type = null;
@@ -78,7 +79,7 @@ class Rent extends PublicController {
                     break;
             }
 
-            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community,$property_id, $order, $order_type);
 
             $this->data['properties'] = $properties;
             $this->data['property_types'] = $this->Property_type_model->find_by_model_name($unit_model);
@@ -116,6 +117,14 @@ class Rent extends PublicController {
             $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property->property_ref_no);
 
             $this->data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
+        }
+        
+         if ($property) {
+
+            $this->data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type_except_one(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0, (isset($property->property_community) ? $property->property_community  : ''), 'rent',$property->property_id, null, null);
+        } else {
+
+            $this->data['properties_rent'] = [];
         }
         
         //load the view

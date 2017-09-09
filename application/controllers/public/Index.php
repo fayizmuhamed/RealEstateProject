@@ -38,7 +38,7 @@ class Index extends PublicController {
         $this->data['projects'] = $this->Project_model->find_latest_with_limit(INDEX_PAGE_PROJECT_COUNT);
         $this->data['testimonials'] = $this->Testimonial_model->find_approved_testimonial_by_agent(INDEX_PAGE_TESTIMONIAL_COUNT, 0, NULL, 'testimonial_updated_at', 'DESC');
         
-        $this->data['communities'] = $this->Community_model->find_with_search(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL, NULL, NULL);
+        $this->data['communities'] = $this->Community_model->find_with_priority(INDEX_PAGE_COMMUNITIES_COUNT_PER_PAGE, 0, NULL);
         $this->data['featured_sales'] = $this->Property_model->fetch_featured_property_by_ad_type('sale');
         $this->data['featured_rents'] = $this->Property_model->fetch_featured_property_by_ad_type('rent');
         $this->data['employees'] = $this->Employee_model->fetch_featured_agent(FEATURED_AGENT_COUNT, 0);

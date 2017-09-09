@@ -137,7 +137,9 @@
             $(this).material_select();
         });
 
-        $(".location-select").select2();
+        $(".location-select").select2({
+            placeholder: " Location or Building e.g. Downtown Dubai or Cayan Tower"
+        });
 
     });
 </script>

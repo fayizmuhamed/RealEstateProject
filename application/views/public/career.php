@@ -98,12 +98,12 @@
                                 <div class="col s12 l6 m6"><input type="text" placeholder="Mobie Number" name="contact" id="contact"></div>
                                 <div class="col s12 l6 m6">
                                     <div class="input-field">
-                                        <select multiple name="applied_for" id="applied_for">
-                                            <option value="" selected>Applied For</option>
+                                        <select name="applied_for" id="applied_for">
+                                            <option value="" selected disabled>Applied For</option>
                                             <?php
                                             foreach ($opportunities as $opportunity) {
 
-                                                echo '<option value="' . $opportunity['opportunity_title'] . '1">' . $opportunity['opportunity_title'] . '</option>';
+                                                echo '<option value="' . $opportunity['opportunity_title'] . '"'.set_select('applied_for',$opportunity['opportunity_title']).'>' . $opportunity['opportunity_title'] . '</option>';
                                             }
                                             ?>
                                         </select>
@@ -125,7 +125,7 @@
                                 <div class="col l12 s12 m12">
                                     <br>
                                     <br>
-                                    <button class="waves-effect waves-light bt-normal-red" type="submit">SUBMIT</button>
+                                    <button class="waves-effect waves-light bt-normal-red" id="btnSubmitDropMyCV">SUBMIT</button>
                                 </div>
 
                             </div>

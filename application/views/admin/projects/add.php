@@ -87,6 +87,10 @@
                     ?>
                 </select>
             </div>
+            <div class="input-field col s12 m6">
+                  <input id="project_priority" type="number" name="project_priority"  class="validate" value="<?php echo set_value('project_priority'); ?>">
+                <label class="active" for="project_priority">Priority</label>
+            </div>
         </div>
 
         <div class="row">
@@ -218,13 +222,14 @@
 
                     <div class="collapsible-body pads">
                         <div class="row">
+                            
                             <?php
                             $navigations = navigation_list();
 
                             foreach ($navigations as $key => $value) {
 
-                                echo '<div class="col s6 l4 m6" >';
-                                echo '<input type="checkbox" class="naviagation" value="1" name="navigations[' . $key . ']" id="' . $value . '" />';
+                                echo '<div class="col s6 l4 m6 navigation-item" >';
+                                echo '<input type="checkbox" class="navigation" value="1" name="navigations[' . $key . ']" id="' . $value . '" />';
                                 echo '<label for="' . $value . '">' . navigation_icon($value) . '&nbsp; </label>';
                                 echo '<input type="text" name="navigation_values[' . $key . ']" class="browser-default" disabled>';
                                 echo '</div>';

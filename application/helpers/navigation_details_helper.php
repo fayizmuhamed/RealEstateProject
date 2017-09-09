@@ -22,65 +22,123 @@ if (!function_exists('navigation_icon')) {
         switch ($item) {
 
             case 'navigation_airport':
-                $icon = '<i class="zmdi zmdi-local-airport tooltipped width-20" data-tooltip="Airport"></i>';
+                $icon = '<i class="icon-Airport-01 tooltipped width-20" data-tooltip="Airport"></i>';
                 break;
             case 'navigation_metro':
-                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Metro"></i>';
+                $icon = '<i class="icon-Highway-01 tooltipped width-20" data-tooltip="Metro"></i>';
                 break;
             case 'navigation_public_transport':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Public transport"></i>';
+                $icon = '<i class="icon-Public-Transport-01 tooltipped width-20" data-tooltip="Public Transport"></i>';
                 break;
             case 'navigation_park':
-                $icon = '<i class="zmdi zmdi-landscape tooltipped width-20" data-tooltip="Park"></i>';
+                $icon = '<i class="icon-Park-01 tooltipped width-20" data-tooltip="Park"></i>';
                 break;
             case 'navigation_lake':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Lake"></i>';
+                $icon = '<i class="icon-Lake-01 tooltipped width-20" data-tooltip="Lake"></i>';
                 break;
             case 'navigation_beach':
-                $icon = '<i class="zmdi zmdi-local-see tooltipped width-20" data-tooltip="Beach"></i>';
+                $icon = '<i class="icon-Beach-01 tooltipped width-20" data-tooltip="Beach"></i>';
                 break;
             case 'navigation_mall':
-                $icon = '<i class="zmdi zmdi-mall tooltipped width-20" data-tooltip="Mall"></i>';
+                $icon = '<i class="icon-Mall-01 tooltipped width-20" data-tooltip="Mall"></i>';
                 break;
             case 'navigation_restaurants':
-                $icon = '<i class="zmdi zmdi-hotel tooltipped width-20" data-tooltip="Restaurants"></i>';
+                $icon = '<i class="icon-Restaurants-01 tooltipped width-20" data-tooltip="Restaurants"></i>';
                 break;
             case 'navigation_super_market':
-                $icon = '<i class="zmdi zmdi-local-grocery-store tooltipped width-20" data-tooltip="Supermarket"></i>';
+                $icon = '<i class="icon-Supermarket-01 tooltipped width-20" data-tooltip="Supermarket"></i>';
                 break;
             case 'navigation_school':
-                $icon = '<i class="zmdi zmdi-graduation-cap tooltipped width-20" data-tooltip="School"></i>';
+                $icon = '<i class="icon-School-01 tooltipped width-20" data-tooltip="School"></i>';
                 break;
             case 'navigation_hospital':
-                $icon = '<i class="zmdi zmdi-hospital tooltipped width-20" data-tooltip="Hospital"></i>';
+                $icon = '<i class="icon-Hospital-01 tooltipped width-20" data-tooltip="Hospital"></i>';
                 break;
             case 'navigation_leisure_center':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Leisure Centre"></i>';
+                $icon = '<i class="icon-Leisure-Centre-01 tooltipped width-20" data-tooltip="Leisure Centre"></i>';
                 break;
             case 'navigation_fitness_center':
-                $icon = '<i class="zmdi zmdi-fire tooltipped width-20" data-tooltip="Fitness Centre"></i>';
+                $icon = '<i class="icon-Fitness-Centre-01 tooltipped width-20" data-tooltip="Fitness Centre"></i>';
                 break;
             case 'navigation_motor_way':
-                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Motor Way / Highway"></i>';
+                $icon = '<i class="icon-Motor-Way tooltipped width-20" data-tooltip="Motor Way / Highway"></i>';
                 break;
             case 'navigation_burj_al_arab':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Burj Al Arab"></i>';
+                $icon = '<i class="icon-Burj-Al-Arab-01 tooltipped width-20" data-tooltip="Burj Al Arab"></i>';
                 break;
             case 'navigation_palm_jumeirah':
-                $icon = '<i class="zmdi zmdi-airplane tooltipped width-20" data-tooltip="Palm Jumeirah"></i>';
+                $icon = '<i class="icon-Palm-Jumeirah-01 tooltipped width-20" data-tooltip="Palm Jumeirah"></i>';
                 break;
             case 'navigation_burj_khalifa':
-                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Burj Khalifa"></i>';
+                $icon = '<i class="icon-Burj-Khalifa-01 tooltipped width-20" data-tooltip="Burj Khalifa"></i>';
                 break;
             case 'navigation_golf_course':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Golf course"></i>';
+                $icon = '<i class="icon-Golf-course-01 tooltipped width-20" data-tooltip="Golf course"></i>';
                 break;
             case 'navigation_marina':
-                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Marina"></i>';
+                $icon = '<i class="icon-Marina-01 tooltipped width-20" data-tooltip="Marina"></i>';
                 break;
             case 'navigation_expo_2020':
-                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Expo 2020"></i>';
+                $icon = '<i class="icon-Expo-2020-01 tooltipped width-20" data-tooltip="Expo 2020"></i>';
                 break;
+            
+//            case 'navigation_metro':
+//                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Metro"></i>';
+//                break;
+//            case 'navigation_public_transport':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Public transport"></i>';
+//                break;
+//            case 'navigation_park':
+//                $icon = '<i class="zmdi zmdi-landscape tooltipped width-20" data-tooltip="Park"></i>';
+//                break;
+//            case 'navigation_lake':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Lake"></i>';
+//                break;
+//            case 'navigation_beach':
+//                $icon = '<i class="zmdi zmdi-local-see tooltipped width-20" data-tooltip="Beach"></i>';
+//                break;
+//            case 'navigation_mall':
+//                $icon = '<i class="zmdi zmdi-mall tooltipped width-20" data-tooltip="Mall"></i>';
+//                break;
+//            case 'navigation_restaurants':
+//                $icon = '<i class="zmdi zmdi-hotel tooltipped width-20" data-tooltip="Restaurants"></i>';
+//                break;
+//            case 'navigation_super_market':
+//                $icon = '<i class="zmdi zmdi-local-grocery-store tooltipped width-20" data-tooltip="Supermarket"></i>';
+//                break;
+//            case 'navigation_school':
+//                $icon = '<i class="zmdi zmdi-graduation-cap tooltipped width-20" data-tooltip="School"></i>';
+//                break;
+//            case 'navigation_hospital':
+//                $icon = '<i class="zmdi zmdi-hospital tooltipped width-20" data-tooltip="Hospital"></i>';
+//                break;
+//            case 'navigation_leisure_center':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Leisure Centre"></i>';
+//                break;
+//            case 'navigation_fitness_center':
+//                $icon = '<i class="zmdi zmdi-fire tooltipped width-20" data-tooltip="Fitness Centre"></i>';
+//                break;
+//            case 'navigation_motor_way':
+//                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Motor Way / Highway"></i>';
+//                break;
+//            case 'navigation_burj_al_arab':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Burj Al Arab"></i>';
+//                break;
+//            case 'navigation_palm_jumeirah':
+//                $icon = '<i class="zmdi zmdi-airplane tooltipped width-20" data-tooltip="Palm Jumeirah"></i>';
+//                break;
+//            case 'navigation_burj_khalifa':
+//                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Burj Khalifa"></i>';
+//                break;
+//            case 'navigation_golf_course':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Golf course"></i>';
+//                break;
+//            case 'navigation_marina':
+//                $icon = '<i class="zmdi zmdi-railway tooltipped width-20" data-tooltip="Marina"></i>';
+//                break;
+//            case 'navigation_expo_2020':
+//                $icon = '<i class="zmdi zmdi-bus tooltipped width-20" data-tooltip="Expo 2020"></i>';
+//                break;
         }
 
         return $icon;

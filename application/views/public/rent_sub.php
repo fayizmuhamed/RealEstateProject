@@ -15,39 +15,62 @@
 <!-- Modal Structure -->
 <div id="modal-filter" class="modal bottom-sheet">
     <div class="modal-content">
-        <h4>Flter</h4>
+        <h4>Filter</h4>
         <div class="filters">
+           
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Property Type</option>
-                    <option value="1">Apartment</option>
-                    <option value="2">Villas</option>
-                    <option value="3">Residential</option>
-                    <option value="4">Retail</option>
-                    <option value="5">Official</option>
-                    <option value="6">Commercial</option>
+                <select class="js-example-responsive location-select" multiple="multiple" name="search_location" id="filter_location" name="filter_location">
+                    <?php
+                    $search_locations = isset($search_locations) ? $search_locations : array();
+                    foreach ($locations as $location) {
+                        $isSelected = (in_array($location['community_name'], $search_locations)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $location['community_name'] . '"' . $isSelected . '>' . $location['community_name'] . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Bed Room</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                <select name="bedrooms" multiple>
+                    <option value="NA" disabled selected>Bed Rooms</option>
+                    <?php
+                    $search_bedrooms = isset($search_bedrooms) ? $search_bedrooms : array();
+                    for ($i = 1; $i <= 10; $i++) {
+
+                        $isSelected = (in_array($i, $search_bedrooms)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $i . '"' . $isSelected . '>' . $i . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
             <div class="input-field col s12">
-                <select multiple>
-                    <option value="" selected>Budget</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
+                <select  name="budget" multiple>
+                    <option value="NA" disabled selected>Budget</option>
+                    <?php
+                   $budgets = array('1' => 'Less than 50,000',
+                        '2' => '50,000 – 75,000',
+                        '3' => '75,000 – 100,000',
+                        '4' => '100,000 – 125,000',
+                        '5' => '125,000 – 150,000',
+                        '6' => '150,000 – 175,000',
+                        '7' => '175,000 – 200,000',
+                        '8' => '200,000 – 250,000',
+                        '9' => '300,000 – 350,000',
+                        '10' => '350,000 – 400,000',
+                        '11' => '400,000 – 450,000',
+                        '12' => '450,000 – 500,000',
+                        '13' => '500,000 – 600,000',
+                        '14' => '600,000 – 700,000',
+                        '15' => '700,000 – 800,000',
+                        '16' => '800,000 – 900,000',
+                        '17' => '900,000 – 1,000,000',
+                        '18' => 'More than 1,000,000'
+                    );
+                    $search_budgets = isset($search_budgets) ? $search_budgets : array();
+                    foreach ($budgets as $key => $value) {
+                        $isSelected = (in_array($key, $search_budgets)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $key . '"' . $isSelected . '>' . $value . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
 
@@ -106,8 +129,8 @@
                         echo '<ul>';
                         echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
                         echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
                         echo '</ul>';

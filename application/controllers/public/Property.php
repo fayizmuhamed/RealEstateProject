@@ -42,7 +42,7 @@ class Property extends PublicController {
             $communities = $this->input->post('locations');
             $bedrooms = $this->input->post('bedrooms');
             $budgets = $this->input->post('budgets');
-            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, null, null, $bedrooms, $budgets, null, null, null, null, null, $communities, null, null);
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, null, null, $bedrooms, $budgets, null, null, null, null, null, $communities, null, 'property_last_updated', 'DESC');
 
             $this->data['properties'] = $properties;
             $this->data['property_types'] = $this->Property_type_model->find_all();
@@ -79,6 +79,7 @@ class Property extends PublicController {
         $search_string = $this->input->get('search_string');
         $order = $this->input->get('order');
         $order_type = $this->input->get('order_type');
+        $property_id = $this->input->get('property_id');
 
         $page = $this->input->get('page', TRUE);
 
@@ -96,7 +97,7 @@ class Property extends PublicController {
             $offset = 0;
         }
 
-        $properties = $this->Property_model->search_properties($per_page, $offset, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
+        $properties = $this->Property_model->search_properties($per_page, $offset, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $property_id, $order, $order_type);
 
         exit($this->send_response('success', $properties));
     }
@@ -117,6 +118,13 @@ class Property extends PublicController {
             }
         }
 
+        if ($property) {
+            $this->data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type_except_one(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0, (isset($property->property_community) ? $property->property_community : ''), 'sale', $property->property_id, null, null);
+            $this->data['properties_rent'] = $this->Property_model->find_by_community_and_ad_type_except_one(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0, (isset($property->property_community) ? $property->property_community : ''), 'rent', $property->property_id, null, null);
+        } else {
+            $this->data['properties_sale'] = [];
+            $this->data['properties_rent'] = [];
+        }
 
         //load the view
         $this->data['content'] = 'public/property_detail';

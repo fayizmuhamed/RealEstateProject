@@ -30,7 +30,7 @@ class Property extends AdminController {
      * Load the main view with all the current model model's data.
      * @return void
      */
-    public function index($sort_by = 'property_id', $sort_order = 'asc', $offset = 0) {
+    public function index($sort_by = 'property_last_updated', $sort_order = 'desc', $offset = 0) {
 
         $limit = ADMIN_ITEM_PER_LIST_PAGE;
 
@@ -197,6 +197,7 @@ class Property extends AdminController {
                         $listing_agent_phone = array_key_exists('Listing_Agent_Phone', $item) ? $item['Listing_Agent_Phone'] : "";
                         $listing_agent_email = array_key_exists('Listing_Agent_Email', $item) ? $item['Listing_Agent_Email'] : "";
                         $listing_agent_photo = array_key_exists('Listing_Agent_Photo', $item) ? $item['Listing_Agent_Photo'] : "";
+                        $last_updated_at=array_key_exists('Last_Updated', $item) ? $item['Last_Updated'] : "";
 
                         $unit_model = $this->getPropertyModel($unit_type);
 
@@ -230,7 +231,8 @@ class Property extends AdminController {
                             'property_listing_agent_photo' => is_null($listing_agent_photo) || empty($listing_agent_photo) ? "" : $listing_agent_photo,
                             'property_web_remarks' => is_null($web_remarks) || empty($web_remarks) ? "" : $web_remarks,
                             'property_images' => is_null($images) || empty($images) ? "" : json_encode($images),
-                            'property_facilities' => is_null($facilities) || empty($facilities) ? "" : json_encode($facilities)
+                            'property_facilities' => is_null($facilities) || empty($facilities) ? "" : json_encode($facilities),
+                            'property_last_updated' => is_null($last_updated_at) || empty($last_updated_at) ? "" : $last_updated_at,
                         );
 
                         $property = $this->getExistingProperty($property_ref_no);

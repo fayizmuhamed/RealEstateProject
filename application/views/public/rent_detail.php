@@ -37,10 +37,8 @@
 
             <div class="col s12 l12 m12 margin-top">
                 <div class="row">
-                    <div class="col l9 m6 s12">
+                    <div class="col l9 m6 s12 ">
                         <div class="image-buy-detail">
-
-
                             <div class="flexslider">
                                 <ul class="slides">
                                     <?php
@@ -75,7 +73,7 @@
                                     </div> 
     <!--                                    <button class="bt-number"><a href="#"><i class="zmdi zmdi-phone"></i>&nbsp;9995540446</a></button>-->
                                 </div>
-                                 <div class="agent-footer">
+                                <div class="agent-footer">
 
                                     <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage('<?php echo $employee['emp_id']; ?>', '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');return false;">SEND MESSAGE</a></button>
                                     <button class="bt-half"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack('<?php echo $employee['emp_id']; ?>', '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
@@ -95,12 +93,12 @@
                                         <span><strong>From</strong>:&nbsp;N/A</span>
                                         <span><strong>Area Specializes in</strong>:&nbsp;N/A</span>
                                     </div> 
-                                  
+
                                 </div>
-                                 <div class="agent-footer">
-                                   
-                                     <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
-                                                return false;">SEND MESSAGE</a></button>
+                                <div class="agent-footer">
+
+                                    <button class="bt-half mg-right-10 bg-send"><a class="modal-trigger" data-target="send_message" onclick="sendMessage(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
+                                                 return false;">SEND MESSAGE</a></button>
                                     <button class="bt-half"><a class="modal-trigger" data-target="request_call_back" onclick="requestForCallBack(null, '<?php echo isset($property->property_ref_no) ? $property->property_ref_no : '' ?>', '<?php echo isset($property->property_title) ? $property->property_title : '' ?>');
                                                 return false;">REQUEST FOR CALL BACK</a></button>
                                 </div>
@@ -315,6 +313,78 @@
                         }
                         google.maps.event.addDomListener(window, "load", initialize);
                     </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 l12 m12">
+            <div class="row agent-det mg-bt-none">
+                <div class="col s12 l12 m12">
+                    <h2>Other properties for rent in  <?php echo (isset($property->property_community) ? $property->property_community : ''); ?></h2>
+                </div>
+                <div id="rent_detail_property_list_container">
+                    <?php
+                    foreach ($properties_rent as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
+                        echo '<div class="col s12 l3 m6">';
+                        echo '<div class="list-card">';
+                        echo '<div class="over-card">';
+                        echo '<ul>';
+                        echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
+                        echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
+                        echo '</ul>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
+                        echo '</div>';
+                        echo '<div class="property-thumb">';
+
+                        $images = json_decode($property['property_images'], TRUE);
+                        if ($images != null && count($images) > 0) {
+
+                            echo '<img src="' . $images['image'][0] . '">';
+                        } else {
+
+                            echo '<img src="#">';
+                        }
+
+                        echo '</div>';
+                        echo '<div class="property-list-details">';
+                        echo '<h3>' . $property['property_title'] . '</h3>';
+                        echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                        echo '<div class="button-block">';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+
+                <!-- more -->
+                <div class="col s12 more-button-block">
+                    <button class="bt-normal waves-effect waves-light" id="btn_rent_detail_property_list_add_more" data-page="1" data-community="<?php echo (isset($property->property_community) ? $property->property_community : ''); ?>" data-property="<?php echo (isset($property->property_id) ? $property->property_id : ''); ?>">VIEW MORE</button>
                 </div>
             </div>
         </div>

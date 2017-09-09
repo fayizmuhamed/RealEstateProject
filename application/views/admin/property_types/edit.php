@@ -31,7 +31,7 @@
         
         <!-- Project Name Developer -->
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <input id="property_type_name" type="text" name="property_type_name" class="validate" value="<?php echo $property_type[0]['pt_name']; ?>">
                 <label class="active" for="property_type_name">Property Type Name</label>
             </div>
@@ -39,7 +39,7 @@
         </div>
         <!-- Property Type Property Location -->
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <select id="property_type_model" name="property_type_model">
                     <option value="" disabled selected>Property Model</option>
                     <?php                            
@@ -56,6 +56,12 @@
                           
                      }?>
                 </select>
+            </div>
+        </div>
+         <div class="row">
+             <div class="input-field col s12 m6">
+                <input id="pt_priority" type="number" name="pt_priority"  class="validate" value="<?php echo set_value('pt_priority', isset( $property_type[0]['pt_priority'])? $property_type[0]['pt_priority']:''); ?>">
+                <label class="active" for="pt_priority">Priority</label>
             </div>
         </div>
         <div class="col s12">

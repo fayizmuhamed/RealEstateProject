@@ -113,6 +113,32 @@ class Community_model extends CI_Model {
 
         return $query->result_array();
     }
+    
+    /**
+     * get community list with search by name
+     */
+    function find_with_priority($limit, $offset, $query_array) {
+
+
+        $this->db->select('*');
+        $this->db->from('communities');
+        $this->db->limit($limit, $offset);
+        $this->db->order_by('community_priority IS NULL , community_priority ASC','',FALSE);
+      
+
+        if (isset($query_array['community_name']) && strlen($query_array['community_name'])) {
+
+           $this->db->like('community_name', $query_array['community_name']);
+        }
+        if (isset($query_array['community_id']) && strlen($query_array['community_id'])) {
+
+            $this->db->where('community_id', $query_array['community_id']);
+        }
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
 
     /**
      * Store the new community into the database

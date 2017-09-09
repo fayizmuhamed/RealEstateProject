@@ -33,7 +33,7 @@ class Buy extends PublicController {
      */
     function index() {
 
-        $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, 'sale', null, null, null, null, null, null, null, null, null, null, null, null);
+        $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, 'sale', null, null, null, null, null, null, null, null, null, null, null, null,null);
         $this->data['properties'] = $properties;
         $this->data['property_types'] = $this->Property_type_model->find_all();
         $this->data['communities'] = $this->Community_model->find_all();
@@ -54,6 +54,7 @@ class Buy extends PublicController {
         $featured = null;
         $agent = null;
         $community = null;
+        $property_id=null;
         $search_string = null;
         $order = null;
         $order_type = null;
@@ -77,7 +78,7 @@ class Buy extends PublicController {
                     break;
             }
 
-            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community, $order, $order_type);
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, $unit_model, $property_type, $bedrooms, $budgets, $size, $off_plan, $featured, $search_string, $agent, $community,$property_id, $order, $order_type);
 
             $this->data['properties'] = $properties;
             $this->data['property_types'] = $this->Property_type_model->find_by_model_name($unit_model);
@@ -119,8 +120,13 @@ class Buy extends PublicController {
             $this->data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
         }
 
+        if ($property) {
 
+            $this->data['properties_sale'] = $this->Property_model->find_by_community_and_ad_type_except_one(COMMUNITY_PAGE_PROPERTIES_COUNT_PER_PAGE, 0, (isset($property->property_community) ? $property->property_community  : ''), 'sale',$property->property_id, null, null);
+        } else {
 
+            $this->data['properties_sale'] = [];
+        }
         //load the view
         $this->data['content'] = 'public/buy_detail';
         $this->load->view('includes/public/template', $this->data);

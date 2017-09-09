@@ -46,13 +46,12 @@ class Career extends PublicController {
             $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
             $this->form_validation->set_rules('contact', 'Mobie Number', 'trim|required|xss_clean');
             $this->form_validation->set_rules('applied_for', 'Applied For', 'trim|required|xss_clean');
-           // $this->form_validation->set_rules('resume', 'Resume', 'trim|required|xss_clean');
-
+            // $this->form_validation->set_rules('resume', 'Resume', 'trim|required|xss_clean');
             //if the form has passed through the validation
-            if ($this->form_validation->run()) {
+            if ($this->form_validation->run() && $this->resume_upload()) {
 
-                
-                $resume_tmp_path = $_FILES['resume']['tmp_name'] . '/' . $_FILES['resume']['name'];
+
+                $resume_tmp_path = (empty($this->upload_data) || !isset($this->upload_data['resume'])) ? null : $this->upload_data['resume']['full_path'];
 
                 $data_to_send = array(
                     'first_name' => $this->input->post('first_name', true),
@@ -67,7 +66,7 @@ class Career extends PublicController {
 
                 $message = $this->load->view('includes/email/drop_my_cv_request', $data_to_send, TRUE);
 
-                if (send_email('html', $to, $subject, $message,$resume_tmp_path)) {
+                if (send_email('html', $to, $subject, $message, ($resume_tmp_path ? array('Resume' => $resume_tmp_path) : null))) {
 
                     $status = 'success';
                     $message = 'Resume uploaded successfully';
@@ -84,6 +83,50 @@ class Career extends PublicController {
 
                 exit($this->send_response($status, $message));
             }
+        }
+    }
+
+    function resume_upload() {
+
+        if ($_FILES['resume']['size'] != 0) {
+
+            $upload_dir = './uploads/resume';
+
+            if (!is_dir($upload_dir)) {
+
+                mkdir($upload_dir);
+            }
+
+            $config2['upload_path'] = $upload_dir;
+
+            $config2['allowed_types'] = 'gif|jpg|png|jpeg|pdf|doc|docx|sql';
+
+            $config2['max_size'] = 200;
+
+            $date = new DateTime();
+
+            $file_name = 'resume_' . $date->format('Y_m_d_H_i_s');
+
+            $config2['file_name'] = $file_name;
+
+            $config2['overwrite'] = false;
+
+            $this->load->library('upload', $config2);
+
+            if (!$this->upload->do_upload('resume')) {
+
+                $this->form_validation->set_message('resume', $this->upload->display_errors());
+
+                return false;
+            } else {
+
+                $this->upload_data['resume'] = $this->upload->data();
+
+                return true;
+            }
+        } else {
+
+            return true;
         }
     }
 

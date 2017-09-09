@@ -313,6 +313,149 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col s12 l12 m12">
+            <div class="row agent-det mg-bt-none">
+                <div class="col s12 l12 m12">
+                    <h2>Other properties for sale in  <?php echo (isset($property->property_community) ? $property->property_community : ''); ?></h2>
+                </div>
+                <div id="property_detail_sale_list_container">
+                    <?php
+                    foreach ($properties_rent as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
+                        echo '<div class="col s12 l3 m6">';
+                        echo '<div class="list-card">';
+                        echo '<div class="over-card">';
+                        echo '<ul>';
+                        echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
+                        echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
+                        echo '</ul>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
+                        echo '</div>';
+                        echo '<div class="property-thumb">';
+
+                        $images = json_decode($property['property_images'], TRUE);
+                        if ($images != null && count($images) > 0) {
+
+                            echo '<img src="' . $images['image'][0] . '">';
+                        } else {
+
+                            echo '<img src="#">';
+                        }
+
+                        echo '</div>';
+                        echo '<div class="property-list-details">';
+                        echo '<h3>' . $property['property_title'] . '</h3>';
+                        echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                        echo '<div class="button-block">';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+
+                <!-- more -->
+                <div class="col s12 more-button-block">
+                    <button class="bt-normal waves-effect waves-light" id="btn_property_detail_sale_list_add_more" data-page="1" data-community="<?php echo (isset($property->property_community) ? $property->property_community : ''); ?>" data-property="<?php echo (isset($property->property_id) ? $property->property_id : ''); ?>">VIEW MORE</button>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 l12 m12">
+            <div class="row agent-det mg-bt-none">
+                <div class="col s12 l12 m12">
+                    <h2>Other properties for rent in  <?php echo (isset($property->property_community) ? $property->property_community : ''); ?></h2>
+                </div>
+                <div id="property_detail_rent_list_container">
+                    <?php
+                    foreach ($properties_rent as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
+                        echo '<div class="col s12 l3 m6">';
+                        echo '<div class="list-card">';
+                        echo '<div class="over-card">';
+                        echo '<ul>';
+                        echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
+                        echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        }
+                        echo '</ul>';
+                        echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
+                        echo '</div>';
+                        echo '<div class="property-thumb">';
+
+                        $images = json_decode($property['property_images'], TRUE);
+                        if ($images != null && count($images) > 0) {
+
+                            echo '<img src="' . $images['image'][0] . '">';
+                        } else {
+
+                            echo '<img src="#">';
+                        }
+
+                        echo '</div>';
+                        echo '<div class="property-list-details">';
+                        echo '<h3>' . $property['property_title'] . '</h3>';
+                        echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                        echo '<div class="button-block">';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
+                </div>
+
+                <!-- more -->
+                <div class="col s12 more-button-block">
+                    <button class="bt-normal waves-effect waves-light" id="btn_property_detail_rent_list_add_more" data-page="1" data-community="<?php echo (isset($property->property_community) ? $property->property_community : ''); ?>" data-property="<?php echo (isset($property->property_id) ? $property->property_id : ''); ?>">VIEW MORE</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </section>

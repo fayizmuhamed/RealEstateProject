@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!function_exists('send_email')) {
 
-    function send_email($mailType = 'text',$to = '', $subject = '', $message = '',$attachment=null) {
+    function send_email($mailType = 'text',$to = '', $subject = '', $message = '',$attachments=null) {
 
         $CI = & get_instance();
 
@@ -38,9 +38,12 @@ if (!function_exists('send_email')) {
         $CI->email->to($to);
         $CI->email->subject($subject);
         $CI->email->message($message);
-        if($attachment){
+        if($attachments){
             
-            $CI->email->attach($attachment);
+            foreach($attachments as $key=>$value){
+                
+                $CI->email->attach($value);
+            }
         }
         return $CI->email->send();
     }

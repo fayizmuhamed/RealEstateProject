@@ -67,7 +67,8 @@ class Project_model extends CI_Model {
 
         $this->db->select('*');
         $this->db->from('projects');
-        $this->db->order_by('project_updated_at', 'DESC');
+        //$this->db->order_by('project_priority', 'ASC');
+        $this->db->order_by('project_priority IS NULL , project_priority ASC','',FALSE);
         $this->db->limit($count);
 
         $query = $this->db->get();
@@ -100,14 +101,51 @@ class Project_model extends CI_Model {
 
         $sort_order = ($sort_order == 'desc') ? 'desc' : 'asc';
 
-        $sort_column = array('project_id', 'project_name', 'project_reference', 'project_location', 'project_developer');
+        $sort_column = array('project_id', 'project_name', 'project_reference', 'project_location', 'project_developer','project_priority');
 
         $sort_by = (in_array($sort_by, $sort_column)) ? $sort_by : 'project_id';
 
         $this->db->select('*');
         $this->db->from('projects');
         $this->db->limit($limit, $offset);
+        //$this->db->order_by('project_priority IS NULL , project_priority','asc',FALSE);
         $this->db->order_by($sort_by, $sort_order);
+
+
+        if (isset($query_array['project_name']) && strlen($query_array['project_name'])) {
+
+            $this->db->like('project_name', $query_array['project_name']);
+        }
+        if (isset($query_array['project_reference']) && strlen($query_array['project_reference'])) {
+
+            $this->db->like('project_reference', $query_array['project_reference']);
+        }
+
+        if (isset($query_array['project_location']) && strlen($query_array['project_location'])) {
+
+            $this->db->like('project_location', $query_array['project_location']);
+        }
+        if (isset($query_array['project_developer']) && strlen($query_array['project_developer'])) {
+
+            $this->db->like('project_developer', $query_array['project_developer']);
+        }
+
+
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
+    /**
+     * get projects list by search conditions
+     */
+    function find_project_with_priority($limit, $offset, $query_array) {
+
+
+        $this->db->select('*');
+        $this->db->from('projects');
+        $this->db->limit($limit, $offset);
+        $this->db->order_by('project_priority IS NULL , project_priority','asc',FALSE);
 
 
         if (isset($query_array['project_name']) && strlen($query_array['project_name'])) {

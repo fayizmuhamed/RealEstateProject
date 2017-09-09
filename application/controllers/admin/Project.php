@@ -132,7 +132,8 @@ class Project extends AdminController {
                     'project_location_url' => htmlspecialchars($this->input->post('project_location_url')),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
                     'project_agents' => json_encode($this->input->post('project_agents')),
-                    'project_navigations' => $this->getProjectNavigations()
+                    'project_navigations' => $this->getProjectNavigations(),
+                    'project_priority'=>($this->input->post('project_priority')?$this->input->post('project_priority'):NULL)
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];
@@ -204,7 +205,9 @@ class Project extends AdminController {
                     'project_location_url' => htmlspecialchars($this->input->post('project_location_url')),
                     'project_payment_plans' => $this->input->post('project_payment_plan_hidden'),
                     'project_agents' => json_encode($this->input->post('project_agents')),
-                    'project_navigations' => $this->getProjectNavigations()
+                    'project_navigations' => $this->getProjectNavigations(),
+                    'project_priority'=>($this->input->post('project_priority')?$this->input->post('project_priority'):NULL)
+                        
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['project_thumbnail_image'])) ? "" : $this->upload_data['project_thumbnail_image'];

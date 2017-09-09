@@ -33,7 +33,7 @@ class Project extends PublicController {
         if ($id == null) {
 
             //load the view
-            $projects = $this->Project_model->find_with_search(PROJECT_COUNT_PER_PAGE, 0, $query_array = [], 'project_updated_at', 'desc');
+            $projects = $this->Project_model->find_project_with_priority(PROJECT_COUNT_PER_PAGE, 0, $query_array = []);
 
             $this->data['projects'] = $projects;
 

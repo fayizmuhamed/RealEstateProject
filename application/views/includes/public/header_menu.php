@@ -42,7 +42,7 @@
 
                 <div class="searchfeild">
                     <div class="search-text">
-                        <select class="js-example-responsive location-select" multiple="multiple"  name="locations[]" id="header_search_locations">
+                        <select class="js-example-responsive location-select" multiple="multiple"  name="locations[]" id="header_search_locations" style="width:513px;">
                             <?php
                             $search_locations = isset($search_locations) ? $search_locations : array();
                             foreach ($locations as $location) {
@@ -67,25 +67,56 @@
                     </div>
                     <div class="search-budget-select">
                         <select   multiple name="budgets[]" id="header_search_budgets">
-                            <?php $search_budgets = isset($search_budgets) ? $search_budgets : array(); ?>
+
                             <option value="NA" disabled selected>Budget</option>
-                            <option value="Less than 1,000,000" >Less than 1,000,000</option>
-                            <option value="1,000,000 – 1,500,000">1,000,000 – 1,500,000</option>
-                            <option value="1,500,000 – 2,000,000">1,500,000 – 2,000,000</option>
-                            <option value="2,000,000 – 2,500,000">2,000,000 – 2,500,000</option>
-                            <option value="2,500,000 – 3,000,000">2,500,000 – 3,000,000</option>
-                            <option value="3,000,000 – 3,500,000">3,000,000 – 3,500,000</option>
-                            <option value="3,500,000 – 4,000,000">3,500,000 – 4,000,000</option>
-                            <option value="4,000,000 – 4,500,000">4,000,000 – 4,500,000</option>
-                            <option value="4,500,000 – 5,000,000">4,500,000 – 5,000,000</option>
-                            <option value="5,000,000 – 6,000,000">5,000,000 – 6,000,000</option>
-                            <option value="6,000,000 – 7,000,000">6,000,000 – 7,000,000</option>
-                            <option value="7,000,000 – 8,000,000">7,000,000 – 8,000,000</option>
-                            <option value="8,000,000 – 9,000,000">8,000,000 – 9,000,000</option>
-                            <option value="9,000,000 – 10,000,000">9,000,000 – 10,000,000</option>
-                            <option value="10,000,000 – 15,000,000">10,000,000 – 15,000,000</option>
-                            <option value="15,000,000 – 20,000,000">15,000,000 – 20,000,000</option>
-                            <option value="More than 20,000,000">More than 20,000,000</option>
+                            <?php
+                            if (isset($unit_category) && $unit_category == 'sale') {
+
+                                $budgets = array('1' => 'Less than 1,000,000',
+                                    '2' => '1,000,000 – 1,500,000',
+                                    '3' => '1,500,000 – 2,000,000',
+                                    '4' => '2,000,000 – 2,500,000',
+                                    '5' => '2,500,000 – 3,000,000',
+                                    '6' => '3,000,000 – 3,500,000',
+                                    '7' => '3,500,000 – 4,000,000',
+                                    '8' => '4,000,000 – 4,500,000',
+                                    '9' => '4,500,000 – 5,000,000',
+                                    '10' => '5,000,000 – 6,000,000',
+                                    '11' => '6,000,000 – 7,000,000',
+                                    '12' => '7,000,000 – 8,000,000',
+                                    '13' => '8,000,000 – 9,000,000',
+                                    '14' => '9,000,000 – 10,000,000',
+                                    '15' => '10,000,000 – 15,000,000',
+                                    '16' => '15,000,000 – 20,000,000',
+                                    '17' => 'More than 20,000,000'
+                                );
+                            } else {
+                                $budgets = array('1' => 'Less than 50,000',
+                                    '2' => '50,000 – 75,000',
+                                    '3' => '75,000 – 100,000',
+                                    '4' => '100,000 – 125,000',
+                                    '5' => '125,000 – 150,000',
+                                    '6' => '150,000 – 175,000',
+                                    '7' => '175,000 – 200,000',
+                                    '8' => '200,000 – 250,000',
+                                    '9' => '300,000 – 350,000',
+                                    '10' => '350,000 – 400,000',
+                                    '11' => '400,000 – 450,000',
+                                    '12' => '450,000 – 500,000',
+                                    '13' => '500,000 – 600,000',
+                                    '14' => '600,000 – 700,000',
+                                    '15' => '700,000 – 800,000',
+                                    '16' => '800,000 – 900,000',
+                                    '17' => '900,000 – 1,000,000',
+                                    '18' => 'More than 1,000,000'
+                                );
+                            }
+                            $search_budgets = isset($search_budgets) ? $search_budgets : array();
+                            foreach ($budgets as $key => $value) {
+                                $isSelected = (in_array($key, $search_budgets)) ? ' selected="selected"' : '';
+                                echo '<option value="' . $key . '"' . $isSelected . '>' . $value . '</option>';
+                            }
+                            ?>
                         </select>
                     </div>
 

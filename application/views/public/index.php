@@ -152,8 +152,8 @@
                         echo '<ul>';
                         echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
                         if ($is_maid_room) {
                             echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         }
@@ -233,8 +233,8 @@
                         echo '<ul>';
                         echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="icon-bath"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
                         if ($is_maid_room) {
                             echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
                         }

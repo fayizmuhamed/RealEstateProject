@@ -75,7 +75,8 @@ class Property_type extends AdminController {
             if ($this->form_validation->run()) {
                 $data_to_store = array(
                     'pt_name' => $this->input->post('property_type_name'),
-                    'pt_model_id' => $this->input->post('property_type_model')
+                    'pt_model_id' => $this->input->post('property_type_model'),
+                    'pt_priority'=>($this->input->post('pt_priority') ? $this->input->post('pt_priority') : NULL)
                 );
 
                 //if the insert has returned true then we show the flash message
@@ -116,7 +117,8 @@ class Property_type extends AdminController {
 
                 $data_to_store = array(
                     'pt_name' => $this->input->post('property_type_name'),
-                    'pt_model_id' => $this->input->post('property_type_model')
+                    'pt_model_id' => $this->input->post('property_type_model'),
+                    'pt_priority'=>($this->input->post('pt_priority') ? $this->input->post('pt_priority') : NULL)
                 );
 
                 //if the insert has returned true then we show the flash message

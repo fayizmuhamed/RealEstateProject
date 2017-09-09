@@ -68,8 +68,8 @@
 
                             foreach ($navigations as $key => $value) {
 
-                                echo '<div class="col s6 l4 m6" >';
-                                echo '<input type="checkbox" class="naviagation" value="1" name="navigations[' . $key . ']" id="' . $value . '" ' . set_checkbox('navigations', "1", (!empty($property_navigation_list) && isset($property_navigation_list[$value]) ) ? TRUE : FALSE) . ' />';
+                                echo '<div class="col s6 l4 m6 navigation-item" >';
+                                echo '<input type="checkbox" class="navigation" value="1" name="navigations[' . $key . ']" id="' . $value . '" ' . set_checkbox('navigations', "1", (!empty($property_navigation_list) && isset($property_navigation_list[$value]) ) ? TRUE : FALSE) . ' />';
                                 echo '<label for="' . $value . '">' . navigation_icon($value) . '&nbsp; </label>';
                                 echo '<input type="text" name="navigation_values[' . $key . ']" class="browser-default" ' . ((!empty($property_navigation_list) && isset($property_navigation_list[$value]) ) ? '' : 'disabled') . ' value=" ' . ((!empty($property_navigation_list) && isset($property_navigation_list[$value]) ) ? $property_navigation_list[$value] : '') . '">';
                                 echo '</div>';

@@ -9,13 +9,14 @@
 }
 
 .image-buy-detail {
-    height: 550px;
+    height: 565px;
 }
+
 
 /* line 1, ../sass/layout/Pages/_team.scss */
 .buy-agent-card {
     width: 100%;
-    height: 550px;
+    height: 565px;
     background: #fff;
     margin-bottom: 0px;
     border: 1px solid rgba(225, 225, 225, 0.73);
@@ -37,41 +38,41 @@
 }
 
 .buy-agent-card .agent-footer .bt-half {
-  width: 49%;
-  float: left;
-  height: 35px;
-  border: 1px solid #19223D;
-  color: #19223D;
-  background-color: #fff;
+    width: 49%;
+    float: left;
+    height: 35px;
+    border: 1px solid #19223D;
+    color: #19223D;
+    background-color: #fff;
 }
 /* line 106, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-footer .bt-half a {
-  color: #19223D;
-  font-size: 12px;
+    color: #19223D;
+    font-size: 12px;
 }
 /* line 111, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-footer .mg-right-5 {
-  margin-right: 5px;
-  background-color: #19223D !important;
+    margin-right: 5px;
+    background-color: #19223D !important;
 }
 /* line 114, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-footer .mg-right-5 a {
-  color: #fff;
+    color: #fff;
 }
 /* line 118, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-footer .bt-number {
-  margin-top: 5px;
-  width: 100%;
-  height: 35px;
-  border: 1px solid #19223D;
-  color: #19223D;
-  background-color: #fff;
+    margin-top: 5px;
+    width: 100%;
+    height: 35px;
+    border: 1px solid #19223D;
+    color: #19223D;
+    background-color: #fff;
 }
 /* line 125, ../sass/layout/Pages/_buy.scss */
 .buy-agent-card .agent-footer .bt-number a {
-  color: #19223D;
-  font-size: 14px;
-  font-weight: 600;
+    color: #19223D;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 
@@ -352,9 +353,9 @@ button{
 
 .search-form .selection{
 
- float: left;
- width: 100%;
- border: 0px !important;
+    float: left;
+    width: 100%;
+    border: 0px !important;
 }
 
 .search-form .select2-selection{
@@ -370,14 +371,15 @@ button{
     margin-bottom: 0px !important;
 }
 .search-form .select2-search__field{
-      border-bottom: 0px solid #fff !important;
+    border-bottom: 0px solid #fff !important;
+    width:513px!important;
 }
 
 .search-form .select2-selection__choice { 
     padding: 7px 7px !important;
 }
 .search-form .select2-selection__rendered{
-    
+
     border: 0px solid #fff !important;
 }
 
@@ -386,6 +388,10 @@ button{
     width:100% !important;
     border: 1px solid #fff !important;
     border-radius: 0px !important;
+}
+
+.filters .select2-search__field{
+    width:225px!important;
 }
 
 .filters .select2-selection{
@@ -408,6 +414,12 @@ button{
     padding: 7px 7px !important;
 }
 
+.list-card{
+
+    height:100%;
+    float:left;
+    min-height: 355px;
+}
 
 
 /*.filters .select2-container--default .select2-selection--multiple {

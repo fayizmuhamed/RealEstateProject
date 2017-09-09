@@ -109,7 +109,8 @@ class Community extends AdminController {
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => htmlspecialchars($this->input->post('community_location_url')),
                     'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? "" : $this->upload_data['community_cover_image']['file_name'],
-                    'community_navigations'=>$this->getCommunityNavigations()
+                    'community_navigations' => $this->getCommunityNavigations(),
+                    'community_priority' => ($this->input->post('community_priority') ? $this->input->post('community_priority') : NULL)
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
@@ -160,7 +161,8 @@ class Community extends AdminController {
                     'community_description' => $this->input->post('community_description'),
                     'community_location_url' => htmlspecialchars($this->input->post('community_location_url')),
                     'community_cover_image' => (empty($this->upload_data) || !isset($this->upload_data['community_cover_image'])) ? $this->input->post('community_cover_image_hidden') : $this->upload_data['community_cover_image']['file_name'],
-                    'community_navigations'=>$this->getCommunityNavigations()
+                    'community_navigations' => $this->getCommunityNavigations(),
+                    'community_priority' => ($this->input->post('community_priority') ? $this->input->post('community_priority') : NULL)
                 );
 
                 $thumbnail = (empty($this->upload_data) || !isset($this->upload_data['community_thumbnail_image'])) ? "" : $this->upload_data['community_thumbnail_image'];
@@ -195,18 +197,20 @@ class Community extends AdminController {
 
         $community_navigations = array();
 
-        foreach ($navigations as $key => $value) {
+        if ($navigations) {
 
-            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
+            foreach ($navigations as $key => $value) {
 
-            if ($navigation_key) {
+                $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
 
-                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+                if ($navigation_key) {
 
-                $community_navigations[$navigation_key] = $navigation_value;
+                    $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
+
+                    $community_navigations[$navigation_key] = $navigation_value;
+                }
             }
         }
-
         return json_encode($community_navigations);
     }
 
