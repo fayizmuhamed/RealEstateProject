@@ -60,6 +60,7 @@ $route['admin/login'] = 'admin/user';
 $route['admin']="admin/user";
 
 $route['admin/home']='admin/home';
+$route['admin/propertysync']='admin/sync';
 
 $route['admin/properties']='admin/property';
 $route['admin/properties/navigations/(:any)']='admin/property/property_navigations/$1';

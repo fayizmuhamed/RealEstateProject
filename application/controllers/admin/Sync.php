@@ -11,7 +11,7 @@
  *
  * @author DELL
  */
-class Property extends AdminController {
+class Sync extends CommonController {
 //put your code here
 
     /**
@@ -24,76 +24,6 @@ class Property extends AdminController {
         $this->load->model('Property_type_model');
         $this->load->model('Property_model');
         $this->load->library("pagination");
-    }
-
-    /**
-     * Load the main view with all the current model model's data.
-     * @return void
-     */
-    public function index($sort_by = 'property_last_updated', $sort_order = 'desc', $offset = 0) {
-
-        $limit = ADMIN_ITEM_PER_LIST_PAGE;
-
-//all the posts sent by the view
-        $filter = $this->input->post('filter');
-        $search_string = $this->input->post('search_string');
-
-        $query_array = array(
-            $filter => $search_string
-        );
-
-        $properties = $this->Property_model->find_with_search($limit, $offset, $query_array, $sort_by, $sort_order);
-
-        $data['properties'] = $properties;
-        $data['sort_order'] = $sort_order;
-        $data['sort_by'] = $sort_by;
-
-//pagination settings
-        $config = array();
-        $config['base_url'] = site_url("admin/properties/$sort_by/$sort_order");
-        $config["total_rows"] = $this->Property_model->record_count($query_array);
-        $config["per_page"] = $limit;
-        $config["uri_segment"] = 5;
-
-//initializate the panination helper 
-        $this->pagination->initialize($config);
-
-//load the view
-        $data['content'] = 'admin/properties/list';
-
-
-        $this->load->view('includes/admin_template', $data);
-    }
-
-    public function property_navigations($property_ref_no) {
-
-//if save button was clicked, get the data sent via post
-        if ($this->input->server('REQUEST_METHOD') === 'POST') {
-
-            $data_to_store = array(
-                'property_ref_no' => $property_ref_no,
-                'property_navigations' => $this->getPropertyNavigations()
-            );
-
-//if the insert has returned true then we show the flash message
-            if ($this->Property_navigation_model->insert_property_navigations($property_ref_no, $data_to_store)) {
-
-                $this->session->set_flashdata('flash_message', TRUE);
-                redirect('admin/properties');
-            } else {
-                $this->session->set_flashdata('flash_message', FALSE);
-            }
-        }
-
-
-        $property = $this->Property_model->find_by_ref_no($property_ref_no);
-        $data['property'] = $property;
-        $property_navigations = $this->Property_navigation_model->find_by_property_ref_no($property_ref_no);
-
-        $data['property_navigations'] = (isset($property_navigations) ? $property_navigations->property_navigations : '');
-//load the view
-        $data['content'] = 'admin/properties/property_navigations';
-        $this->load->view('includes/admin_template', $data);
     }
 
     function getUrl() {
@@ -130,7 +60,7 @@ class Property extends AdminController {
         return $property;
     }
 
-    function property_sync() {
+    public function index() {
 
         $this->load->helper('xml');
 
@@ -255,152 +185,24 @@ class Property extends AdminController {
                             }
                         }
                     }
-                    $now = new DateTime();
-                    $sync_log['property_last_sync_time'] = array(
-                        'config_key' => 'property_last_sync_time',
-                        'config_value' => $now->format('Y-m-d H:i:s')
-                    );
-
-                    $this->Configuration_model->insert_multiple($sync_log);
-
-                    $this->session->set_flashdata('flash_message', 'success');
                 }
 
                 $this->Property_model->delete_except_listed_property_ref($properties_inserted);
+                $now = new DateTime();
+                $sync_log['property_last_sync_time'] = array(
+                    'config_key' => 'property_last_sync_time',
+                    'config_value' => $now->format('Y-m-d H:i:s')
+                );
+
+                $this->Configuration_model->insert_multiple($sync_log);
+
+                $this->send_response('success', "sync completed");
             } else {
                 log_message('error', 'Unable to connect to xml url');
-                $this->session->set_flashdata('flash_message', 'Unable to connect to xml url');
             }
         } catch (Exception $ex) {
             log_message('error', $ex);
         }
-
-
-        redirect('admin/properties');
     }
 
-    public function getPropertyNavigations() {
-
-        $navigation_list = navigation_list();
-
-        $navigations = $this->input->post('navigations');
-
-        $navigation_values = $this->input->post('navigation_values');
-
-        $property_navigations = array();
-
-        foreach ($navigations as $key => $value) {
-
-            $navigation_key = array_key_exists($key, $navigation_list) ? $navigation_list[$key] : null;
-
-            if ($navigation_key) {
-
-                $navigation_value = isset($navigation_values[$key]) ? $navigation_values[$key] : '';
-
-                $property_navigations[$navigation_key] = $navigation_value;
-            }
-        }
-
-        return json_encode($property_navigations);
-    }
-
-//        $doc = new DOMDocument();
-//        $doc->load($url);
-//
-//        foreach ($doc->getElementsByTagName('Listing') as $node) {
-//            
-//            $count = $node->getElementsByTagName('count')->item(0)->nodeValue;
-//
-//            $ad_type = $node->getElementsByTagName('Ad_Type')->item(0)->nodeValue;
-//
-//            $property_title = $node->getElementsByTagName('Property_Title')->item(0)->nodeValue;
-//            $property_ref_no = $node->getElementsByTagName('Property_Ref_No')->item(0)->nodeValue;
-//            $permit_number = $node->getElementsByTagName('permit_number')->item(0)->nodeValue;
-//            $property_name = $node->getElementsByTagName('Property_Name')->item(0)->nodeValue;
-//            $emirate = $node->getElementsByTagName('Emirate')->item(0)->nodeValue;
-//            $community = $node->getElementsByTagName('Community')->item(0)->nodeValue;
-//            $unit_builtup_Area = $node->getElementsByTagName('Unit_Builtup_Area')->item(0)->nodeValue;
-//            $plot_area = $node->getElementsByTagName('Plot_Area')->item(0)->nodeValue;
-//            $unit_measure = $node->getElementsByTagName('unit_measure')->item(0)->nodeValue;
-//            $unit_type = $node->getElementsByTagName('Unit_Type')->item(0)->nodeValue;
-//            $unit_model = $node->getElementsByTagName('Unit_Model')->item(0)->nodeValue;
-//            $primary_view = $node->getElementsByTagName('Primary_View')->item(0)->nodeValue;
-//            $no_of_rooms = $node->getElementsByTagName('No_of_Rooms')->item(0)->nodeValue;
-//            $no_of_bathroom = $node->getElementsByTagName('No_of_Bathroom')->item(0)->nodeValue;
-//            $parking = $node->getElementsByTagName('Parking')->item(0)->nodeValue;
-//            $price = $node->getElementsByTagName('Price')->item(0)->nodeValue;
-//            $frequency = $node->getElementsByTagName('Frequency')->item(0)->nodeValue;
-//            $featured = $node->getElementsByTagName('Featured')->item(0)->nodeValue;
-//            $off_plan = $node->getElementsByTagName('off_plan')->item(0)->nodeValue;
-//            $fitted = $node->getElementsByTagName('Fitted')->item(0)->nodeValue;
-//            $Web_Remarks = $node->getElementsByTagName('Web_Remarks')->item(0)->nodeValue;
-//            $latitude = $node->getElementsByTagName('Latitude')->item(0)->nodeValue;
-//            $longitude = $node->getElementsByTagName('Longitude')->item(0)->nodeValue;
-//            $images = $node->getElementsByTagName('Images')->item(0)->nodeValue;
-//            $facilities = $node->getElementsByTagName('Facilities')->item(0)->nodeValue;
-//
-//
-//            $listing_agent = $node->getElementsByTagName('Listing_Agent')->item(0)->nodeValue;
-//            $listing_agent_phone = $node->getElementsByTagName('Listing_Agent_Phone')->item(0)->nodeValue;
-//            $listing_agent_email = $node->getElementsByTagName('Listing_Agent_Email')->item(0)->nodeValue;
-//            $listing_agent_photo = $node->getElementsByTagName('Listing_Agent_Photo')->item(0)->nodeValue;
-//
-//            if ($unit_model == "") {
-//
-//                $unit_model = $this->getPropertyModel($unit_type);
-//            }
-//            
-//            $projectRefNos[]=$property_ref_no;
-//
-//            $data_to_store = array(
-//                'property_ad_type' =>is_null($ad_type)?"":$ad_type ,
-//                'property_ref_no' =>is_null($property_ref_no)?"":$property_ref_no ,
-//                'property_title' => is_null($property_title)?"":$property_title,
-//                'property_name' =>is_null($property_name)?"":$property_name ,
-//                'property_permit_number' =>is_null($permit_number)?"":$permit_number ,
-//                'property_emirate' =>is_null($emirate)?"":$emirate ,
-//                'property_community' =>is_null($community)?"":$community ,
-//                'property_unit_type' =>is_null($unit_type)?"":$unit_type ,
-//                'property_unit_model' =>is_null($unit_model)?"":$unit_model ,
-//                'property_builtup_area' =>is_null($unit_builtup_Area)?"":$unit_builtup_Area ,
-//                'property_plot_area' =>is_null($plot_area)?"":$plot_area ,
-//                'property_unit_measure' =>is_null($unit_measure)?"":$unit_measure ,
-//                'property_primary_view' =>is_null($primary_view)?"":$primary_view ,
-//                'property_rooms' =>is_null($no_of_rooms)?"":$no_of_rooms ,
-//                'property_bathrooms' =>is_null($no_of_bathroom)?"":$no_of_bathroom ,
-//                'property_parking' =>is_null($parking)?"":$parking ,
-//                'property_price' =>is_null($price)?"":$price ,
-//                'property_frequency' =>is_null($frequency)?"":$frequency ,
-//                'property_featured' =>is_null($featured)?0:$property_title ,
-//                'property_off_plan' =>is_null($off_plan)?0:$off_plan ,
-//                'property_fitted' =>is_null($fitted)?0:$fitted ,
-//                'property_latitude' =>is_null($latitude)?"":$latitude ,
-//                'property_longitude' =>is_null($longitude)?"":$longitude ,
-//                'property_listing_agent' =>is_null($listing_agent)?"":$listing_agent ,
-//                'property_listing_agent_phone' =>is_null($listing_agent_phone)?"":$listing_agent_phone ,
-//                'property_listing_agent_email' =>is_null($listing_agent_email)?"":$listing_agent_email ,
-//                'property_listing_agent_photo' =>is_null($listing_agent_photo)?"":$listing_agent_photo ,
-//                'property_web_remarks' =>is_null($Web_Remarks)?"":$Web_Remarks ,
-//            );
-//
-//            $property = $this->getExistingProperty($property_ref_no);
-//
-//            if ($property == null) {
-//
-//                //if the insert has returned true then we show the flash message
-//                if (!$this->Property_model->insert($data_to_store)) {
-//                    
-//                     log_message('error', 'Property insertion  failed');
-//                }
-//                
-//            } else {
-//                
-//                //if the insert has returned true then we show the flash message
-//                if (!$this->Property_model->update($property->property_id,$data_to_store)) {
-//                    
-//                     log_message('error', 'Property updation  failed');
-//                }
-//            }
-//        }
-//        
 }

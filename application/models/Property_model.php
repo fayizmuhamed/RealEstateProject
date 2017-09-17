@@ -441,6 +441,13 @@ class Property_model extends CI_Model {
             $this->db->where_in('property_community', $community);
         }
 
+        if ($size) {
+
+            $this->db->where("(TRIM(TRAILING '.' FROM(CAST(TRIM(TRAILING '0' FROM property_builtup_area)AS char))))=", $size);
+            
+           // $this->db->where('property_builtup_area1', $size);
+        }
+        
         if ($property_id) {
 
             $this->db->where('property_id !=', $property_id);
