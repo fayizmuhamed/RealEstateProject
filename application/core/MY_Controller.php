@@ -51,14 +51,14 @@ class PublicController extends CommonController {
         parent::__construct();
         $this->load->model('Configuration_model');
         
-        $this->load->model('Community_model');
+        $this->load->model('Property_model');
        
         
         $this->configurations = $this->Configuration_model->find_as_key_map();
         
         $this->load->vars($this->configurations);
         
-        $this->data['locations']= $this->Community_model->find_all();
+        $this->data['search_location_filters']= $this->Property_model->fetch_location_for_search(null);
     }
 
 }

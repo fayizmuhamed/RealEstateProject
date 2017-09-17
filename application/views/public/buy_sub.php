@@ -9,30 +9,34 @@
 </style>
 <!-- filter -->
 <div class="filter">
-    <a class="modal-trigger" href="#modal-filter"><img src="<?php echo base_url(); ?>assets/images/filter.svg"></a>
+    <a class="modal-trigger" href="#buy-sub-modal-filter"><img src="<?php echo base_url(); ?>assets/images/filter.svg"></a>
 </div>
 <!-- Modal Structure -->
-<div id="modal-filter" class="modal bottom-sheet">
+<div id="buy-sub-modal-filter" class="modal bottom-sheet">
     <div class="modal-content">
         <h4>Filter</h4>
         <div class="filters">
-           
+
             <div class="input-field col s12">
-                <select class="js-example-responsive location-select" multiple="multiple" name="search_location" id="filter_location" name="filter_location">
+                <select class="js-example-responsive location-select" multiple="multiple" name="search_location" id="buy_sub_filter_locations" name="filter_location">
                     <?php
                     $search_locations = isset($search_locations) ? $search_locations : array();
-                    foreach ($locations as $location) {
-                        $isSelected = (in_array($location['community_name'], $search_locations)) ? ' selected="selected"' : '';
-                        echo '<option value="' . $location['community_name'] . '"' . $isSelected . '>' . $location['community_name'] . '</option>';
+                    foreach ($search_location_filters as $location) {
+                        $isSelected = (in_array($location['id'], $search_locations)) ? ' selected="selected"' : '';
+                        echo '<option value="' . $location['id'] . '"' . $isSelected . '>' . $location['text'] . '</option>';
                     }
                     ?>
                 </select>
             </div>
+
+
             <div class="input-field col s12">
-                <select name="bedrooms" multiple>
+                <select name="bedrooms" multiple id="buy_sub_filter_bedrooms">
                     <option value="NA" disabled selected>Bed Rooms</option>
                     <?php
                     $search_bedrooms = isset($search_bedrooms) ? $search_bedrooms : array();
+                    $isStudioSelected = (in_array("ST", $search_bedrooms)) ? ' selected="selected"' : '';
+                    echo '<option value="ST"' . $isStudioSelected . '>Studio</option>';
                     for ($i = 1; $i <= 10; $i++) {
 
                         $isSelected = (in_array($i, $search_bedrooms)) ? ' selected="selected"' : '';
@@ -41,8 +45,10 @@
                     ?>
                 </select>
             </div>
+
             <div class="input-field col s12">
-                <select  name="budget" multiple>
+
+                <select  name="budget" multiple id="buy_sub_filter_budgets">
                     <option value="NA" disabled selected>Budget</option>
                     <?php
                     $budgets = array('1' => 'Less than 1,000,000',
@@ -74,10 +80,10 @@
 
 
             <p class="range-field">
-                <input type="text" placeholder="Size" />
+                <input type="text" placeholder="Size" id="buy_sub_filter_property_size"/>
             </p>
 
-            <button><a href="#">Search</a></button>
+            <button id="button_buy_sub_filter" class="bt-normal waves-effect waves-light">Search</button>
             <button class="cancel-b modal-close"><a href="#">Cancel</a></button>
 
 
@@ -92,7 +98,10 @@
                 <ul>
                     <li><a href="<?php echo base_url(); ?>">HOME</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="#" class="active-bred">BUY</a></li>
+                    <li><a href="<?php echo base_url(); ?>buy">BUY</a></li>
+                    <li><i class="zmdi zmdi-chevron-right"></i></li>
+                    <li><a href="#" class="active-bred"><?php echo strtoupper($unit_model); ?></a></li>
+
                 </ul>
             </div>
             <div class="col s2 m2 l2">
@@ -101,7 +110,7 @@
         </div>
         <div class="row inner-tab">
             <div class="col s12">
-                <input type="hidden"  name="buy_unit_model" id="buy_unit_model" value="<?php echo $unit_model;?>">
+                <input type="hidden"  name="buy_unit_model" id="buy_unit_model" value="<?php echo $unit_model; ?>">
                 <ul class="tabs tabs-fixed-width">
                     <li class="tab"><a  class="buy-sub-tab " value="" href="#" >ALL</a></li>
                     <?php
@@ -117,6 +126,20 @@
                 <div class="row mg-bt-none" id="buy-sub-property-container">
                     <?php
                     foreach ($properties as $property) {
+                        $is_maid_room = FALSE;
+                        $is_study_room = FALSE;
+                        if (isset($property['property_facilities'])) {
+
+                            $facilities = json_decode($property['property_facilities'], TRUE);
+
+
+
+                            if (isset($facilities['facility'])) {
+
+                                $is_maid_room = in_array("Maid's room", $facilities['facility']) ? TRUE : FALSE;
+                                $is_study_room = in_array("Study", $facilities['facility']) ? TRUE : FALSE;
+                            }
+                        }
                         echo '<div class="col s12 l3 m6">';
                         echo '<div class="list-card">';
                         echo '<div class="over-card">';
@@ -124,12 +147,16 @@
                         echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
-                        echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
-                        echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
+                        if ($is_maid_room) {
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
+                        }
+                        if ($is_study_room) {
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
+                        }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
-                        echo '<button class="view-b"><a href="'.base_url().'buydetail/'.$property['property_id'].'">View Detail</a></button>';
+                        echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
                         echo '</div>';
                         echo '<div class="property-thumb">';
 
@@ -137,17 +164,17 @@
                         if ($images != null && count($images) > 0) {
 
                             echo '<img src="' . $images['image'][0] . '">';
-                        }else{
-                            
+                        } else {
+
                             echo '<img src="#">';
                         }
-                        
+
                         echo '</div>';
                         echo '<div class="property-list-details">';
                         echo '<h3>' . $property['property_title'] . '</h3>';
                         echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                         echo '<div class="button-block">';
-                        echo '<button class="price">AED ' . number_format($property['property_price'])  . '</button>';
+                        echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
@@ -168,10 +195,10 @@
 
 <script type="text/javascript">
 
- 
+
     $(document).ready(function () {
 
-      //  searchProperties('sale', null, null, null, null, null, null, null, null, 0);
+        //  searchProperties('sale', null, null, null, null, null, null, null, null, 0);
     });
 
 </script>

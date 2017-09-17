@@ -1,3 +1,7 @@
+<style>
+    .logos{ background:none;}
+    .r2{ margin-bottom:0px;}
+</style>
 <footer>
     <div class="container">
         <div class="row">
@@ -54,6 +58,20 @@
             </div>
         </div>
     </div>
+    <!-- LOGOS -->
+    <section class="logos">
+        <div class="conatiner">
+            <div class="row">
+                <div class="col s12">
+                    <ul>
+                        <li><img src="<?php echo base_url(); ?>assets/images/emp1.png"></li>
+                        <li><img src="<?php echo base_url(); ?>assets/images/emp2.png"></li>
+                        <li><img src="<?php echo base_url(); ?>assets/images/emp3.png"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="sub-footer">
         <div class="container">
             <div class="row">
@@ -138,7 +156,33 @@
         });
 
         $(".location-select").select2({
-            placeholder: " Location or Building e.g. Downtown Dubai or Cayan Tower"
+            placeholder: " Location or Building e.g. Downtown Dubai or Cayan Tower",
+            minimumInputLength: 1,
+            width: "100%",
+            ajax: {
+                delay: 250,
+                url: document.BaseUrl + "locations",
+                dataType: 'json',
+                data: function (params) {
+                    var query = {
+                        search: params.term
+                    };
+
+                    // Query parameters will be ?search=[term]&page=[page]
+                    return query;
+                },
+                processResults: function (response, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: response.data,
+                        pagination: {
+                            more: (params.page * 10) < response.count_filtered
+                        }
+                    };
+                }
+
+            }
         });
 
     });

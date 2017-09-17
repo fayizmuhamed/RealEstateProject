@@ -21,9 +21,9 @@
 <!--                    <li class="tab"><a href="<?php echo base_url(); ?>#community-sec" target="_self">Dubai Communities</a></li>-->
                     <li class="tab"><a href="#rera_updates">RERA</a></li>
                      <li class="tab"><a href="#investor_visa">Investor Visa</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>ownersguide" target="_self">Owner’s Guide</a></li>
+<!--                    <li class="tab"><a href="<?php echo base_url(); ?>ownersguide" target="_self">Owner’s Guide</a></li>
                     <li class="tab"><a href="<?php echo base_url(); ?>buyersguide" target="_self">Buyer’s Guide</a></li>
-                    <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">Tenant’s Guide</a></li>
+                    <li class="tab"><a href="<?php echo base_url(); ?>tenantsguide" target="_self">Tenant’s Guide</a></li>-->
                     <li class="tab"><a href="#faq ">FAQs</a></li>
                 </ul>
             </div>

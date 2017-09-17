@@ -169,6 +169,7 @@ $route['rentdetail/(:num)']='public/rent/rentDetails/$1';
 $route['rent/sub/(:any)']='public/rent/rentCategory/$1';
 $route['rent']='public/rent';
 
+$route['locations']='public/property/locations';
 $route['properties/search']='public/property/search';
 $route['properties/findPropertiesWithSearch']='public/property/findPropertiesWithSearch';
 $route['buyersguide']='public/buy/buyersGuide';

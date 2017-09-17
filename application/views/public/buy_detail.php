@@ -8,7 +8,9 @@
                 <ul>
                     <li><a href="<?php echo base_url(); ?>">HOME</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="<?php echo base_url(); ?>buy" class="active-bred">BUY</a></li>
+                    <li><a href="<?php echo base_url(); ?>buy">BUY</a></li>
+                    <li><i class="zmdi zmdi-chevron-right"></i></li>
+                    <li><a href="#" class="active-bred">PROPERTY DETAIL</a></li>
                 </ul>
             </div>
             <div class="col s2 m2 l2">
@@ -40,7 +42,9 @@
                 <div class="row">
                     <div class="col l9 m6 s12">
                         <div class="image-buy-detail">
-
+                            <style type="text/css">
+                                
+                            </style>
 
                             <div class="flexslider">
                                 <ul class="slides">
@@ -186,49 +190,7 @@
                                 </div>
 
                             </div>
-                            <ul>
 
-
-<!--                            <li><i class="zmdi zmdi-view-dashboard"></i><strong>Price</strong>:&nbsp;<?php echo isset($property->property_price) ? $property->property_price : '' ?> AED <?php echo isset($property->property_frequency) ? $property->property_frequency : '' ?></li>
-<li><i class="zmdi zmdi-dock"></i><strong>Type</strong>:&nbsp;&nbsp;<?php echo isset($property->property_unit_type) ? $property->property_unit_type : '' ?></li>
-<li><i class="zmdi zmdi-globe"></i><strong>Emirates</strong>:&nbsp;&nbsp;<?php echo isset($property->property_emirate) ? $property->property_emirate : '' ?></li>
-<li><i class="zmdi zmdi-city"></i><strong>Location</strong>:&nbsp;&nbsp;<?php echo isset($property->property_community) ? $property->property_community : '' ?></li>
-<li><i class="zmdi zmdi-city-alt"></i><strong>Sub Location</strong>:&nbsp;&nbsp;<?php echo isset($property->property_name) ? $property->property_name : '' ?></li>
-<li><i class="zmdi zmdi-hotel"></i><strong>Bed</strong>:&nbsp;&nbsp;<?php echo isset($property->property_rooms) ? $property->property_rooms : '' ?></li>
-<li><i class="zmdi zmdi-seat"></i><strong>Bathrooms</strong>:&nbsp;&nbsp;<?php echo isset($property->property_bathrooms) ? $property->property_bathrooms : '' ?></li>
-<li><i class="zmdi zmdi-border-outer"></i><strong>Built Up Area</strong>:&nbsp;&nbsp;<?php echo isset($property->property_builtup_area) ? ($property->property_builtup_area . $property->property_unit_measure) : '' ?></li>
-<li><i class="zmdi zmdi-landscape"></i><strong>Plot Area</strong>:&nbsp;&nbsp;<?php echo isset($property->property_plot_area) ? ($property->property_plot_area . $property->property_unit_measure) : '' ?></li>
-<li><i class="zmdi zmdi-flare"></i><strong>View</strong>:&nbsp;&nbsp;<?php echo isset($property->property_primary_view) ? $property->property_primary_view : '' ?></li>-->
-
-
-                                <?php
-//                            if (isset($property->property_facilities)) {
-//
-//                                $facilities = json_decode($property->property_facilities, TRUE);
-//
-//                                if (isset($facilities['facility'])) {
-//
-//                                    if (in_array("Maid's room", $facilities['facility'])) {
-//                                        echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;Yes</li>';
-//                                    } else {
-//                                        echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
-//                                    }
-//
-//                                    if (in_array("Study", $facilities['facility'])) {
-//                                        echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;Yes</li>';
-//                                    } else {
-//                                        echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
-//                                    }
-//                                } else {
-//                                    echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
-//                                    echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
-//                                }
-//                            } else {
-//                                echo '<li><i class="zmdi zmdi-group"></i><strong>Maid</strong>:&nbsp;&nbsp;No</li>';
-//                                echo '<li><i class="zmdi zmdi-file-text"></i><strong>Study</strong>:&nbsp;&nbsp;No</li>';
-//                            }
-                                ?>
-                            </ul>
                         </div>
                     </div>
                     <div class="col s12 l12 m12">
@@ -335,12 +297,12 @@
                     </div>
                     <div id="buy_detail_property_list_container">
                         <?php
-                        foreach ($properties_sale as $property) {
+                        foreach ($properties_sale as $property_for_sale) {
                             $is_maid_room = FALSE;
                             $is_study_room = FALSE;
-                            if (isset($property['property_facilities'])) {
+                            if (isset($property_for_sale['property_facilities'])) {
 
-                                $facilities = json_decode($property['property_facilities'], TRUE);
+                                $facilities = json_decode($property_for_sale['property_facilities'], TRUE);
 
 
 
@@ -354,23 +316,23 @@
                             echo '<div class="list-card">';
                             echo '<div class="over-card">';
                             echo '<ul>';
-                            echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
-                            echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
-                            echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                            echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                            echo '<li><i class="icon-bed"></i>&nbsp;' . $property_for_sale['property_unit_type'] . '</li>';
+                            echo '<li><i class="icon-1"></i>&nbsp;' . $property_for_sale['property_builtup_area'] . ' ' . $property_for_sale['property_unit_measure'] . '</li>';
+                            echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property_for_sale['property_rooms'] . ' Bed</li>';
+                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property_for_sale['property_bathrooms'] . ' Bath</li>';
                             if ($is_maid_room) {
-                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                             }
                             if ($is_study_room) {
-                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                             }
                             echo '</ul>';
-                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
-                            echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property['property_id'] . '">View Detail</a></button>';
+                            echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property_for_sale['property_title'] . '&#39;,&#39;' . $property_for_sale['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
+                            echo '<button class="view-b"><a href="' . base_url() . 'buydetail/' . $property_for_sale['property_id'] . '">View Detail</a></button>';
                             echo '</div>';
                             echo '<div class="property-thumb">';
 
-                            $images = json_decode($property['property_images'], TRUE);
+                            $images = json_decode($property_for_sale['property_images'], TRUE);
                             if ($images != null && count($images) > 0) {
 
                                 echo '<img src="' . $images['image'][0] . '">';
@@ -381,10 +343,10 @@
 
                             echo '</div>';
                             echo '<div class="property-list-details">';
-                            echo '<h3>' . $property['property_title'] . '</h3>';
-                            echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
+                            echo '<h3>' . $property_for_sale['property_title'] . '</h3>';
+                            echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property_for_sale['property_name'] . ',' . $property_for_sale['property_community'] . '</span>';
                             echo '<div class="button-block">';
-                            echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
+                            echo '<button class="price">AED ' . number_format($property_for_sale['property_price']) . '</button>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -395,6 +357,7 @@
 
                     <!-- more -->
                     <div class="col s12 more-button-block">
+
                         <button class="bt-normal waves-effect waves-light" id="btn_buy_detail_property_list_add_more" data-page="1" data-community="<?php echo (isset($property->property_community) ? $property->property_community : ''); ?>" data-property="<?php echo (isset($property->property_id) ? $property->property_id : ''); ?>">VIEW MORE</button>
                     </div>
                 </div>

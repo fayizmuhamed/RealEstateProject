@@ -39,18 +39,18 @@
                 </ul>
             </div>
             <div class="search-form">
-
                 <div class="searchfeild">
                     <div class="search-text">
-                        <select class="js-example-responsive location-select" multiple="multiple"  name="locations[]" id="header_search_locations" style="width:513px;">
+                        <select class="js-example-responsive location-select" multiple="multiple"  name="locations[]" id="header_search_locations" style="width:513px;" >
                             <?php
                             $search_locations = isset($search_locations) ? $search_locations : array();
-                            foreach ($locations as $location) {
-                                $isSelected = (in_array($location['community_name'], $search_locations)) ? ' selected="selected"' : '';
-                                echo '<option value="' . $location['community_name'] . '"' . $isSelected . '>' . $location['community_name'] . '</option>';
+                            foreach ($search_location_filters as $location) {
+                                $isSelected = (in_array($location['id'], $search_locations)) ? ' selected="selected"' : '';
+                                echo '<option value="' . $location['id'] . '"' . $isSelected . '>' . $location['text'] . '</option>';
                             }
                             ?>
                         </select>
+                        
                     </div>
 <!--                        <div class="search-text"><input type="text" name="" placeholder=" Location or Building e.g. Downtown Dubai or Cayan Tower"></div>-->
                     <div class="search-select-room">
@@ -58,6 +58,8 @@
                             <option value="NA" disabled selected>Bed Rooms</option>
                             <?php
                             $search_bedrooms = isset($search_bedrooms) ? $search_bedrooms : array();
+                            $isStudioSelected = (in_array("ST", $search_bedrooms)) ? ' selected="selected"' : '';
+                            echo '<option value="ST"' . $isStudioSelected . '>Studio</option>';
                             for ($i = 1; $i <= 10; $i++) {
                                 $isSelected = (in_array($i, $search_bedrooms)) ? ' selected="selected"' : '';
                                 echo '<option value="' . $i . '"' . $isSelected . '>' . $i . '</option>';

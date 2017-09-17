@@ -8,7 +8,9 @@
                 <ul>
                     <li><a href="<?php echo base_url(); ?>">HOME</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="<?php echo base_url(); ?>projects" class="active-bred">PROJECT</a></li>
+                    <li><a href="<?php echo base_url(); ?>projects" >PROJECT</a></li>
+                     <li><i class="zmdi zmdi-chevron-right"></i></li>
+                    <li><a href="#" class="active-bred">DETAILS</a></li>
                 </ul>
             </div>
             <div class="col s2 m2 l2">

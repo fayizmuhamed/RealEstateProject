@@ -159,12 +159,12 @@
                             echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                             echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                             echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
                             if ($is_maid_room) {
-                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                             }
                             if ($is_study_room) {
-                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                             }
                             echo '</ul>';
                             echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
@@ -186,7 +186,7 @@
                             echo '<h3>' . $property['property_title'] . '</h3>';
                             echo '<span><i class="zmdi zmdi-pin"></i>&nbsp;' . $property['property_name'] . ',' . $property['property_community'] . '</span>';
                             echo '<div class="button-block">';
-                            echo '<button class="price">AED ' .number_format($property['property_price']) . '</button>';
+                            echo '<button class="price">AED ' . number_format($property['property_price']) . '</button>';
                             echo '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -231,12 +231,12 @@
                             echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                             echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                             echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
                             if ($is_maid_room) {
-                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                             }
                             if ($is_study_room) {
-                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                             }
                             echo '</ul>';
                             echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';

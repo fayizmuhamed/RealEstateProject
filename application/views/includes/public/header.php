@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/materialize.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/screen.css">
-        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/select2.css">
+<!--        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/stylesheets/select2.css">-->
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/stylesheets/public.css">
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
@@ -30,7 +30,9 @@
 
 <!--        <script src="<?php echo base_url(); ?>assets/js/jquery-2.1.1.min.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/materialize.min.js"></script>-->
-        <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>
+<!--        <script src="<?php echo base_url(); ?>assets/js/select2.js"></script>-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     </head>
     <body class="inner-bg">
         <div class="loader" id="loader">

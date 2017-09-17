@@ -80,6 +80,7 @@
                                     <div class="col s12 m6 l6">
                                         <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
+                                            <option value="Studio">Studio</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
 
@@ -92,20 +93,23 @@
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
                                         <select  name="study_or_maid">
-                                            <option value="NA"  selected>None</option>
+                                            <option value="NA" disabled selected>Maid’s / Study Room</option>
+                                            <option value="None">None</option>
                                             <option value="Study Room">Study Room</option>
-                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Maid Room">Maid's Room</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
                                         <select  name="furnish">
-                                            <option value="Furnished"  selected>Furnished</option>
-                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="NA" disabled selected>Furnished / Unfurnished</option>
+                                            <option value="Furnished">Furnished</option>
+                                            <option value="Unfurnished">Unfurnished</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
@@ -236,6 +240,7 @@
                                     <div class="col s12 m6 l6">
                                         <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
+                                            <option value="Studio">Studio</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
 
@@ -245,23 +250,26 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="bloc-f">
+                               <div class="bloc-f">
                                     <div class="col s12 m6 l6">
                                         <select  name="study_or_maid">
-                                            <option value="NA"  selected>None</option>
+                                            <option value="NA" disabled selected>Maid’s / Study Room</option>
+                                            <option value="None">None</option>
                                             <option value="Study Room">Study Room</option>
-                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Maid Room">Maid's Room</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
                                         <select  name="furnish">
-                                            <option value="Furnished"  selected>Furnished</option>
-                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="NA" disabled selected>Furnished / Unfurnished</option>
+                                            <option value="Furnished">Furnished</option>
+                                            <option value="Unfurnished">Unfurnished</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
@@ -399,9 +407,10 @@
                                     <div class="col s12 m6 l6">
                                         <input type="text" placeholder="Location" name="location">
                                     </div>
-                                    <div class="col s12 m6 l6">
+                                   <div class="col s12 m6 l6">
                                         <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
+                                            <option value="Studio">Studio</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
 
@@ -414,16 +423,18 @@
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
                                         <select  name="study_or_maid">
-                                            <option value="NA"  selected>None</option>
+                                            <option value="NA" disabled selected>Maid’s / Study Room</option>
+                                            <option value="None">None</option>
                                             <option value="Study Room">Study Room</option>
-                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Maid Room">Maid's Room</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
                                         <select  name="furnish">
-                                            <option value="Furnished"  selected>Furnished</option>
-                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="NA" disabled selected>Furnished / Unfurnished</option>
+                                            <option value="Furnished">Furnished</option>
+                                            <option value="Unfurnished">Unfurnished</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
@@ -532,6 +543,7 @@
                                     <div class="col s12 m6 l6">
                                         <select  name="bedrooms">
                                             <option value="" disabled selected>Bed Rooms</option>
+                                            <option value="Studio">Studio</option>
                                             <?php
                                             for ($i = 1; $i <= 10; $i++) {
 
@@ -544,20 +556,23 @@
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">
                                         <select  name="study_or_maid">
-                                            <option value="NA"  selected>None</option>
+                                            <option value="NA" disabled selected>Maid’s / Study Room</option>
+                                            <option value="None">None</option>
                                             <option value="Study Room">Study Room</option>
-                                            <option value="Maid Room">Maid Room</option>
+                                            <option value="Maid Room">Maid's Room</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                     <div class="col s12 m6 l6">
                                         <select  name="furnish">
-                                            <option value="Furnished"  selected>Furnished</option>
-                                            <option value="Un Furnished">Un Furnished</option>
+                                            <option value="NA" disabled selected>Furnished / Unfurnished</option>
+                                            <option value="Furnished">Furnished</option>
+                                            <option value="Unfurnished">Unfurnished</option>
                                             <option value="Both">Both</option>
                                         </select>
                                     </div>
                                 </div>
+
 
                                 <div class="bloc-f">
                                     <div class="col s12 m6 l6">

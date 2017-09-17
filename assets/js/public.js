@@ -1,25 +1,25 @@
-var number_format = function(number, decimals, decPoint, thousandsSep) {
- number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-  var n = !isFinite(+number) ? 0 : +number;
-  var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
-  var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
-  var dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
-  var s = ''
-  var toFixedFix = function (n, prec) {
-    var k = Math.pow(10, prec);
-    return '' + (Math.round(n * k) / k)
-      .toFixed(prec);
-  };
-  // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
+var number_format = function (number, decimals, decPoint, thousandsSep) {
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number;
+    var prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+    var sep = (typeof thousandsSep === 'undefined') ? ',' : thousandsSep;
+    var dec = (typeof decPoint === 'undefined') ? '.' : decPoint;
+    var s = ''
+    var toFixedFix = function (n, prec) {
+        var k = Math.pow(10, prec);
+        return '' + (Math.round(n * k) / k)
+                .toFixed(prec);
+    };
+    // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3) {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec) {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
 };
 
 /* 
@@ -331,13 +331,13 @@ var searchBuyProperties = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -418,13 +418,13 @@ var searchRentProperties = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -504,13 +504,13 @@ var searchBuySubProperties = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -591,13 +591,13 @@ var searchRentSubProperties = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -678,13 +678,13 @@ var findEmployeeProperties = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -763,13 +763,13 @@ var addMoreCommunitySaleList = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -847,13 +847,13 @@ var addMoreCommunityRentList = function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -896,7 +896,7 @@ var addMoreCommunityRentList = function (params) {
     });
 };
 
-var addMoreBuyDetailPropertyList=function (params) {
+var addMoreBuyDetailPropertyList = function (params) {
 
     var page = 'page' in params ? params['page'] : 1;
 
@@ -928,13 +928,13 @@ var addMoreBuyDetailPropertyList=function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -977,7 +977,7 @@ var addMoreBuyDetailPropertyList=function (params) {
     });
 };
 
-var addMoreRentDetailPropertyList=function (params) {
+var addMoreRentDetailPropertyList = function (params) {
 
     var page = 'page' in params ? params['page'] : 1;
 
@@ -1009,13 +1009,13 @@ var addMoreRentDetailPropertyList=function (params) {
                 property += '<li><i class="icon-bed"></i>&nbsp;' + value.property_unit_type + '</li>';
                 property += '<li><i class="icon-1"></i>&nbsp;' + value.property_builtup_area + ' ' + value.property_unit_measure + '</li>';
                 property += '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' + value.property_rooms + ' Bed</li>';
-                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Baths</li>';
+                property += '<li><i class="zmdi zmdi-seat"></i>&nbsp;' + value.property_bathrooms + ' Bath</li>';
                 if (is_maid_room) {
-                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + ' Maid</li>';
+                    property += '<li><i class="zmdi zmdi-group"></i>&nbsp;' + "Maid's Room" + '</li>';
                 }
 
                 if (is_study_room) {
-                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + ' Study</li>';
+                    property += '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' + "Study Room" + '</li>';
                 }
                 property += '</ul>';
                 property += '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' + value.property_title + '&#39;,&#39;' + value.property_ref_no + '&#39;);return false;">Make Enquiry</a></button>';
@@ -1083,6 +1083,9 @@ $("#frm_send_feedback").submit(function (event) {
 
     });
 });
+
+
+
 $("#frm_quick_enquiry").submit(function (event) {
     event.preventDefault();
     $.ajax({
@@ -1176,7 +1179,7 @@ var dropMyCV = function (e) {
     //var formData = new FormData($('#add_new_project')[0]);
     //var dataString = $('#add_new_project').serialize();
 
-   $.ajax({
+    $.ajax({
         type: "POST",
         url: document.BaseUrl + "career/dropmycv",
         data: new FormData(this),
@@ -1487,6 +1490,33 @@ $("#frm_request_call_back").submit(function (event) {
     });
 });
 
+$("#frm_buy_filter").submit(function (event) {
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: document.BaseUrl + "contact/sendfeedback",
+        data: new FormData(this),
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+            console.log(response.status);
+            if (response.status === 'success') {
+                // alertMessage('#message', 'success', response.data, 6000 );
+                // $('#frm_send_feedback #response').addClass('alert alert-success').html(response.data);
+                $('#frm_send_feedback')[0].reset();
+                Materialize.toast(response.data, 10000);
+            } else {
+                Materialize.toast(response.data, 10000);
+                //alertMessage('#message', 'error', response.data, 6000);
+                // $('#frm_send_feedback #response').addClass('alert alert-error').html(response.data);
+            }
+        }
+
+    });
+});
+
+
 var makeEnquiry = function (type, ref_name, ref_number) {
 
     $('#frm_send_enquiry_model #type').val(type);
@@ -1700,6 +1730,11 @@ $(document).ready(function () {
         }
         var page = $(this).data('page');
         params['page'] = parseInt(page) + 1;
+        params['property_type'] = $("#buy_filter_property_types").val();
+        params['search_string'] = $("#buy_filter_locations").val();
+        params['bedrooms'] = $("#buy_filter_bedrooms").val();
+        params['budgets'] = $("#buy_filter_budgets").val();
+        params['size'] = $("#buy_filter_property_size").val();
         searchBuyProperties(params);
     });
     $(".buy-tab").on('click', function (e) {
@@ -1730,9 +1765,50 @@ $(document).ready(function () {
                 break;
         }
         params['page'] = '1';
+        params['property_type'] = $("#buy_filter_property_types").val();
+        params['search_string'] = $("#buy_filter_locations").val();
+        params['bedrooms'] = $("#buy_filter_bedrooms").val();
+        params['budgets'] = $("#buy_filter_budgets").val();
+        params['size'] = $("#buy_filter_property_size").val();
         searchBuyProperties(params);
     });
 
+    $("#button_buy_filter").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'sale';
+        var tab = $('.tabs .tab .active').attr('value');
+        switch (tab) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'off_plan':
+                params['off_plan'] = '1';
+                break;
+            case 'featured':
+                params['featured'] = '1';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        params['page'] = '1';
+        params['property_type'] = $("#buy_filter_property_types").val();
+        params['search_string'] = $("#buy_filter_locations").val();
+        params['bedrooms'] = $("#buy_filter_bedrooms").val();
+        params['budgets'] = $("#buy_filter_budgets").val();
+        params['size'] = $("#buy_filter_property_size").val();
+        searchBuyProperties(params);
+        $('#buy-modal-filter').modal('close');
+    });
 
     $("#button_rent_load_more").on('click', function (e) {
 
@@ -1763,8 +1839,16 @@ $(document).ready(function () {
         }
         var page = $(this).data('page');
         params['page'] = parseInt(page) + 1;
+        params['property_type'] = $("#rent_filter_property_types").val();
+        params['search_string'] = $("#rent_filter_locations").val();
+        params['bedrooms'] = $("#rent_filter_bedrooms").val();
+        params['budgets'] = $("#rent_filter_budgets").val();
+        params['size'] = $("#rent_filter_property_size").val();
         searchRentProperties(params);
     });
+
+
+
     $(".rent-tab").on('click', function (e) {
         e.preventDefault();
         var params = {};
@@ -1792,7 +1876,49 @@ $(document).ready(function () {
                 break;
         }
         params['page'] = '1';
+        params['property_type'] = $("#rent_filter_property_types").val();
+        params['search_string'] = $("#rent_filter_locations").val();
+        params['bedrooms'] = $("#rent_filter_bedrooms").val();
+        params['budgets'] = $("#rent_filter_budgets").val();
+        params['size'] = $("#rent_filter_property_size").val();
         searchRentProperties(params);
+    });
+
+    $("#button_rent_filter").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'rent';
+        var tab = $('.tabs .tab .active').attr('value');
+        switch (tab) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'off_plan':
+                params['off_plan'] = '1';
+                break;
+            case 'featured':
+                params['featured'] = '1';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        params['page'] = '1';
+        params['property_type'] = $("#rent_filter_property_types").val();
+        params['search_string'] = $("#rent_filter_locations").val();
+        params['bedrooms'] = $("#rent_filter_bedrooms").val();
+        params['budgets'] = $("#rent_filter_budgets").val();
+        params['size'] = $("#rent_filter_property_size").val();
+        searchRentProperties(params);
+        $('#rent-modal-filter').modal('close');
     });
 
     $("#button_buy_sub_load_more").on('click', function (e) {
@@ -1801,9 +1927,6 @@ $(document).ready(function () {
         var params = {};
         params['unit_category'] = 'sale';
         var unit_model = $('#buy_unit_model').attr('value');
-        params['unit_model'] = unit_model;
-
-        var property_type = $('.tabs .tab .active').attr('value');
         switch (unit_model) {
 
             case 'residential':
@@ -1819,9 +1942,14 @@ $(document).ready(function () {
                 params['off_plan'] = '0';
                 break;
         }
+        var property_type = $('.tabs .tab .active').attr('value');
+        params['property_type'] = property_type;
         var page = $(this).data('page');
         params['page'] = parseInt(page) + 1;
-        params['property_type'] = property_type;
+        params['search_string'] = $("#buy_sub_filter_locations").val();
+        params['bedrooms'] = $("#buy_sub_filter_bedrooms").val();
+        params['budgets'] = $("#buy_sub_filter_budgets").val();
+        params['size'] = $("#buy_sub_filter_property_size").val();
         searchBuySubProperties(params);
     });
     $(".buy-sub-tab").on('click', function (e) {
@@ -1830,9 +1958,6 @@ $(document).ready(function () {
         var params = {};
         params['unit_category'] = 'sale';
         var unit_model = $('#buy_unit_model').attr('value');
-        params['unit_model'] = unit_model;
-        var property_type = $(this).attr('value');
-
         switch (unit_model) {
 
             case 'residential':
@@ -1848,21 +1973,21 @@ $(document).ready(function () {
                 params['off_plan'] = '0';
                 break;
         }
+        var property_type = $(this).attr('value');
         params['property_type'] = property_type;
-
         params['page'] = '1';
+        params['search_string'] = $("#buy_sub_filter_locations").val();
+        params['bedrooms'] = $("#buy_sub_filter_bedrooms").val();
+        params['budgets'] = $("#buy_sub_filter_budgets").val();
+        params['size'] = $("#buy_sub_filter_property_size").val();
         searchBuySubProperties(params);
     });
-
-    $("#button_rent_sub_load_more").on('click', function (e) {
+    $("#button_buy_sub_filter").on('click', function (e) {
 
         e.preventDefault();
         var params = {};
         params['unit_category'] = 'rent';
         var unit_model = $('#buy_unit_model').attr('value');
-        params['unit_model'] = unit_model;
-
-        var property_type = $('.tabs .tab .active').attr('value');
         switch (unit_model) {
 
             case 'residential':
@@ -1878,9 +2003,47 @@ $(document).ready(function () {
                 params['off_plan'] = '0';
                 break;
         }
+        var property_type = $('.tabs .tab .active').attr('value');
+        params['property_type'] = property_type;
+        params['page'] = '1';
+        params['search_string'] = $("#buy_sub_filter_locations").val();
+        params['bedrooms'] = $("#buy_sub_filter_bedrooms").val();
+        params['budgets'] = $("#buy_sub_filter_budgets").val();
+        params['size'] = $("#buy_sub_filter_property_size").val();
+        searchBuySubProperties(params);
+        $('#buy-sub-modal-filter').modal('close');
+    });
+    $("#button_rent_sub_load_more").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'rent';
+        var unit_model = $('#rent_unit_model').attr('value');
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+
+        var property_type = $('.tabs .tab .active').attr('value');
+
         var page = $(this).data('page');
         params['page'] = parseInt(page) + 1;
         params['property_type'] = property_type;
+        params['search_string'] = $("#rent_sub_filter_locations").val();
+        params['bedrooms'] = $("#rent_sub_filter_bedrooms").val();
+        params['budgets'] = $("#rent_sub_filter_budgets").val();
+        params['size'] = $("#rent_sub_filter_property_size").val();
         searchRentSubProperties(params);
     });
     $(".rent-sub-tab").on('click', function (e) {
@@ -1889,9 +2052,6 @@ $(document).ready(function () {
         var params = {};
         params['unit_category'] = 'rent';
         var unit_model = $('#rent_unit_model').attr('value');
-        params['unit_model'] = unit_model;
-        var property_type = $(this).attr('value');
-
         switch (unit_model) {
 
             case 'residential':
@@ -1907,12 +2067,50 @@ $(document).ready(function () {
                 params['off_plan'] = '0';
                 break;
         }
+
+        var property_type = $(this).attr('value');
+
         params['property_type'] = property_type;
 
         params['page'] = '1';
+        params['search_string'] = $("#rent_sub_filter_locations").val();
+        params['bedrooms'] = $("#rent_sub_filter_bedrooms").val();
+        params['budgets'] = $("#rent_sub_filter_budgets").val();
+        params['size'] = $("#rent_sub_filter_property_size").val();
         searchRentSubProperties(params);
     });
 
+    $("#button_rent_sub_filter").on('click', function (e) {
+
+        e.preventDefault();
+        var params = {};
+        params['unit_category'] = 'rent';
+        var unit_model = $('#rent_unit_model').attr('value');
+        switch (unit_model) {
+
+            case 'residential':
+                params['unit_model'] = 'residential';
+                params['off_plan'] = '0';
+                break;
+            case 'commercial':
+                params['unit_model'] = 'commercial';
+                params['off_plan'] = '0';
+                break;
+            case 'plots':
+                params['unit_model'] = 'plots';
+                params['off_plan'] = '0';
+                break;
+        }
+        var property_type = $('.tabs .tab .active').attr('value');
+        params['property_type'] = property_type;
+        params['page'] = '1';
+        params['search_string'] = $("#rent_sub_filter_locations").val();
+        params['bedrooms'] = $("#rent_sub_filter_bedrooms").val();
+        params['budgets'] = $("#rent_sub_filter_budgets").val();
+        params['size'] = $("#rent_sub_filter_property_size").val();
+        searchRentSubProperties(params);
+        $('#rent-sub-modal-filter').modal('close');
+    });
 
     $("#button_team_property_load_more").on('click', function (e) {
         e.preventDefault();
@@ -2036,7 +2234,8 @@ $(document).ready(function () {
         e.preventDefault();
         debugger;
         var $el = $("#header_search_budgets");
-        $el.empty().html(' ');; // remove old options
+        $el.empty().html(' ');
+        ; // remove old options
         $el.append('<option value="NA" disabled selected>Budget</option>');
         $.each(buyBudgets, function (key, value) {
             $el.append($("<option></option>")
@@ -2045,7 +2244,7 @@ $(document).ready(function () {
 
         $("#search_category_buy").addClass('active');
         $("#search_category_rent").removeClass('active');
-        $("#unit_category").attr('value','sale');
+        $("#unit_category").attr('value', 'sale');
         $el.trigger('contentChanged');
     });
 
@@ -2053,20 +2252,21 @@ $(document).ready(function () {
         debugger;
         e.preventDefault();
         var $el = $("#header_search_budgets");
-        $el.empty().html(' ');; // remove old options
+        $el.empty().html(' ');
+        ; // remove old options
         $el.append('<option value="NA" disabled selected>Budget</option>');
         $.each(rentBudgets, function (key, value) {
             $el.append($("<option></option>")
                     .attr("value", key).text(value));
         });
-        
+
         $("#search_category_buy").removeClass('active');
         $("#search_category_rent").addClass('active');
-        $("#unit_category").attr('value','rent');
+        $("#unit_category").attr('value', 'rent');
         $el.trigger('contentChanged');
     });
-    
-     $("#btn_buy_detail_property_list_add_more").on('click', function (e) {
+
+    $("#btn_buy_detail_property_list_add_more").on('click', function (e) {
         e.preventDefault();
         var params = {};
         var page = $(this).data('page');
@@ -2087,7 +2287,7 @@ $(document).ready(function () {
         var page = $(this).data('page');
         var community = $(this).data('community');
         var property = $(this).data('property');
-        
+
         params['page'] = parseInt(page) + 1;
         params['count_per_page'] = 4;
         params['community'] = community;

@@ -35,37 +35,75 @@
                 <?php $this->load->view('includes/public/header_menu'); ?>
             </div>
         </header>
-        <div class="banner-text">
-            <div class="logo"><img src="<?php echo base_url(); ?>assets/images/logo.svg"></div>
-            <h1>Local Expertise, Quality and Trust... <br>We got what you need</h1>
-            <br>
-            <a href="#tst">
-                <i class="zmdi zmdi-chevron-down btn-floating pulse"></i>
-                <span id="tst"></span>
-            </a>
-        </div>
     </div>
-    <div class="testimonials">
-        <div class="container">
-            <div class="slider-testimonials">
-                <div class="flexslider">
-                    <ul class="slides">
-                        <?php
-                        foreach ($testimonials as $testimonial) {
+    <div class="flexslider">
 
-                            echo '<li>';
-                            echo '<p class="content-testi">' . $testimonial['testimonial_message'] . '</p>';
-                            echo '<h2>' . $testimonial['testimonial_author_name'] . '</h2>';
-                            echo '<span>' . $testimonial['testimonial_property_location'] . '</span>';
-                            echo '</li>';
-                        }
-                        ?>
-                    </ul>
-                </div>
+        <ul class="slides">
+
+            <li><img src="http://akhilma.com/realestatephp/assets/images/slide-1.jpg" /></li>
+
+            <li><img src="http://akhilma.com/realestatephp/assets/images/slide-2.jpg" /></li>
+
+            <li><img src="http://akhilma.com/realestatephp/assets/images/slide-3.jpg" /></li>
+
+        </ul>
+
+    </div>
+    <div class="banner-text">
+        <div class="logo"><img src="<?php echo base_url(); ?>assets/images/logo.svg"></div>
+        <h1>Local Expertise, Quality and Trust... <br>We got what you need</h1>
+        <br>
+        <a href="#tst">
+            <i class="zmdi zmdi-chevron-down btn-floating pulse"></i>
+            <span id="tst"></span>
+        </a>
+    </div>
+</div>
+<div class="testimonials">
+    <div class="container">
+        <div class="slider-testimonials">
+            <div class="flexslider">
+                <ul class="slides">
+                    <?php
+                    foreach ($testimonials as $testimonial) {
+
+                        echo '<li>';
+                        echo '<div class="user-img"><img src="' . base_url() . 'uploads/emp-profile/' . $testimonial['emp_profile_image'] . '"> </div>';
+                        echo '<div class="tst-content"><p class="content-testi">' . $testimonial['testimonial_message'] . '</p>';
+                        echo '<h2>' . $testimonial['testimonial_author_name'] . '</h2>';
+                        echo '<span>' . $testimonial['testimonial_property_location'] . '</span></div>';
+                        echo '</li>';
+                    }
+                    ?>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 </section>
+<style>
+
+    .banner .banner-text{ position:absolute; top:0; }
+
+    .user-img{ width:100px; height:100px; overflow:hidden; border-radius:50%; float:left; margin-right:20px; border:2px solid #FFFFFF; margin-top:10px;}
+
+    .tst-content{ margin-left:20px; }
+
+    .tst-content p{ padding-right:0px;}
+
+    .banner .flexslider{ margin-bottom:0px;}
+
+
+
+    .flexslider .slides::after{ height:0px;}
+
+    .career{ padding-bottom:15px;}
+
+    .banner .banner-text{ margin:0px auto; left:0; right:0; width:70%;}
+
+    .banner .testimonials{ height:300px;}
+
+</style>
 
 <!-- LATEST LOUNCH -->
 <section class="section-gap" id="project-hero">
@@ -153,12 +191,12 @@
                         echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
                         if ($is_maid_room) {
-                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                         }
                         if ($is_study_room) {
-                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                         }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
@@ -234,12 +272,12 @@
                         echo '<li><i class="zmdi zmdi-view-dashboard"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                         echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                         echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                        echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
                         if ($is_maid_room) {
-                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                            echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                         }
                         if ($is_study_room) {
-                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                            echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                         }
                         echo '</ul>';
                         echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
@@ -535,25 +573,12 @@
             </div>
             <!-- More -->
             <div class="col s12 more-button-block">
-                <button class="bt-normal auto waves-effect waves-light"><a href="<?php echo base_url(); ?>career">MORE OPERTUNITIES</a></button>
+                <button class="bt-normal auto waves-effect waves-light"><a href="<?php echo base_url(); ?>career">MORE OPPORTUNITIES</a></button>
             </div>
         </div>
     </div>
 </section>   
 
-<!-- LOGOS -->
-<section class="logos">
-    <div class="conatiner">
-        <div class="row">
-            <div class="col s12">
-                <ul>
-                    <li><img src="<?php echo base_url(); ?>assets/images/emp1.png"></li>
-                    <li><img src="<?php echo base_url(); ?>assets/images/emp2.png"></li>
-                    <li><img src="<?php echo base_url(); ?>assets/images/emp3.png"></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</section>
+
 
 

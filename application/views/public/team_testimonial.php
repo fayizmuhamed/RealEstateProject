@@ -45,7 +45,9 @@
         <div class="row bredcrums">
             <div class="col s10 m10 l10">
                 <ul>
-                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="<?php echo base_url(); ?>">ABOUT</a></li>
+                    <li><i class="zmdi zmdi-chevron-right"></i></li>
+                    <li><a href="<?php echo base_url(); ?>testimonial">TESTIMONIAL</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
                     <li><a href="#" class="active-bred">AGENT TESTIMONIAL</a></li>
                 </ul>

@@ -30,6 +30,57 @@ class Property_model extends CI_Model {
         return $query->row();
     }
 
+    function fetch_location_for_search($search_query) {
+
+        $locations = [];
+
+        $this->db->distinct();
+        $this->db->select('property_emirate as id,CONCAT(property_emirate," ( all areas ) ") as text');
+        $this->db->from('properties');
+        $this->db->group_by('property_emirate');
+        if ($search_query) {
+            $this->db->like('property_emirate', $search_query);
+        }
+        $query = $this->db->get();
+
+        $countries = $query->result_array();
+        if ($countries) {
+
+            $locations = array_merge($locations, $countries);
+        }
+
+        $this->db->distinct();
+        $this->db->select('property_community as id,CONCAT(property_community," ( ",property_emirate," ) ") as text');
+        $this->db->from('properties');
+        $this->db->group_by('property_community');
+        if ($search_query) {
+            $this->db->like('property_community', $search_query);
+        }
+        $query = $this->db->get();
+
+        $communities = $query->result_array();
+
+        if ($communities) {
+            $locations = array_merge($locations, $communities);
+        }
+
+        $this->db->distinct();
+        $this->db->select('property_name as id,CONCAT(property_name," ( ",property_emirate,",",property_community," ) ") as text');
+        $this->db->from('properties');
+        $this->db->group_by('property_name');
+        if ($search_query) {
+            $this->db->like('property_name', $search_query);
+        }
+        $query = $this->db->get();
+
+        $sublocations = $query->result_array();
+        if ($sublocations) {
+            $locations = array_merge($locations, $sublocations);
+        }
+
+        return $locations;
+    }
+
     function find_by_ref_no($ref_no) {
 
         $this->db->select('*');
@@ -357,12 +408,12 @@ class Property_model extends CI_Model {
 
         if ($unit_model) {
 
-            $this->db->where('property_unit_model', $unit_model);
+            $this->db->where_in('property_unit_model', $unit_model);
         }
 
         if ($property_type) {
 
-            $this->db->where('property_unit_type', $property_type);
+            $this->db->where_in('property_unit_type', $property_type);
         }
 
         if ($bedrooms) {
@@ -395,6 +446,14 @@ class Property_model extends CI_Model {
             $this->db->where('property_id !=', $property_id);
         }
 
+        if ($search_string) {
+
+            $this->db->group_start();
+            $this->db->where_in('property_community', $search_string);
+            $this->db->or_where_in('property_emirate', $search_string);
+            $this->db->or_where_in('property_name', $search_string);
+            $this->db->group_end();
+        }
 
         if ($order) {
 
@@ -403,7 +462,7 @@ class Property_model extends CI_Model {
 
             $this->db->order_by('property_id', $order_type);
         }
-      //  $this->db->order_by('type', 1);
+        //  $this->db->order_by('type', 1);
 
         $this->db->limit($limit, $offset);
 

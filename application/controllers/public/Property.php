@@ -39,16 +39,16 @@ class Property extends PublicController {
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
             $unit_category = $this->input->post('unit_category');
-            $communities = $this->input->post('locations');
+            $search_string = $this->input->post('locations');
             $bedrooms = $this->input->post('bedrooms');
             $budgets = $this->input->post('budgets');
-            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, null, null, $bedrooms, $budgets, null, null, null, null, null, $communities, null, 'property_last_updated', 'DESC');
+            $properties = $this->Property_model->search_properties(PROPERTIES_COUNT_PER_PAGE, 0, $unit_category, null, null, $bedrooms, $budgets, null, null, null, $search_string, null, null, null, 'property_last_updated', 'DESC');
 
             $this->data['properties'] = $properties;
             $this->data['property_types'] = $this->Property_type_model->find_all();
             $this->data['communities'] = $this->Community_model->find_all();
             $this->data['unit_category'] = $unit_category;
-            $this->data['search_locations'] = $communities;
+            $this->data['search_locations'] = $search_string;
             $this->data['search_bedrooms'] = $bedrooms;
             $this->data['search_budgets'] = $budgets;
             if ($unit_category == 'sale') {
@@ -129,6 +129,17 @@ class Property extends PublicController {
         //load the view
         $this->data['content'] = 'public/property_detail';
         $this->load->view('includes/public/template', $this->data);
+    }
+
+    function locations() {
+
+        $search = $this->input->get('search');
+        $size = $this->input->post('size');
+        $page = $this->input->post('page');
+
+        $locations = $this->Property_model->fetch_location_for_search($search);
+
+        exit($this->send_response('success', $locations));
     }
 
 }

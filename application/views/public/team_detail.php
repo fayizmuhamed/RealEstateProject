@@ -15,9 +15,11 @@
         <div class="row bredcrums">
             <div class="col s10 m10 l10">
                 <ul>
-                    <li><a href="#">ABOUT</a></li>
+                    <li><a href="<?php echo base_url(); ?>">ABOUT</a></li>
                     <li><i class="zmdi zmdi-chevron-right"></i></li>
-                    <li><a href="#" class="active-bred">TEAM</a></li>
+                    <li><a href="<?php echo base_url(); ?>teams" class="active-bred">TEAM</a></li>
+                    <li><i class="zmdi zmdi-chevron-right"></i></li>
+                    <li><a href="#" class="active-bred">PROFILE</a></li>
                 </ul>
             </div>
             <div class="col s2 m2 l2">
@@ -72,7 +74,7 @@
                     </div>
 
                     <div  id="team_detail_property_container">
-                       
+
                         <?php
                         foreach ($properties as $property) {
                             $is_maid_room = FALSE;
@@ -96,12 +98,12 @@
                             echo '<li><i class="icon-bed"></i>&nbsp;' . $property['property_unit_type'] . '</li>';
                             echo '<li><i class="icon-1"></i>&nbsp;' . $property['property_builtup_area'] . ' ' . $property['property_unit_measure'] . '</li>';
                             echo '<li><i class="zmdi zmdi-hotel"></i>&nbsp;' . $property['property_rooms'] . ' Bed</li>';
-                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Baths</li>';
+                            echo '<li><i class="zmdi zmdi-seat"></i>&nbsp;' . $property['property_bathrooms'] . ' Bath</li>';
                             if ($is_maid_room) {
-                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . ' Maid</li>';
+                                echo '<li><i class="zmdi zmdi-group"></i>&nbsp;' . "Maid's Room" . '</li>';
                             }
                             if ($is_study_room) {
-                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . ' Study</li>';
+                                echo '<li><i class="zmdi zmdi-file-text"></i>&nbsp;' . "Study Room" . '</li>';
                             }
                             echo '</ul>';
                             echo '<button class="mk-e modal-trigger waves-effect waves-light" data-target="make_enquiry_model"><a href="#" onclick="makeEnquiry(&#39;property&#39;,&#39;' . $property['property_title'] . '&#39;,&#39;' . $property['property_ref_no'] . '&#39;);return false;">Make Enquiry</a></button>';
